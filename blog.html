@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajos — Cielo Caicedo</title>
+  <meta name="description" content="Bitácora de Cielo Caicedo: procesos y reflexiones sobre diseño, audiovisual y animación.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="masthead">
+    <nav class="masthead__nav" aria-label="Navegación principal">
+      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span>Cielo Yenied Caicedo</a>
+      <ul class="masthead__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html" aria-current="page">Trabajos</a></li>
+        <li><a href="contacto.html" class="nav-cta">Contacto</a></li>
+        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false"><span class="tema-btn__icono" aria-hidden="true">☾</span> <span class="tema-btn__texto">Modo oscuro</span></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <section class="obra section--wide" id="trabajos" aria-labelledby="obra-title">
+      <h1 id="obra-title" class="section-title">Trabajos</h1>
+      <p class="obra__intro">Todo lo que he hecho, repartido en tres oficios. Elige uno para verlo.</p>
+
+      <div class="obra__rail" role="tablist" aria-label="Tipos de trabajo">
+        <button class="obra__tab" type="button" role="tab"
+                id="tab-diseno" aria-controls="panel-diseno" aria-selected="true">Diseño</button>
+        <button class="obra__tab" type="button" role="tab"
+                id="tab-post" aria-controls="panel-post" aria-selected="false" tabindex="-1">Posproducción</button>
+        <button class="obra__tab" type="button" role="tab"
+                id="tab-juegos" aria-controls="panel-juegos" aria-selected="false" tabindex="-1">Videojuegos</button>
+      </div>
+
+        <div class="obra__panel" id="panel-diseno" role="tabpanel"
+             aria-labelledby="tab-diseno" tabindex="0">
+          <h2 class="obra__grupo">Diseño gráfico y editorial</h2>
+          <p class="obra__descripcion">Empaque, campañas para redes y maquetación de revista. Piezas donde la marca tiene que sostenerse sola.</p>
+          <ul class="blog__list">
+
+            <li class="blog__item">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--ancha">
+              <a class="post-card__zoom" href="img/blog-empaque.webp">
+                <img class="post-card__cover"
+                     src="img/blog-empaque.webp"
+                     alt="Troquel desplegado de la Cajita Feliz de Drácula: alas de murciélago negras, boca roja con colmillos y una cara lateral morada con calcomanías."
+                     width="1200" height="609" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+              <a class="post-card__zoom" href="img/blog-empaque-2.webp">
+                <img class="post-card__cover"
+                     src="img/blog-empaque-2.webp"
+                     alt="Banner promocional de la Cajita Feliz de Drácula sobre fondo rojo, con el logo del reto y la frase «¡Te esperamos!»."
+                     width="900" height="281" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Rediseño</p>
+            <h3 class="post-card__title">Del troquel a la caja: rediseñar la Cajita Feliz</h3>
+            <p class="post-card__excerpt">Diseñar un empaque obliga a pensar en plano y en volumen a la vez. Cómo resolví que las alas siguieran leyéndose una vez armada la caja.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026-08-14">2025</time>
+              <ul class="post-card__tags">
+                <li>Empaque</li>
+                <li>Troquel</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item">
+          <article class="post-card">
+            <div class="post-card__gallery">
+              <a class="post-card__zoom" href="img/blog-perfumeria.webp">
+                <img class="post-card__cover"
+                     src="img/blog-perfumeria.webp"
+                     alt="Publicación «Trío Amoroso» de 1076 Perfumería: tres frascos sobre pedestales oscuros entre nubes, corazones y una cinta roja."
+                     width="760" height="950" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+              <a class="post-card__zoom" href="img/blog-perfumeria-2.webp">
+                <img class="post-card__cover"
+                     src="img/blog-perfumeria-2.webp"
+                     alt="Publicación «¿Qué fragancia eres?» de 1076 Perfumería: los mismos tres frascos con las etiquetas Intensa, Seductora y Clásica."
+                     width="700" height="875" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Proceso creativo</p>
+            <h3 class="post-card__title">Una campaña de Amor y Amistad para una perfumería</h3>
+            <p class="post-card__excerpt">Cinco publicaciones que debían verse como una sola campaña. Lo que aprendí construyendo un sistema visual antes de diseñar la primera pieza.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026-07-29">2026</time>
+              <ul class="post-card__tags">
+                <li>Redes sociales</li>
+                <li>Campaña</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item">
+          <article class="post-card">
+            <div class="post-card__gallery">
+              <a class="post-card__zoom" href="img/blog-editorial.webp">
+                <img class="post-card__cover"
+                     src="img/blog-editorial.webp"
+                     alt="Página de revista titulada «Branding» con unas gafas de pasta ilustradas y un bloque de texto a dos columnas."
+                     width="760" height="982" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+              <a class="post-card__zoom" href="img/blog-editorial-2.webp">
+                <img class="post-card__cover"
+                     src="img/blog-editorial-2.webp"
+                     alt="Página de revista con el titular «Novillo, un siglo de identidad», una línea de tiempo de logos y un retrato en blanco y negro."
+                     width="700" height="904" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Ilustración y redacción</p>
+            <h3 class="post-card__title">Diseñar para revista: retícula, jerarquía y ritmo</h3>
+            <p class="post-card__excerpt">Diseñar páginas de revista me enseñó a pensar en bloques de lectura, no solo en imágenes bonitas. Estas son mis conclusiones.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026-06-10">2025</time>
+              <ul class="post-card__tags">
+                <li>Editorial</li>
+                <li>Maquetación</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--single">
+              <video class="post-card__cover post-card__video"
+                     poster="img/blog-animacion.webp"
+                     controls
+                     preload="none"
+                     width="900" height="506">
+                <source src="img/blog-animacion.mp4" type="video/mp4">
+                Tu navegador no soporta el video. <a href="img/blog-animacion.mp4">Descárgalo aquí</a>.
+              </video>
+            </div>
+            <p class="post-card__tag">Animación y Publicidad</p>
+            <h3 class="post-card__title">Dar vida a un empaque con After Effects</h3>
+            <p class="post-card__excerpt">Animar un producto no es solo moverlo: es decidir en qué momento se revela la marca. Así construí el timing de esta pieza en After Effects.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026-09-05">2026</time>
+              <ul class="post-card__tags">
+                <li>Animación</li>
+                <li>After Effects</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+          </ul>
+        </div>
+
+        <div class="obra__panel" id="panel-post" role="tabpanel"
+             aria-labelledby="tab-post" tabindex="0" hidden>
+          <h2 class="obra__grupo">Posproducción audiovisual</h2>
+          <p class="obra__descripcion">Lo que pasa después de grabar: montaje, ritmo y animación. Cada pieza se reproduce desde acá.</p>
+          <ul class="blog__list">
+
+            <li class="blog__item">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--vertical">
+              <video class="post-card__cover post-card__video post-card__video--vertical"
+                     poster="media/colegio.webp"
+                     controls
+                     preload="none"
+                     width="404" height="720">
+                <source src="media/colegio.mp4" type="video/mp4">
+                Tu navegador no soporta el video. <a href="media/colegio.mp4">Descárgalo aquí</a>.
+              </video>
+            </div>
+            <p class="post-card__tag">Video institucional</p>
+            <h3 class="post-card__title">Los Patios Centro 2: los niños cuidan su colegio</h3>
+            <p class="post-card__excerpt">Pieza para las redes del Instituto Técnico Los Patios Centro 2. Los estudiantes cuentan en primera persona cómo cuidan las zonas verdes de la institución. Formato vertical, montaje a ritmo de testimonio.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026-09-15">2026</time>
+              <ul class="post-card__tags">
+                <li>Institucional</li>
+                <li>Montaje</li>
+                <li>Reel</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--vertical">
+              <video class="post-card__cover post-card__video post-card__video--vertical"
+                     poster="media/perfumeria.webp"
+                     controls
+                     preload="none"
+                     width="540" height="960">
+                <source src="media/perfumeria.mp4" type="video/mp4">
+                Tu navegador no soporta el video. <a href="media/perfumeria.mp4">Descárgalo aquí</a>.
+              </video>
+            </div>
+            <p class="post-card__tag">Video para redes</p>
+            <h3 class="post-card__title">1076 Perfumería: atención en mostrador</h3>
+            <p class="post-card__excerpt">Reel para la perfumería 1076. La asesora presenta los combos de la campaña en el punto de venta, con el letrero de neón de la marca siempre en cuadro. Corte rápido pensado para consumo en celular.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026-09-12">2026</time>
+              <ul class="post-card__tags">
+                <li>Redes sociales</li>
+                <li>Producto</li>
+                <li>Reel</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+          </ul>
+        </div>
+
+        <div class="obra__panel" id="panel-juegos" role="tabpanel"
+             aria-labelledby="tab-juegos" tabindex="0" hidden>
+          <h2 class="obra__grupo">La saga Petunia</h2>
+          <p class="obra__descripcion">Juegos web que programo y diseño yo misma. Petunia es la máquina rival que los une a todos.</p>
+          <div class="banner-juegos">
+            <div>
+              <h3>Juega la saga Petunia</h3>
+              <p>5 juegos: PetuGol, PetuPong, Noche de Espantos, Cóndor de los Andes y Estanco Nucita.</p>
+            </div>
+            <a class="btn-jugar" href="juegos.html">Ver los juegos →</a>
+          </div>
+          <ul class="arcade__mas">
+            <li><a href="futbol.html"><strong>PetuGol</strong><span>Futbolito 6 contra 6 contra Petunia o en línea.</span></a></li>
+            <li><a href="pingpong.html"><strong>PetuPong</strong><span>Ping-pong contra Petunia o para 2 jugadores.</span></a></li>
+            <li><a href="noche-de-espantos.html"><strong>Noche de Espantos</strong><span>Supervivencia 3D con mitos y leyendas colombianos.</span></a></li>
+            <li><a href="condor-de-los-andes.html"><strong>Cóndor de los Andes</strong><span>Guerra aérea 3D por la historia de Colombia.</span></a></li>
+            <li><a href="estanco-nucita.html"><strong>Estanco Nucita</strong><span>Pamela atiende su estanco con la perrita Nucita.</span></a></li>
+          </ul>
+        </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Navegación de pie de página">
+      <ul class="site-footer__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__contact"><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></p>
+  </footer>
+
+
+  <dialog class="lightbox" id="lightbox" aria-label="Imagen ampliada">
+    <button class="lightbox__close" type="button" aria-label="Cerrar la imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <figcaption class="lightbox__caption"></figcaption>
+    </figure>
+  </dialog>
+
+  <script src="js/pestanas.js" defer></script>
+  <script src="js/visor.js" defer></script>
+  <script src="js/animaciones.js" defer></script>
+
+</body>
+</html>

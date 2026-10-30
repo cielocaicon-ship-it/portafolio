@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cielo Yenied Caicedo — Portafolio de Ingeniería Multimedia</title>
+  <meta name="description" content="Portafolio de Cielo Caicedo, Ingeniera Multimedia: diseño gráfico, producción audiovisual, animación 2D, modelado y marketing.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="masthead">
+    <nav class="masthead__nav" aria-label="Navegación principal">
+      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span>Cielo Yenied Caicedo</a>
+      <ul class="masthead__menu">
+        <li><a href="index.html" aria-current="page">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="contacto.html" class="nav-cta">Contacto</a></li>
+        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false"><span class="tema-btn__icono" aria-hidden="true">☾</span> <span class="tema-btn__texto">Modo oscuro</span></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="hero__kicker">Portafolio</p>
+      <h1 id="hero-title" class="hero__title">Diseño, imagen y movimiento, contados con <em class="hero__marca">intención</em>.</h1>
+      <p class="hero__lead">Trabajo entre el diseño gráfico, la producción audiovisual y la animación para dar forma a ideas que otras personas quieren mostrar.</p>
+
+      <p class="hero__actions">
+        <a href="contacto.html" class="btn-outline">Contáctame</a>
+        <a href="#sobre-mi" class="btn-circle-link">
+          <span class="btn-circle" aria-hidden="true">↓</span>
+          Conóceme
+        </a>
+      </p>
+
+      <figure class="hero__pila">
+        <img class="hero__pieza hero__pieza--uno"
+             src="img/hero-1.webp" data-profundidad="0.6"
+             alt="Página de revista sobre branding, con unas gafas de pasta ilustradas."
+             width="300" height="388" loading="eager" decoding="async">
+        <img class="hero__pieza hero__pieza--dos"
+             src="img/hero-2.webp" data-profundidad="1"
+             alt="Publicación «Trío Amoroso» para la perfumería 1076."
+             width="300" height="375" loading="eager" decoding="async">
+        <img class="hero__pieza hero__pieza--tres"
+             src="img/hero-3.webp" data-profundidad="1.5"
+             alt="Afiche de la Cajita Feliz de Drácula para una campaña de Halloween."
+             width="320" height="320" loading="eager" decoding="async">
+      </figure>
+    </section>
+
+    <!-- Cinta de oficios. La segunda lista es copia de la primera y solo
+         existe para que el movimiento empalme sin salto; por eso los
+         lectores de pantalla la ignoran. -->
+    <aside class="cinta" aria-label="Oficios">
+      <ul class="cinta__pista">
+        <li class="cinta__oficio cinta__oficio--diseno">Diseño gráfico</li>
+        <li class="cinta__oficio cinta__oficio--post">Posproducción</li>
+        <li class="cinta__oficio cinta__oficio--juegos">Videojuegos</li>
+        <li class="cinta__oficio cinta__oficio--diseno">Fotografía</li>
+        <li class="cinta__oficio cinta__oficio--post">Animación 2D</li>
+        <li class="cinta__oficio cinta__oficio--juegos">Marketing</li>
+      </ul>
+      <ul class="cinta__pista" aria-hidden="true">
+        <li class="cinta__oficio cinta__oficio--diseno">Diseño gráfico</li>
+        <li class="cinta__oficio cinta__oficio--post">Posproducción</li>
+        <li class="cinta__oficio cinta__oficio--juegos">Videojuegos</li>
+        <li class="cinta__oficio cinta__oficio--diseno">Fotografía</li>
+        <li class="cinta__oficio cinta__oficio--post">Animación 2D</li>
+        <li class="cinta__oficio cinta__oficio--juegos">Marketing</li>
+      </ul>
+    </aside>
+
+    <section class="about" id="sobre-mi" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title">Sobre mí</h2>
+
+      <p class="about__text">Mucho gusto, mi nombre es Cielo Yenied Caicedo Contreras, soy estudiante de sexto semestre de Ingeniería Multimedia en la Universidad Simón Bolívar sede Cúcuta y técnica en sistemas del SENA. Combino formación técnica con sensibilidad creativa: diseño piezas gráficas, produzco contenido audiovisual, modelo y animo en 2D, y aplico marketing para que ese contenido llegue a quien debe llegar.</p>
+
+      <h3 class="about__subtitle">Herramientas que sé utilizar</h3>
+      <ul class="tool-list">
+        <li>Illustrator</li>
+        <li>Photoshop</li>
+        <li>Visual Studio</li>
+        <li>Premiere Pro</li>
+        <li>After Effects</li>
+        <li>3dsMax</li>
+      </ul>
+
+      <img class="about__portrait"
+           src="img/retrato.webp"
+           alt="Retrato ilustrado de Cielo Caicedo."
+           width="483" height="483" loading="lazy" decoding="async">
+    </section>
+
+    <section class="skills" aria-labelledby="skills-title">
+      <h2 id="skills-title" class="section-title">Habilidades</h2>
+      <ul class="skills__list">
+        <li>Diseño gráfico</li>
+        <li>Fotografía</li>
+        <li>Producción audiovisual</li>
+        <li>Animación 2D y modelado</li>
+        <li>Marketing</li>
+        <li>Manejo de Adobe</li>
+      </ul>
+      <aside class="skills__aside" aria-labelledby="skills-aside-title">
+        <h3 id="skills-aside-title" class="skills__aside-title">Enfoque</h3>
+        <p class="skills__aside-text">Cada proyecto pasa por las mismas dos preguntas: ¿qué necesita ver la persona que lo recibe, y en qué formato lo va a recibir?</p>
+      </aside>
+    </section>
+
+    <section class="projects" id="proyectos" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="section-title">Proyectos trabajados</h2>
+
+      <ul class="projects__list">
+
+        <li class="projects__item">
+          <article class="project">
+            <img class="project__cover"
+                 src="img/proyecto-perfumeria.webp"
+                 alt="Publicación «¿Qué fragancia eres?» para 1076 Perfumería: tres frascos sobre podios de mármol entre nubes y corazones."
+                 width="760" height="950" loading="lazy" decoding="async">
+            <p class="project__tag">Redes sociales</p>
+            <h3 class="project__title">Campaña para Perfumería 1076</h3>
+            <p class="project__desc">Serie de publicaciones para la campaña de Amor y Amistad de una perfumería. Un mismo sistema visual de nubes, corazones y podios sostiene cinco piezas distintas sin que ninguna pierda la unidad de marca.</p>
+          </article>
+        </li>
+
+        <li class="projects__item">
+          <article class="project">
+            <img class="project__cover"
+                 src="img/proyecto-revista.webp"
+                 alt="Página de revista sobre Cruz Novillo con su retrato ilustrado en alto contraste junto a una columna de texto."
+                 width="760" height="982" loading="lazy" decoding="async">
+            <p class="project__tag">Editorial</p>
+            <h3 class="project__title">Cruz Novillo, un siglo de identidad</h3>
+            <p class="project__desc">Artículo de revista de la materia Diseño Gráfico, sobre el diseñador que definió buena parte de la identidad visual española. Retícula a dos columnas, ilustración a alto contraste y una rueda de logotipos como pieza central.</p>
+          </article>
+        </li>
+
+        <li class="projects__item">
+          <article class="project">
+            <img class="project__cover"
+                 src="img/proyecto-empaque.webp"
+                 alt="Afiche de la campaña Estilo Monstruoso: un personaje verde sostiene la Cajita Feliz de Drácula frente a la luna."
+                 width="625" height="625" loading="lazy" decoding="async">
+            <p class="project__tag">Empaque</p>
+            <h3 class="project__title">Cajita Feliz Drácula</h3>
+            <p class="project__desc">Rediseño de la Cajita Feliz de McDonald&#39;s para una campaña de Halloween de la materia Diseño Gráfico: alas de murciélago en el troquel, dos monstruos coleccionables y una lámina de calcomanías para armar tu propio personaje.</p>
+          </article>
+        </li>
+
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Navegación de pie de página">
+      <ul class="site-footer__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__contact"><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></p>
+  </footer>
+
+  <script src="js/pila.js" defer></script>
+  <script src="js/animaciones.js" defer></script>
+
+</body>
+</html>

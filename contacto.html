@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — Cielo Caicedo</title>
+  <meta name="description" content="Formulario de contacto de Cielo Caicedo, Ingeniera Multimedia en Cúcuta.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="masthead">
+    <nav class="masthead__nav" aria-label="Navegación principal">
+      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span>Cielo Yenied Caicedo</a>
+      <ul class="masthead__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="contacto.html" class="nav-cta" aria-current="page">Contacto</a></li>
+        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false"><span class="tema-btn__icono" aria-hidden="true">☾</span> <span class="tema-btn__texto">Modo oscuro</span></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <section class="contact section--wide" aria-labelledby="contact-title">
+      <h1 id="contact-title" class="section-title">Contacto</h1>
+      <p class="contact__intro">¿Tienes un proyecto en mente? Cuéntame de qué se trata y te respondo por correo.</p>
+
+      <div class="contact__tarjeta row g-4">
+
+        <form class="contact__form col-12 col-md-7" action="#" method="post">
+          <fieldset class="contact__fieldset">
+            <legend class="contact__legend">Datos del proyecto</legend>
+
+            <p class="contact__required-note">Los campos marcados con asterisco (*) son obligatorios.</p>
+
+            <div class="row g-4">
+
+              <div class="col-12 col-lg-6">
+                <label for="nombre" class="form-label">Nombre completo <abbr title="obligatorio" class="req">*</abbr></label>
+                <input type="text" class="form-control" id="nombre" name="nombre"
+                       autocomplete="name" minlength="3" maxlength="80" required
+                       aria-describedby="ayuda-nombre">
+                <span class="form-hint" id="ayuda-nombre">Mínimo 3 caracteres.</span>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <label for="correo" class="form-label">Correo electrónico <abbr title="obligatorio" class="req">*</abbr></label>
+                <input type="email" class="form-control" id="correo" name="correo"
+                       autocomplete="email" placeholder="nombre@ejemplo.com" required
+                       aria-describedby="ayuda-correo">
+                <span class="form-hint" id="ayuda-correo">A esta dirección te responderé.</span>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono"
+                       autocomplete="tel" inputmode="tel" pattern="[0-9\s\+\(\)\-]{7,15}"
+                       aria-describedby="ayuda-telefono">
+                <span class="form-hint" id="ayuda-telefono">Opcional. Entre 7 y 15 dígitos.</span>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <label for="servicio" class="form-label">Tipo de proyecto <abbr title="obligatorio" class="req">*</abbr></label>
+                <select class="form-select" id="servicio" name="servicio" required
+                        aria-describedby="ayuda-servicio">
+                  <option value="">Selecciona una opción</option>
+                  <option value="diseno-grafico">Diseño gráfico</option>
+                  <option value="audiovisual">Producción audiovisual</option>
+                  <option value="animacion">Animación 2D y modelado</option>
+                  <option value="marketing">Marketing</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <span class="form-hint" id="ayuda-servicio">Elige lo que más se acerque a tu necesidad.</span>
+              </div>
+
+              <div class="col-12">
+                <label for="mensaje" class="form-label">Mensaje <abbr title="obligatorio" class="req">*</abbr></label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="6"
+                          minlength="10" maxlength="1000" required
+                          aria-describedby="ayuda-mensaje"></textarea>
+                <span class="form-hint" id="ayuda-mensaje">Cuéntame el objetivo, el formato y la fecha estimada. Mínimo 10 caracteres.</span>
+                <span class="form-contador" id="cuenta-mensaje" role="status" aria-live="polite"></span>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn-enviar">Enviar mensaje</button>
+              </div>
+
+            </div>
+          </fieldset>
+        </form>
+
+        <aside class="contact__aside col-12 col-md-5" aria-labelledby="aside-title">
+          <h2 id="aside-title" class="contact__aside-title">Otros canales</h2>
+
+          <dl class="contact__data">
+            <dt>Correo</dt>
+            <dd><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></dd>
+
+            <dt>Ubicación</dt>
+            <dd>Los Patios, Norte de Santander, Colombia</dd>
+
+            <dt>Redes Sociales</dt>
+            <dd>Cielo__Caicedo</dd>
+
+            <dt>Disponibilidad</dt>
+            <dd>Proyectos freelance y prácticas profesionales</dd>
+          </dl>
+
+          <p class="contact__aside-note">Si tu proyecto tiene fecha límite, menciónala en el mensaje: me ayuda a decirte de una vez si alcanzo a tomarlo.</p>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Navegación de pie de página">
+      <ul class="site-footer__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__contact"><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></p>
+  </footer>
+
+  <script src="js/contador.js" defer></script>
+  <script src="js/animaciones.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,3150 @@
+
+:root {
+  /* Papel beige con tarjetas blancas encima: el contraste entre los dos
+     es lo que da profundidad, sin necesidad de sombras. */
+  --bg: #FAF6EF;            /* papel */
+  --surface: #FFFFFF;       /* tarjetas */
+  --panel: #FFFFFF;         /* marco detrás de las piezas */
+  --band: #F0E9DC;          /* bandas de apoyo */
+  --dark: #16130F;          /* cabecera y hero */
+  --ink: #1A1714;           /* texto principal     14.3:1 */
+  --gray: #5E574D;          /* texto secundario     6.0:1 */
+  --line: #D9CCB7;          /* hilos y bordes */
+  --line-ui: #8A7C63;       /* bordes de campos */
+  --chip-bg: #EFE7D9;       /* pastillas */
+  --field: #FFFFFF;         /* fondo de los campos */
+
+  /* Un color por oficio. Son los tres que ya venías usando. Cada panel de
+     Trabajos adopta el suyo y repinta pestaña, pastillas y filo de tarjeta. */
+  --diseno: #8F4A24;        /* terracota   5.5:1 sobre el papel */
+  --post: #22477A;          /* azul        7.8:1 */
+  --juegos: #003E19;        /* verde      10.3:1 */
+
+  --accent: var(--diseno);
+  --sobre-acento: #FFFFFF;  /* blanco sobre terracota 6.6:1 */
+  --error: #C0392B;         /* rojo de error      5.4:1 sobre blanco */
+
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+
+  --max-width: 1000px;
+  --max-width-wide: 1100px;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2.5rem;
+  --space-lg: 3.5rem;
+}
+
+/* Cada oficio tiñe su pestaña y su panel. */
+#tab-diseno,
+#panel-diseno {
+  --categoria: var(--diseno);
+}
+
+#tab-post,
+#panel-post {
+  --categoria: var(--post);
+}
+
+#tab-juegos,
+#panel-juegos {
+  --categoria: var(--juegos);
+}
+
+/* ---------- 2. Reset y Modelo de Caja ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3 {
+  font-family: var(--font);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+p {
+  margin: 0 0 var(--space-sm);
+  max-width: 60ch;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--ink);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Foco visible en todo elemento interactivo (WCAG 2.4.7).
+   Toma el color del bloque donde esté: dentro de Trabajos el de su
+   pestaña, dentro del formulario el del tipo de proyecto elegido. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+main:focus-visible {
+  outline: 3px solid var(--categoria, var(--accent));
+  outline-offset: 3px;
+}
+
+/* ---------- 2b. Respaldo de la rejilla ---------- */
+/* Bootstrap 5.3.3 ahora va guardado en css/bootstrap.min.css, así que la
+   página funciona sin internet. Estas reglas se quedan como segunda red:
+   reproducen, con los mismos valores de Bootstrap 5.3, solo las clases de
+   rejilla que usa contacto.html. Con Bootstrap presente dicen lo mismo y no
+   se nota la diferencia; si un día la hoja faltara, el formulario no se
+   desarma. */
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+
+.row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: var(--bs-gutter-y);
+}
+
+.g-4 {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
+
+.col-12 {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .col-md-5 {
+    flex: 0 0 auto;
+    width: 41.66666667%;
+  }
+
+  .col-md-7 {
+    flex: 0 0 auto;
+    width: 58.33333333%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}
+
+/* ---------- 3. Enlace de salto (accesibilidad de teclado) ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background-color: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  padding: var(--space-xs) var(--space-sm);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: var(--space-sm);
+  top: var(--space-xs);
+}
+
+/* ---------- 4. Cabecera y navegación ---------- */
+.masthead {
+  background: linear-gradient(180deg, #221C16, var(--dark));
+  border-bottom: 1px solid var(--line);
+  padding: var(--space-sm);
+}
+
+.masthead__nav {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.masthead__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.masthead__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+}
+
+.masthead__menu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.masthead__menu a {
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.masthead__menu a:hover,
+.masthead__menu a[aria-current="page"] {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.masthead__menu .nav-cta {
+  background-color: #fff;
+  color: var(--dark);
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.masthead__menu .nav-cta:hover,
+.masthead__menu .nav-cta[aria-current="page"] {
+  background-color: var(--accent);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ---------- 5. Layout general de secciones ---------- */
+main:focus {
+  outline: none;
+}
+
+main > section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-sm);
+}
+
+main > section + section {
+  border-top: 1px solid var(--line);
+}
+
+.section--wide {
+  max-width: var(--max-width-wide);
+}
+
+.hero + .about {
+  border-top: none;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- 6. Hero (index.html) ---------- */
+.hero {
+  background: radial-gradient(circle at 18% -10%, #3B2616, #231A12 45%, var(--dark) 78%);
+  color: #fff;
+  max-width: none;
+  /* El relleno lateral centra una columna de 1000px sin necesidad de un
+     contenedor extra, y nunca baja del margen mínimo en pantallas chicas. */
+  padding: 6rem max(var(--space-sm), calc((100% - 1000px) / 2));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+  column-gap: var(--space-lg);
+  align-items: center;
+}
+
+.hero__kicker,
+.hero__title,
+.hero__lead,
+.hero__actions {
+  margin-left: 0;
+  margin-right: 0;
+  grid-column: 1;
+}
+
+/* El trabajo aparece desde el primer pantallazo: tres piezas impresas y
+   superpuestas, a la derecha del titular. Van separadas (y no como una sola
+   imagen) para que cada una pueda moverse por su cuenta con el cursor. */
+.hero__pila {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  justify-self: end;
+  width: 100%;
+  max-width: 26rem;
+  aspect-ratio: 5 / 4;
+  margin: 0;
+}
+
+.hero__pieza {
+  position: absolute;
+  width: 58%;
+  height: auto;
+  border: 0.5rem solid #fff;
+  box-shadow: 0 1rem 2.2rem rgba(0, 0, 0, 0.45);
+  /* El giro de reposo lo pone cada pieza; el script solo suma --giro-extra
+     y el desplazamiento, así nunca se pierde la posición original.
+     La escala queda en una variable aparte para que el hover la cambie
+     sin tener que repetir toda la transformación. */
+  transform: translate(var(--dx, 0), var(--dy, 0))
+             rotate(calc(var(--giro) + var(--giro-extra, 0deg)))
+             scale(var(--escala, 1));
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1),
+              box-shadow 0.3s ease,
+              filter 0.3s ease;
+}
+
+/* Al apuntar una pieza, esa se endereza, crece y pasa al frente.
+   Las otras dos se apagan un punto para que la elegida resalte. */
+.hero__pila:hover .hero__pieza {
+  filter: brightness(0.62);
+}
+
+.hero__pieza:hover {
+  --giro: 0deg;
+  --escala: 1.09;
+  z-index: 5;
+  box-shadow: 0 1.8rem 3.4rem rgba(0, 0, 0, 0.6);
+}
+
+.hero__pila .hero__pieza:hover {
+  filter: none;
+}
+
+.hero__pieza--uno {
+  --giro: -9deg;
+  top: 4%;
+  left: 0;
+}
+
+.hero__pieza--dos {
+  --giro: 5deg;
+  top: 0;
+  right: 0;
+}
+
+.hero__pieza--tres {
+  --giro: -3deg;
+  right: 16%;
+  bottom: 0;
+  width: 54%;
+}
+
+.hero__kicker {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-sm);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  /* La columna del titular es más angosta desde que el collage ocupa la
+     mitad derecha, así que la escala baja para que no se parta en cuatro. */
+  font-size: clamp(2rem, 4.2vw, 3.3rem);
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-md);
+  max-width: none;
+  color: #fff;
+}
+
+.hero__lead {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 55ch;
+  margin-bottom: 0;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.btn-outline {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.8rem;
+}
+
+.btn-outline:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-circle-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.btn-circle-link:hover {
+  text-decoration: underline;
+}
+
+.btn-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  color: var(--dark);
+  font-size: 1.1rem;
+}
+
+.btn-circle-link:hover .btn-circle {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ---------- 7. Sobre mí: retrato y herramientas ---------- */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+  column-gap: var(--space-md);
+  align-items: start;
+}
+
+.about .section-title,
+.about__text,
+.about__subtitle,
+.tool-list {
+  grid-column: 1;
+}
+
+.about__portrait {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.about__subtitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: var(--space-sm);
+}
+
+.tool-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.tool-list li {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink);
+  background-color: var(--chip-bg);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+}
+
+/* ---------- 8. Habilidades ---------- */
+/* Esta sección se asienta sobre una banda de tono más profundo. El
+   box-shadow la estira de borde a borde y el clip-path recorta lo que
+   se sale, para que nunca aparezca barra horizontal.
+   El borde separador sobra: la banda ya marca dónde empieza, y la línea
+   solo cruzaba el ancho del texto mientras el color iba de lado a lado. */
+.skills {
+  position: relative;
+  background-color: var(--band);
+  box-shadow: 0 0 0 100vmax var(--band);
+  clip-path: inset(0 -100vmax);
+  border-top: none;
+}
+
+.skills + section {
+  border-top: none;
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md) var(--space-lg);
+  align-items: start;
+}
+
+.skills .section-title {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.skills__list li {
+  position: relative;
+  padding: var(--space-sm) 0 var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--line);
+  font-weight: 600;
+}
+
+/* Un cuadrito de color antes de cada habilidad, en lugar de una viñeta. */
+.skills__list li::before {
+  content: "";
+  position: absolute;
+  top: 1.45rem;
+  left: 0;
+  width: 0.7rem;
+  height: 0.7rem;
+  background-color: var(--accent);
+}
+
+.skills__list li:nth-child(3n + 2)::before {
+  background-color: var(--post);
+}
+
+.skills__list li:nth-child(3n + 3)::before {
+  background-color: var(--juegos);
+}
+
+.skills__list li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.skills__aside {
+  border: 1px solid var(--line);
+  padding: var(--space-md);
+}
+
+.skills__aside-title {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: var(--space-sm);
+}
+
+.skills__aside-text {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* ---------- 9. Proyectos: rejilla de tarjetas ---------- */
+.projects__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+  align-items: stretch;
+}
+
+.projects__item {
+  display: flex;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  padding: var(--space-sm);
+  background-color: var(--surface);
+}
+
+.project__cover {
+  width: calc(100% + (2 * var(--space-sm)));
+  max-width: none;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background-color: var(--panel);
+  border-bottom: 1px solid var(--line);
+  margin: calc(-1 * var(--space-sm)) calc(-1 * var(--space-sm)) var(--space-sm);
+}
+
+.project__tag {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background-color: var(--chip-bg);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: var(--space-sm);
+}
+
+.project__title {
+  font-size: 1.02rem;
+  margin-bottom: var(--space-xs);
+}
+
+.project__desc {
+  flex-grow: 1;
+  font-size: 0.88rem;
+  color: var(--gray);
+  margin-bottom: 0;
+}
+
+.blog__intro {
+  margin-bottom: var(--space-md);
+}
+
+.blog__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: var(--space-md);
+}
+
+.blog__item {
+  display: flex;
+  flex: 1 1 26rem;
+  min-width: 0;
+  max-width: 32rem;
+}
+
+/* Por debajo de 56rem solo cabe una tarjeta por fila:
+   que ocupe el ancho completo en vez de dejar un hueco al lado. */
+@media (max-width: 56rem) {
+  .blog__item {
+    max-width: 100%;
+  }
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--categoria, var(--accent));
+  padding: var(--space-md);
+  background-color: var(--surface);
+  transition: border-color 0.2s ease;
+}
+
+.post-card__gallery {
+  display: flex;
+  gap: 1px;
+  background-color: var(--line);
+  width: calc(100% + (2 * var(--space-md)));
+  margin: calc(-1 * var(--space-md)) calc(-1 * var(--space-md)) var(--space-md);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.post-card__cover {
+  width: 50%;
+  flex: 1 1 50%;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background-color: var(--panel);
+  margin: 0;
+}
+
+/* ---------- Imagen ampliable ---------- */
+/* El enlace envuelve la imagen, así que ahora es él quien ocupa
+   la mitad de la galería; la imagen pasa a llenarlo por completo. */
+.post-card__zoom {
+  position: relative;
+  display: block;
+  flex: 1 1 50%;
+  min-width: 0;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.post-card__zoom .post-card__cover {
+  width: 100%;
+  flex: none;
+}
+
+.post-card__lupa {
+  position: absolute;
+  right: var(--space-xs);
+  bottom: var(--space-xs);
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--ink);
+  color: var(--surface);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.post-card__zoom:hover .post-card__lupa,
+.post-card__zoom:focus-visible .post-card__lupa {
+  opacity: 1;
+}
+
+/* ---------- Visor de imagen ampliada ---------- */
+.lightbox {
+  width: min(92vw, 1100px);
+  max-width: none;
+  max-height: 94vh;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  overflow: visible;
+}
+
+.lightbox::backdrop {
+  background-color: rgba(12, 10, 8, 0.95);
+}
+
+/* El pie va sobre su propia franja oscura: así se lee aunque detrás
+   quede texto de la página. */
+.lightbox__figure {
+  margin: 0;
+  background-color: var(--dark);
+  padding-bottom: var(--space-sm);
+}
+
+.lightbox__img {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  background-color: #fff;
+}
+
+.lightbox__caption {
+  margin: 0;
+  padding: var(--space-sm) var(--space-sm) 0;
+  max-width: none;
+  color: #fff;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -2.9rem;
+  right: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  color: var(--dark);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox__close:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+.lightbox__close:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+.post-card__gallery--single .post-card__cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* El atributo height="506" del <video> pisaba el aspect-ratio del CSS y
+   dejaba la caja casi cuadrada, con bandas alrededor del video 16:9.
+   Con height: auto manda la proporción y el video llena su caja. */
+.post-card__video {
+  height: auto;
+  background-color: var(--panel);
+}
+/* ---------- Sección Trabajos: pestañas ---------- */
+/* La barra solo aparece cuando el script la enciende. Sin JavaScript
+   no hay barra y los tres grupos se ven uno debajo del otro. */
+.obra__intro {
+  margin-bottom: var(--space-md);
+}
+
+.obra__rail {
+  display: none;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--line);
+}
+
+.obra--interactiva .obra__rail {
+  display: flex;
+}
+
+.obra__tab {
+  position: relative;
+  padding: 0 0 var(--space-sm);
+  border: none;
+  background: none;
+  color: var(--gray);
+  font-family: var(--font);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+}
+
+/* La barra de acento crece desde la izquierda al elegir la pestaña. */
+.obra__tab::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  background-color: var(--categoria);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.22s ease;
+}
+
+.obra__tab:hover {
+  color: var(--ink);
+}
+
+.obra__tab[aria-selected="true"] {
+  color: var(--categoria);
+}
+
+.obra__tab[aria-selected="true"]::after {
+  transform: scaleX(1);
+}
+
+.obra__tab:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.obra__panel:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 6px;
+}
+
+/* Al cambiar de grupo el contenido entra: muestra qué cambió. */
+.obra--interactiva .obra__panel {
+  animation: obra-entra 0.26s ease both;
+}
+
+@keyframes obra-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.obra__grupo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--categoria);
+  margin-bottom: var(--space-xs);
+}
+
+.obra__descripcion {
+  color: var(--gray);
+  margin-bottom: var(--space-md);
+}
+
+.obra__vacio {
+  margin: 0;
+  max-width: none;
+  border: 1px dashed var(--categoria);
+  padding: var(--space-md);
+  color: var(--gray);
+  text-align: center;
+}
+
+/* Las piezas del troquel son apaisadas: en un marco vertical quedaría
+   más fondo que obra, así que ese grupo usa un marco horizontal. */
+/* Dos piezas apaisadas una al lado de la otra quedaban diminutas. Este
+   grupo las apila, y cada una se muestra a su proporción real: así ocupan
+   todo el ancho de la tarjeta y no sobra fondo por ningún lado. */
+.post-card__gallery--ancha {
+  flex-direction: column;
+}
+
+.post-card__gallery--ancha .post-card__zoom {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.post-card__gallery--ancha .post-card__cover {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+/* Al pasar el cursor, la tarjeta se tiñe del color de su oficio: avisa
+   que la pieza se puede abrir sin recurrir a sombras ni saltos. */
+.post-card:hover {
+  border-color: var(--categoria, var(--accent));
+}
+
+/* En pantallas táctiles no hay cursor, así que la pista de "Ampliar"
+   se queda siempre visible. */
+@media (hover: none) {
+  .post-card__lupa {
+    opacity: 1;
+  }
+}
+
+/* ---------- Tarjetas de posproducción: audio ---------- */
+/* Sin portada, la tarjeta arranca directo con el texto y necesita
+   el mismo relleno superior que tienen las demás. */
+/* ---------- Tarjetas de videojuego ---------- */
+/* Las portadas son apaisadas (8:5) y están pensadas para llenar
+   el marco, por eso aquí sí se usa cover y no contain. */
+.post-card__gallery--juego {
+  background-color: var(--dark);
+}
+
+.post-card__cover--juego {
+  width: 100%;
+  flex: 1 1 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  background-color: var(--dark);
+}
+
+.post-card__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-sm);
+  max-width: none;
+}
+
+.btn-jugar,
+.btn-codigo {
+  display: inline-block;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-jugar {
+  background-color: var(--accent);
+  color: var(--sobre-acento);
+  border: 1px solid var(--accent);
+}
+
+.btn-jugar:hover {
+  background-color: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+}
+
+.btn-codigo {
+  background-color: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-ui);
+}
+
+.btn-codigo:focus-visible,
+.btn-jugar:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn-codigo:hover {
+  background-color: var(--chip-bg);
+}
+
+/* Enlace todavía sin publicar: se ve apagado y no invita al clic. */
+.btn-jugar[href="#"],
+.btn-codigo[href="#"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ---------- Videos verticales (formato reel) ---------- */
+/* Un 9:16 a todo el ancho de la tarjeta sería enorme: se limita por altura
+   y se centra sobre un marco oscuro, como se ve en un celular. */
+.post-card__gallery--vertical {
+  justify-content: center;
+  background-color: var(--dark);
+  padding: var(--space-sm) 0;
+}
+
+.post-card__video--vertical {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+  height: 26rem;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background-color: var(--dark);
+}
+
+/* En la tarjeta de audio el resumen no debe estirarse: el reproductor
+   va pegado al texto y es el pie el que baja al fondo de la tarjeta. */
+.post-card--audio .post-card__excerpt {
+  flex-grow: 0;
+}
+
+.post-card--audio .post-card__meta {
+  margin-top: auto;
+}
+
+.post-card__audio {
+  width: 100%;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.post-card__tag {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--categoria, var(--accent));
+  background-color: var(--chip-bg);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: var(--space-sm);
+}
+
+.post-card__title {
+  font-size: 1.15rem;
+  margin-bottom: var(--space-sm);
+}
+
+.post-card__excerpt {
+  flex-grow: 1;
+  color: var(--gray);
+  margin-bottom: var(--space-sm);
+}
+
+.post-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-xs);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+
+.post-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+
+.contact__form {
+  margin-top: var(--space-md);
+}
+
+/* Una sola tarjeta blanca contiene el formulario y el panel de datos, con
+   una línea que los parte por la mitad. Anular los márgenes negativos que
+   trae .row deja el borde a ras del resto del contenido; el relleno de las
+   columnas se encarga de separar las dos mitades por dentro. */
+/* La tarjeta se tiñe según el tipo de proyecto que elija la persona.
+   Es CSS puro: :has() mira cuál <option> quedó seleccionada, así que
+   funciona sin una sola línea de JavaScript. */
+.contact__tarjeta {
+  --categoria: var(--diseno);
+  transition: border-color 0.3s ease;
+}
+
+.contact__tarjeta:has(#servicio option[value="audiovisual"]:checked),
+.contact__tarjeta:has(#servicio option[value="animacion"]:checked) {
+  --categoria: var(--post);
+}
+
+.contact__tarjeta:has(#servicio option[value="marketing"]:checked) {
+  --categoria: var(--juegos);
+}
+
+.contact__tarjeta {
+  margin-right: 0;
+  margin-left: 0;
+  padding: var(--space-md) var(--space-sm);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--categoria);
+  background-color: var(--surface);
+}
+
+.contact__fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Un <legend> normal se incrusta en el borde superior del <fieldset> y lo
+   parte por la mitad. Sacándolo a flotante con ancho completo se comporta
+   como un título cualquiera y el filo de color queda entero. */
+.contact__legend {
+  float: left;
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--categoria);
+  padding: 0;
+  margin-bottom: var(--space-xs);
+}
+
+.contact__legend + * {
+  clear: both;
+}
+
+.contact__required-note {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: var(--space-md);
+}
+
+.contact .req {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* Bootstrap da a las etiquetas y campos su forma de bloque. Si la hoja del
+   CDN no carga (sin conexión, por ejemplo), el formulario se desarmaba: las
+   etiquetas quedaban pegadas al lado de los campos. Estas tres líneas lo
+   sostienen por su cuenta y no estorban cuando Bootstrap sí llega. */
+.contact .form-label {
+  display: block;
+}
+
+.contact .form-control,
+.contact .form-select {
+  display: block;
+  width: 100%;
+}
+
+.contact .form-label {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+}
+
+.contact .form-control,
+.contact .form-select {
+  border-radius: 0;
+  border: 1px solid var(--line-ui);
+  background-color: var(--field);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.contact .form-control:focus,
+.contact .form-select:focus {
+  background-color: var(--field);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: none;
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.contact .form-control::placeholder {
+  color: var(--gray);
+}
+
+/* :user-invalid solo se activa despues de que la persona interactua,
+   asi el formulario no aparece "en error" al cargar la pagina. */
+/* Mientras se llena, cada campo dice en qué va: rojo si algo falta,
+   el color de la tarjeta cuando ya quedó bien. El grosor cambia además
+   del color, para que no dependa solo del tono. */
+.contact .form-control:user-invalid,
+.contact .form-select:user-invalid {
+  border-color: var(--error);
+  border-width: 2px;
+}
+
+.contact .form-control:user-valid,
+.contact .form-select:user-valid {
+  border-color: var(--categoria, var(--accent));
+  border-width: 2px;
+}
+
+/* El contador vive debajo de la ayuda del mensaje. */
+.form-contador {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray);
+  min-height: 1.2em;
+}
+
+.form-contador--listo {
+  color: var(--categoria, var(--accent));
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.btn-enviar {
+  background-color: var(--categoria, var(--accent));
+  transition: background-color 0.3s ease;
+  color: var(--sobre-acento);
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: var(--space-sm);
+}
+
+.btn-enviar:hover {
+  background-color: var(--ink);
+  color: var(--surface);
+}
+
+.contact .row {
+  --bs-gutter-x: 1.5rem;
+}
+
+.contact__intro {
+  margin-bottom: var(--space-md);
+}
+
+/* Sin align-self la columna se estira hasta el alto de la tarjeta, y así la
+   línea divisoria llega hasta abajo en vez de cortarse a media altura. */
+.contact__aside {
+  align-self: stretch;
+}
+
+/* Apilado, la línea va arriba; en pantalla ancha, a la izquierda. */
+.contact__aside {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 48rem) {
+  .contact__aside {
+    margin-top: 0;
+    padding-top: 0;
+    padding-left: var(--space-md);
+    border-top: none;
+    border-left: 1px solid var(--line);
+  }
+}
+
+.contact__aside-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--categoria);
+  margin-bottom: var(--space-md);
+}
+
+.contact__data {
+  margin: 0 0 var(--space-md);
+}
+
+.contact__data dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.15rem;
+}
+
+/* Cada dato queda en su propia fila, separado por un hilo: se leen de
+   un vistazo en lugar de correrse unos contra otros. */
+.contact__data dd {
+  margin: 0 0 var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--line);
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+.contact__data dd:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.contact__data a {
+  color: var(--categoria, var(--accent));
+  font-weight: 600;
+}
+
+/* Cada dato del panel lleva su cuadrito, del mismo color que la tarjeta. */
+.contact__data dt {
+  position: relative;
+  padding-left: 1.15rem;
+}
+
+.contact__data dt::before {
+  content: "";
+  position: absolute;
+  top: 0.38em;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  background-color: var(--categoria, var(--accent));
+}
+
+.contact__aside-note {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 0;
+}
+
+/* ---------- 12. Pie de página ---------- */
+.site-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-sm) var(--space-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  /* Los tres colores de los tres oficios cierran la página: el mismo
+     código que ordena la sección Trabajos, resumido en una línea. */
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(
+      to right,
+      var(--diseno) 0 33.33%,
+      var(--post) 33.33% 66.66%,
+      var(--juegos) 66.66% 100%
+    ) 1;
+}
+
+.site-footer__menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.site-footer a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.site-footer__contact {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.site-footer__contact a {
+  color: var(--gray);
+}
+
+/* ---------- 13. Responsivo ---------- */
+@media (max-width: 48rem) {
+  :root {
+    --space-lg: 3.5rem;
+    --space-md: 1.75rem;
+  }
+
+  .masthead__menu {
+    gap: var(--space-sm);
+  }
+}
+
+@media (max-width: 61.9375rem) {
+  .contact__aside {
+    border-left: none;
+    border-top: 3px solid var(--accent);
+    padding-left: 0;
+    padding-top: var(--space-md);
+  }
+}
+
+@media (max-width: 62rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero__pila {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    max-width: 24rem;
+    margin-top: var(--space-md);
+  }
+}
+
+@media (max-width: 48rem) {
+  /* 10rem de relleno es demasiado alto en pantallas pequeñas */
+  .hero {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .about__portrait {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 15rem;
+    margin-top: var(--space-md);
+  }
+
+  .projects__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* En pantallas estrechas, dos piezas lado a lado quedan diminutas:
+   por debajo de 30rem cada una pasa a ocupar el ancho completo. */
+@media (max-width: 30rem) {
+  .post-card__gallery {
+    flex-direction: column;
+  }
+
+  .post-card__gallery .post-card__zoom {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .projects__list {
+    grid-template-columns: 1fr;
+  }
+
+  .skills {
+    grid-template-columns: 1fr;
+  }
+
+  .blog__item {
+    max-width: 100%;
+  }
+
+  .hero__actions {
+    gap: var(--space-sm);
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* ============================================================
+   14. Movimiento
+   Todo lo que sigue es decoración: si el navegador no anima, o si
+   la persona pidió menos movimiento, la página se ve completa y
+   quieta. Solo se anima transform y opacity, que no mueven el resto
+   de la página (cero saltos de diseño para Lighthouse).
+   ============================================================ */
+
+:root {
+  /* Terracota aclarado: el subrayado del titular vive sobre el hero
+     negro, donde el terracota normal casi no se ve. Es decorativo,
+     no lleva texto encima. */
+  --diseno-claro: #E2895A;
+  --curva: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+@keyframes sube {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+/* Solo desplazamiento, sin fundido: el titular es lo más grande de la
+   página y Lighthouse lo mide como "contenido principal". Si arrancara
+   transparente, la métrica LCP empeoraría. */
+@keyframes asoma {
+  from {
+    transform: translateY(1rem);
+  }
+}
+
+/* ---------- 14a. Barra de lectura ---------- */
+/* La crea js/animaciones.js. Se va descubriendo de izquierda a derecha
+   con los tres colores de oficio a medida que se baja por la página. */
+.progreso {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  height: 4px;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    var(--diseno) 0 33.33%,
+    var(--post) 33.33% 66.66%,
+    var(--juegos) 66.66% 100%
+  );
+  clip-path: inset(0 calc((1 - var(--avance, 0)) * 100%) 0 0);
+}
+
+/* ---------- 14b. Entrada del hero ---------- */
+.hero__kicker {
+  animation: sube 0.7s var(--curva) 0.05s backwards;
+}
+
+.hero__title {
+  animation: asoma 0.8s var(--curva) 0.1s backwards;
+}
+
+.hero__lead {
+  animation: sube 0.7s var(--curva) 0.3s backwards;
+}
+
+.hero__actions {
+  animation: sube 0.7s var(--curva) 0.45s backwards;
+}
+
+/* La palabra clave se subraya sola, como marcada con resaltador. */
+.hero__marca {
+  font-style: normal;
+  background-image: linear-gradient(var(--diseno-claro), var(--diseno-claro));
+  background-repeat: no-repeat;
+  background-position: 0 90%;
+  background-size: 100% 0.16em;
+  animation: subraya 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.9s backwards;
+}
+
+@keyframes subraya {
+  from {
+    background-size: 0% 0.16em;
+  }
+}
+
+/* Las tres piezas llegan como cartas repartidas sobre la mesa.
+   "backwards" aplica el punto de partida solo durante la espera y
+   después suelta la pieza: el hover y el cursor siguen funcionando. */
+.hero__pieza {
+  animation: repartir 0.9s cubic-bezier(0.2, 0.8, 0.25, 1.1) backwards;
+}
+
+.hero__pieza--uno {
+  animation-delay: 0.35s;
+}
+
+.hero__pieza--dos {
+  animation-delay: 0.5s;
+}
+
+.hero__pieza--tres {
+  animation-delay: 0.65s;
+}
+
+@keyframes repartir {
+  from {
+    transform: translate(-2rem, 4rem) rotate(0deg) scale(0.8);
+  }
+}
+
+/* La flecha de "Conóceme" da un saltito de vez en cuando. */
+.btn-circle {
+  animation: rebota 2.4s ease-in-out 1.6s infinite;
+}
+
+@keyframes rebota {
+  0%,
+  50%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateY(5px);
+  }
+}
+
+/* ---------- 14c. Cinta de oficios ---------- */
+/* Dos listas iguales, una detrás de otra. Cada una se corre su propio
+   ancho y vuelve a empezar: como la segunda es copia de la primera, el
+   salto no se nota. overflow: hidden recorta lo que sobra, así que la
+   cinta nunca genera barra horizontal. */
+.cinta {
+  display: flex;
+  overflow: hidden;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding-block: 1.1rem;
+}
+
+.cinta__pista {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-around;
+  gap: var(--space-lg);
+  min-width: 100%;
+  padding-right: var(--space-lg);
+  animation: cinta-corre 36s linear infinite;
+}
+
+/* Al apuntarla se detiene, por si alguien quiere leerla con calma. */
+.cinta:hover .cinta__pista {
+  animation-play-state: paused;
+}
+
+.cinta__oficio {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  letter-spacing: -0.01em;
+  color: var(--color-oficio);
+}
+
+/* El mismo cuadrito de Habilidades, girado para que sea rombo. */
+.cinta__oficio::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.45em;
+  height: 0.45em;
+  background-color: currentColor;
+  transform: rotate(45deg);
+}
+
+.cinta__oficio--diseno {
+  --color-oficio: var(--diseno);
+}
+
+.cinta__oficio--post {
+  --color-oficio: var(--post);
+}
+
+.cinta__oficio--juegos {
+  --color-oficio: var(--juegos);
+}
+
+@keyframes cinta-corre {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ---------- 14d. Aparecer al bajar ---------- */
+/* js/animaciones.js solo esconde lo que está más abajo del primer
+   pantallazo, y lo destapa cuando entra a la vista. Sin el script
+   nadie recibe la clase "espera", así que nada queda oculto. */
+.revela--espera {
+  opacity: 0;
+}
+
+.revela--visto {
+  animation: sube 0.7s var(--curva) backwards;
+  animation-delay: calc(var(--orden, 0) * 90ms);
+}
+
+/* ---------- 14e. Tarjetas que responden ---------- */
+/* Al apuntarlas, las tarjetas se levantan y dejan una sombra plana del
+   color de su oficio, como una pieza impresa que se despega del papel. */
+.project,
+.post-card {
+  transition: border-color 0.2s ease,
+              transform 0.3s var(--curva),
+              box-shadow 0.3s var(--curva);
+}
+
+.project {
+  overflow: hidden;
+}
+
+.project:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 var(--accent);
+}
+
+.post-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 var(--categoria, var(--accent));
+}
+
+/* La imagen se acerca un poco dentro de su marco. */
+.project__cover,
+.post-card__zoom .post-card__cover {
+  transition: transform 0.5s var(--curva);
+}
+
+.project:hover .project__cover,
+.post-card__zoom:hover .post-card__cover {
+  transform: scale(1.05);
+}
+
+/* Al cambiar de pestaña las tarjetas entran una detrás de otra. */
+.obra--interactiva .blog__item {
+  animation: sube 0.5s var(--curva) backwards;
+}
+
+.obra--interactiva .blog__item:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.obra--interactiva .blog__item:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.obra--interactiva .blog__item:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+/* ---------- 14f. Detalles de Sobre mí y Habilidades ---------- */
+.tool-list li {
+  transition: transform 0.2s var(--curva),
+              background-color 0.2s ease,
+              color 0.2s ease;
+}
+
+.tool-list li:hover {
+  transform: translateY(-3px) rotate(-3deg);
+  background-color: var(--accent);
+  color: var(--sobre-acento);
+}
+
+.tool-list li:nth-child(even):hover {
+  transform: translateY(-3px) rotate(3deg);
+}
+
+/* El retrato descansa sobre una lámina beige; al apuntarlo se inclina
+   y la lámina se vuelve azul. */
+.about__portrait {
+  box-shadow: 10px 10px 0 var(--band);
+  transition: transform 0.4s var(--curva), box-shadow 0.4s var(--curva);
+}
+
+.about__portrait:hover {
+  transform: translate(-4px, -4px) rotate(-2deg);
+  box-shadow: 14px 14px 0 var(--post);
+}
+
+/* Cada habilidad se corre un poco y su cuadrito gira a rombo. */
+.skills__list li {
+  transition: padding-left 0.3s var(--curva);
+}
+
+.skills__list li::before {
+  transition: transform 0.35s var(--curva);
+}
+
+.skills__list li:hover {
+  padding-left: calc(var(--space-md) + 0.5rem);
+}
+
+.skills__list li:hover::before {
+  transform: rotate(45deg) scale(1.3);
+}
+
+/* ---------- 14g. Visor y formulario ---------- */
+.lightbox[open] {
+  animation: visor-abre 0.3s cubic-bezier(0.2, 0.8, 0.3, 1.1);
+}
+
+.lightbox[open]::backdrop {
+  animation: fundido 0.3s ease;
+}
+
+@keyframes visor-abre {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes fundido {
+  from {
+    opacity: 0;
+  }
+}
+
+.btn-enviar {
+  transition: background-color 0.3s ease, transform 0.2s var(--curva);
+}
+
+.btn-enviar:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- 14h. Menos movimiento ---------- */
+/* La regla general de arriba ya acorta todo a casi cero. La cinta,
+   además, se queda quieta en su sitio. */
+@media (prefers-reduced-motion: reduce) {
+  .cinta__pista {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   15. Modo oscuro
+   tema.js pone data-theme="dark" en <html>. Aquí solo se
+   cambian las variables de color: como TODO el sitio usa esas
+   variables, todo cambia de una vez sin repetir reglas.
+   El bloque @media es la red de seguridad por si JavaScript
+   no carga: respeta el tema del sistema operativo.
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  /* Colores de los juegos del Arcade (los mismos de PetuPong) */
+  --j1: #138A80;            /* turquesa: jugador 1   4.6:1 sobre el papel */
+  --j2: #C42F74;            /* rosado: Petunia / jugador 2   5.2:1 */
+  --cesped: #2F8F45;
+  --cesped-franja: #2A8240;
+  --lineas-cancha: #F4FFF4;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0F1115;
+  --surface: #181B21;
+  --panel: #1F232A;
+  --band: #14171C;
+  --dark: #08090B;
+  --ink: #EEF0F3;           /* 15.9:1 sobre el fondo */
+  --gray: #A9B0BA;          /*  8.6:1 */
+  --line: #2A2F37;
+  --line-ui: #6B7480;
+  --chip-bg: #232831;
+  --field: #181B21;
+  --diseno: #E8956A;        /* terracota aclarado  7.4:1 */
+  --post: #8DB3F0;          /* azul aclarado       8.6:1 */
+  --juegos: #6FCF8F;        /* verde aclarado     10.2:1 */
+  --sobre-acento: #0F1115;  /* texto oscuro encima de los acentos claros */
+  --error: #FF8A7E;
+  --j1: #3EE0D2;
+  --j2: #FF6FB1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --bg: #0F1115;
+    --surface: #181B21;
+    --panel: #1F232A;
+    --band: #14171C;
+    --dark: #08090B;
+    --ink: #EEF0F3;
+    --gray: #A9B0BA;
+    --line: #2A2F37;
+    --line-ui: #6B7480;
+    --chip-bg: #232831;
+    --field: #181B21;
+    --diseno: #E8956A;
+    --post: #8DB3F0;
+    --juegos: #6FCF8F;
+    --sobre-acento: #0F1115;
+    --error: #FF8A7E;
+    --j1: #3EE0D2;
+    --j2: #FF6FB1;
+  }
+}
+
+/* El botón de Contacto del menú se pinta con el acento al pasar
+   el mouse: en oscuro el acento es claro, así que el texto va oscuro. */
+:root[data-theme="dark"] .masthead__menu .nav-cta:hover,
+:root[data-theme="dark"] .masthead__menu .nav-cta[aria-current="page"] {
+  color: var(--sobre-acento);
+}
+
+/* ---------- Botón del tema (va en el menú) ---------- */
+.tema-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background-color: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tema-btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
+.tema-btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.tema-btn__icono {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ============================================================
+   16. Arcade (juegos.html, futbol.html y pingpong.html)
+   ============================================================ */
+.arcade__intro {
+  color: var(--gray);
+  margin-bottom: var(--space-md);
+}
+
+.arcade__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+/* Las tarjetas de juego reutilizan .post-card del blog */
+.arcade__lista .post-card {
+  height: 100%;
+}
+
+.arcade__mas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-sm);
+}
+
+.arcade__mas a {
+  display: block;
+  height: 100%;
+  padding: var(--space-sm);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--juegos);
+  border-radius: 0.6rem;
+  text-decoration: none;
+}
+
+.arcade__mas a:hover {
+  border-color: var(--juegos);
+}
+
+.arcade__mas strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.arcade__mas span {
+  display: block;
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+
+/* ---------- Récords y tablas ---------- */
+.records__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.records__titulo {
+  font-size: 1.15rem;
+  margin-bottom: var(--space-sm);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.stats li {
+  background-color: var(--chip-bg);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.stats strong {
+  font-variant-numeric: tabular-nums;
+}
+
+/* La tabla puede ser más ancha que un celular: se desplaza dentro
+   de su caja y la página nunca tiene scroll horizontal. */
+.tabla-caja {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  background-color: var(--surface);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabla caption {
+  text-align: left;
+  padding: 0.7rem 0.9rem 0;
+  color: var(--gray);
+  font-size: 0.85rem;
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.tabla thead th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla__vacia td {
+  color: var(--gray);
+  text-align: center;
+  white-space: normal;
+}
+
+.resultado--gana {
+  color: var(--juegos);
+  font-weight: 700;
+}
+
+.resultado--pierde {
+  color: var(--j2);
+  font-weight: 700;
+}
+
+.records__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.btn-reiniciar {
+  padding: 0.55rem 1.2rem;
+  border: 1px solid var(--error);
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--error);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-reiniciar:hover,
+.btn-reiniciar[data-confirmar="si"] {
+  background-color: var(--error);
+  color: var(--surface);
+}
+
+.records__aviso {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+/* ---------- Pantalla de juego ---------- */
+.juego {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: var(--space-md);
+  align-items: start;
+}
+
+.juego__marcador {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+  font-weight: 700;
+}
+
+.juego__equipo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  max-width: none;
+}
+
+.juego__equipo--rival {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.juego__goles {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.juego__equipo--local .juego__goles {
+  color: var(--j1);
+}
+
+.juego__equipo--rival .juego__goles {
+  color: var(--j2);
+}
+
+.juego__reloj {
+  margin: 0;
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  background-color: var(--dark);
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.juego__marco {
+  position: relative;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background-color: var(--dark);
+  border: 1px solid var(--line);
+}
+
+.juego__lienzo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 960 / 560;
+  touch-action: none;   /* el dedo mueve al jugador, no la página */
+}
+
+.juego__lienzo:focus-visible {
+  outline: 3px solid var(--j1);
+  outline-offset: -3px;
+}
+
+.juego__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.juego__barra p {
+  margin: 0;
+}
+
+.btn-juego {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.2rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background-color: var(--ink);
+  color: var(--surface);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-juego:hover {
+  background-color: var(--j1);
+  border-color: var(--j1);
+  color: var(--sobre-acento);
+}
+
+.btn-juego--borde {
+  background-color: transparent;
+  color: var(--ink);
+}
+
+/* Capa que aparece encima del canvas: menú, pausa y final */
+.juego__capa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  background-color: rgba(11, 9, 8, 0.78);
+  color: #fff;
+  overflow-y: auto;
+}
+
+.juego__capa[hidden] {
+  display: none;
+}
+
+.juego__panel {
+  width: min(100%, 34rem);
+  text-align: center;
+}
+
+.juego__panel h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  margin-bottom: var(--space-xs);
+}
+
+.juego__panel p {
+  margin-left: auto;
+  margin-right: auto;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.juego__opciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs) var(--space-sm);
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  border: 0;
+}
+
+.juego__opciones legend {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.juego__opcion {
+  position: relative;
+}
+
+/* El radio real queda invisible pero sigue siendo usable con teclado */
+.juego__opcion input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.juego__opcion label {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.juego__opcion input:checked + label {
+  background-color: #fff;
+  color: #16130F;
+  font-weight: 700;
+}
+
+.juego__opcion input:focus-visible + label {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.juego__capa .btn-juego {
+  background-color: #fff;
+  border-color: #fff;
+  color: #16130F;
+}
+
+.juego__capa .btn-juego:hover {
+  background-color: #3EE0D2;
+  border-color: #3EE0D2;
+}
+
+.juego__capa .btn-juego--borde {
+  background-color: transparent;
+  color: #fff;
+}
+
+.juego__botones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+/* Instrucciones siempre visibles al lado del juego */
+.instrucciones {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  padding: var(--space-sm);
+  font-size: 0.9rem;
+}
+
+.instrucciones h2 {
+  font-size: 1rem;
+  margin-bottom: var(--space-xs);
+}
+
+.instrucciones h3 {
+  font-size: 0.85rem;
+  margin: var(--space-sm) 0 0.3rem;
+}
+
+.instrucciones ul li {
+  margin-bottom: 0.3rem;
+}
+
+.instrucciones p {
+  margin-bottom: 0.4rem;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.6rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--line-ui);
+  border-bottom-width: 3px;
+  border-radius: 0.35rem;
+  background-color: var(--band);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.punto {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.punto--j1 {
+  background-color: var(--j1);
+}
+
+.punto--j2 {
+  background-color: var(--j2);
+}
+
+/* PetuPong va dentro de un iframe: se le da la altura de la pantalla */
+.juego__iframe {
+  display: block;
+  width: 100%;
+  height: min(80vh, 46rem);
+  min-height: 30rem;
+  border: 0;
+}
+
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 62rem) {
+  .juego {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 48rem) {
+  .arcade__lista,
+  .records__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .juego__goles {
+    font-size: 1.6rem;
+  }
+
+  .juego__marcador {
+    font-size: 0.85rem;
+  }
+}
+
+/* El atributo hidden debe ganarle al display de los botones */
+.btn-juego[hidden] {
+  display: none;
+}
+
+/* En celulares el canvas queda bajito y el menú no cabe encima:
+   el menú, la pausa y el final se muestran EN LUGAR del canvas. */
+@media (max-width: 40rem) {
+  .juego__capa {
+    position: static;
+    padding: var(--space-md) var(--space-sm);
+    background-color: var(--dark);
+  }
+
+  .juego__marco:has(.juego__capa:not([hidden])) .juego__lienzo {
+    display: none;
+  }
+}
+
+/* ============================================================
+   17. Ajustes: modo oscuro sin café, color de Videojuegos y
+       pantalla de juego con botón para volver
+   ============================================================ */
+
+/* En oscuro la cabecera y el hero pasan de café a gris carbón */
+:root[data-theme="dark"] .masthead {
+  background: linear-gradient(180deg, #161A20, var(--dark));
+}
+
+:root[data-theme="dark"] .hero {
+  background: radial-gradient(circle at 18% -10%, #1D2530, #12161C 45%, var(--dark) 78%);
+}
+
+/* Las páginas de juegos usan el verde de Videojuegos, no el terracota */
+.pagina-juegos {
+  --accent: var(--juegos);
+  --categoria: var(--juegos);
+}
+
+.pagina-juegos .post-card__tag {
+  color: var(--juegos);
+}
+
+/* Enlace para volver a Trabajos (arriba de la página de juegos) */
+.migas {
+  margin: 0 0 var(--space-sm);
+  font-size: 0.9rem;
+}
+
+.migas a {
+  color: var(--juegos);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.migas a:hover {
+  text-decoration: underline;
+}
+
+/* Banner de Videojuegos dentro de Trabajos */
+.banner-juegos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, #0B2A17, #08140D);
+  color: #fff;
+}
+
+.banner-juegos h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  margin-bottom: 0.3rem;
+}
+
+.banner-juegos p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.banner-juegos .btn-jugar {
+  background-color: #fff;
+  border-color: #fff;
+  color: #08140D;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.5rem;
+}
+
+.banner-juegos .btn-jugar:hover {
+  background-color: #6FCF8F;
+  border-color: #6FCF8F;
+}
+
+/* ---------- Pantalla de juego (iframe a pantalla completa) ---------- */
+.jugador {
+  margin: 0;
+  height: 100vh;
+  height: 100dvh;           /* en celular no cuenta la barra del navegador */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #08090B;
+}
+
+.jugador__barra {
+  flex: 0 0 auto;
+  background-color: #08090B;
+  border-bottom: 1px solid #2A2F37;
+  color: #fff;
+  padding: 0.4rem 0.75rem;
+}
+
+.jugador__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.jugador__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #08090B;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.jugador__volver:hover {
+  background-color: #6FCF8F;
+}
+
+.jugador__titulo {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jugador__inicio {
+  color: #fff;
+  text-decoration: none;
+}
+
+.jugador__ayuda {
+  position: relative;
+  font-size: 0.85rem;
+}
+
+.jugador__ayuda summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.jugador__ayuda summary::-webkit-details-marker {
+  display: none;
+}
+
+.jugador__ayuda[open] summary {
+  background-color: #fff;
+  color: #08090B;
+}
+
+.jugador__ayuda-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 10;
+  width: min(20rem, calc(100vw - 1.5rem));
+  padding: var(--space-sm);
+  border: 1px solid #2A2F37;
+  border-radius: 0.8rem;
+  background-color: #181B21;
+  color: #EEF0F3;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+}
+
+.jugador__ayuda-panel li {
+  margin-bottom: 0.35rem;
+}
+
+.jugador__ayuda-panel kbd {
+  background-color: #232831;
+  color: #EEF0F3;
+  border-color: #6B7480;
+}
+
+.jugador a:focus-visible,
+.jugador summary:focus-visible {
+  outline: 3px solid #6FCF8F;
+  outline-offset: 2px;
+}
+
+.jugador__pantalla {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.jugador__juego {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 30rem) {
+  .jugador__titulo {
+    font-size: 0.9rem;
+  }
+
+  .jugador__inicio {
+    display: none;
+  }
+}
+
+/* ============================================================
+   18. Página de Videojuegos con estilo arcade
+   Todas las animaciones mueven solo transform, opacity o el
+   fondo, y se apagan si la persona pidió menos movimiento.
+   ============================================================ */
+
+/* Un color neón por juego */
+.juego-card--petugol,
+.arcade-hero__ficha--1 { --neon: #2BD47D; }
+.juego-card--petupong,
+.arcade-hero__ficha--2 { --neon: #FF4FA3; }
+.juego-card--noche-de-espantos,
+.arcade-hero__ficha--3 { --neon: #FF8A1F; }
+.juego-card--condor-de-los-andes,
+.arcade-hero__ficha--4 { --neon: #3FB6FF; }
+.juego-card--estanco-nucita,
+.arcade-hero__ficha--5 { --neon: #FFC93C; }
+
+/* ---------- Portada (hero) ---------- */
+main > .arcade-hero {
+  max-width: none;
+}
+
+.arcade-hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 34rem;
+  padding: var(--space-lg) max(var(--space-sm), calc((100vw - var(--max-width-wide)) / 2));
+  background: radial-gradient(circle at 75% 20%, #12351F, #08140D 55%, #050A07);
+  color: #fff;
+}
+
+/* Piso de cuadrícula retro que avanza hacia la pantalla */
+.arcade-hero__piso {
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: -2rem;
+  height: 55%;
+  background-image:
+    linear-gradient(rgba(43, 212, 125, 0.45) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(43, 212, 125, 0.45) 2px, transparent 2px);
+  background-size: 3.5rem 3.5rem;
+  transform: perspective(22rem) rotateX(62deg);
+  transform-origin: bottom center;
+  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 90%);
+  mask-image: linear-gradient(to top, #000 10%, transparent 90%);
+  animation: piso-avanza 2.2s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes piso-avanza {
+  to { background-position: 0 3.5rem; }
+}
+
+.arcade-hero__texto {
+  position: relative;
+  z-index: 1;
+}
+
+.migas--hero a {
+  color: #6FCF8F;
+}
+
+.arcade-hero__kicker {
+  margin-bottom: var(--space-xs);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6FCF8F;
+}
+
+.arcade-hero__titulo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 11vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-sm);
+  animation: titulo-entra 0.9s var(--curva, ease-out) both;
+}
+
+/* "juegos" con degradado de los cinco colores que se va moviendo */
+.arcade-hero__titulo span {
+  background: linear-gradient(90deg, #2BD47D, #3FB6FF, #FF4FA3, #FF8A1F, #FFC93C, #2BD47D);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: degradado-corre 6s linear infinite;
+}
+
+@keyframes titulo-entra {
+  from { opacity: 0; transform: translateY(1.5rem) scale(0.96); }
+}
+
+@keyframes degradado-corre {
+  to { background-position: 300% 0; }
+}
+
+.arcade-hero__lead {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-md);
+}
+
+.arcade-hero__lead strong {
+  color: #FF4FA3;
+}
+
+.arcade-hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.btn-arcade {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  background-color: #2BD47D;
+  color: #05140B;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-decoration: none;
+  box-shadow: 0 0 0 0 rgba(43, 212, 125, 0.6);
+  animation: latido 2s ease-out infinite;
+}
+
+.btn-arcade:hover {
+  background-color: #fff;
+}
+
+.btn-arcade:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+@keyframes latido {
+  70% { box-shadow: 0 0 0 1rem rgba(43, 212, 125, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(43, 212, 125, 0); }
+}
+
+.arcade-hero__moneda {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #FFC93C;
+  animation: parpadeo 1.2s steps(2, start) infinite;
+}
+
+@keyframes parpadeo {
+  to { visibility: hidden; }
+}
+
+/* Las cinco portadas flotando en abanico */
+.arcade-hero__fichas {
+  position: relative;
+  z-index: 1;
+  height: 24rem;
+}
+
+.arcade-hero__ficha {
+  position: absolute;
+  width: 62%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  border: 3px solid var(--neon);
+  box-shadow: 0 0 1.4rem color-mix(in srgb, var(--neon) 55%, transparent), 0 1rem 2rem rgba(0, 0, 0, 0.6);
+  animation: ficha-entra 0.8s var(--curva, ease-out) both, flota 5s ease-in-out infinite;
+}
+
+.arcade-hero__ficha--1 { left: 0;   top: 4%;  --giro: -8deg; animation-delay: 0.1s, 0.9s; }
+.arcade-hero__ficha--2 { left: 34%; top: 0;   --giro: 6deg;  animation-delay: 0.2s, 1.6s; }
+.arcade-hero__ficha--3 { left: 6%;  top: 38%; --giro: 4deg;  animation-delay: 0.3s, 2.3s; }
+.arcade-hero__ficha--4 { left: 38%; top: 34%; --giro: -5deg; animation-delay: 0.4s, 3s; }
+.arcade-hero__ficha--5 { left: 20%; top: 64%; --giro: -2deg; animation-delay: 0.5s, 3.7s; z-index: 1; }
+
+@keyframes ficha-entra {
+  from { opacity: 0; transform: translateY(3rem) rotate(0deg) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) rotate(var(--giro)); }
+}
+
+@keyframes flota {
+  0%, 100% { transform: translateY(0) rotate(var(--giro)); }
+  50% { transform: translateY(-0.8rem) rotate(var(--giro)); }
+}
+
+/* Cinta con los nombres de los juegos */
+.cinta--juegos {
+  background-color: #05140B;
+  border-bottom: 1px solid #12351F;
+}
+
+.cinta--juegos .cinta__oficio {
+  color: #6FCF8F;
+}
+
+main > .cinta--juegos + section {
+  border-top: none;
+}
+
+/* ---------- Tarjetas de juego ---------- */
+.arcade__lista {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: var(--space-md);
+}
+
+.juego-card {
+  --neon: #2BD47D;
+  perspective: 60rem;
+  opacity: 1;
+}
+
+/* Entrada escalonada: arcade.js pone .juego-card--espera y luego la quita */
+.juego-card--espera .juego-card__caja {
+  opacity: 0;
+  transform: translateY(2.5rem) scale(0.97);
+}
+
+.juego-card__caja {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #11151B;
+  color: #EEF0F3;
+  border: 2px solid color-mix(in srgb, var(--neon) 45%, transparent);
+  transform: rotateX(var(--inclina-x, 0deg)) rotateY(var(--inclina-y, 0deg));
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.6s ease;
+}
+
+.juego-card:hover .juego-card__caja,
+.juego-card:focus-within .juego-card__caja {
+  border-color: var(--neon);
+  box-shadow: 0 0 2rem color-mix(in srgb, var(--neon) 40%, transparent), 0 1.2rem 2.5rem rgba(0, 0, 0, 0.35);
+  transform: translateY(-0.4rem) rotateX(var(--inclina-x, 0deg)) rotateY(var(--inclina-y, 0deg));
+}
+
+.juego-card__portada {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 8 / 5;
+  background-color: #08090B;
+}
+
+.juego-card__portada img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.juego-card:hover .juego-card__portada img {
+  transform: scale(1.08);
+}
+
+/* Brillo que cruza la portada al pasar el mouse */
+.juego-card__portada::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+
+.juego-card:hover .juego-card__portada::after {
+  transform: translateX(120%);
+}
+
+.juego-card__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  background-color: var(--neon);
+  color: #08090B;
+  font-weight: 800;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.juego-card:hover .juego-card__play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.juego-card__cuerpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: var(--space-sm) 1.25rem 1.25rem;
+}
+
+.juego-card__numero {
+  position: absolute;
+  right: 1rem;
+  top: -1.9rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--neon);
+  text-shadow: 0 0 1rem color-mix(in srgb, var(--neon) 70%, transparent), 0 2px 0 #08090B;
+}
+
+.juego-card__tag {
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--neon);
+  color: var(--neon);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.juego-card__titulo {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.juego-card__texto {
+  flex: 1 1 auto;
+  color: #A9B0BA;
+  font-size: 0.92rem;
+}
+
+.juego-card__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.juego-card .btn-jugar {
+  background-color: var(--neon);
+  border-color: var(--neon);
+  color: #08090B;
+}
+
+.juego-card .btn-jugar:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #08090B;
+}
+
+.juego-card .btn-codigo {
+  color: #EEF0F3;
+  border-color: #6B7480;
+}
+
+.juego-card .btn-codigo:hover {
+  border-color: #fff;
+}
+
+.juego-card .btn-jugar:focus-visible,
+.juego-card .btn-codigo:focus-visible {
+  outline-color: #fff;
+}
+
+/* En pantallas táctiles no hay hover: el botón de jugar se ve siempre */
+@media (hover: none) {
+  .juego-card__play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+/* Recuadro "Juega la saga Petunia" de Trabajos: brillo que lo cruza */
+.banner-juegos {
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-juegos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%);
+  animation: brillo-pasa 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes brillo-pasa {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+@media (max-width: 56rem) {
+  .arcade-hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding: var(--space-md) var(--space-sm) var(--space-lg);
+  }
+
+  .arcade-hero__fichas {
+    height: 15rem;
+    max-width: 30rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcade-hero__piso,
+  .arcade-hero__titulo,
+  .arcade-hero__titulo span,
+  .arcade-hero__ficha,
+  .btn-arcade,
+  .arcade-hero__moneda,
+  .banner-juegos::after {
+    animation: none;
+  }
+
+  .arcade-hero__ficha {
+    transform: rotate(var(--giro));
+  }
+
+  .juego-card--espera .juego-card__caja {
+    opacity: 1;
+    transform: none;
+  }
+}

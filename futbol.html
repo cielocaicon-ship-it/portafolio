@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetuGol — Videojuegos de Cielo Caicedo</title>
+  <meta name="description" content="PetuGol, juego de la saga Petunia de Cielo Caicedo. Futbolito arcade 6 contra 6 visto desde arriba, inspirado en el fútbol clásico de consola. Juegas contra Petunia en un partido o en un mini torneo, o en línea con tus amigos.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body class="jugador">
+
+  <!-- Barra para salir del juego y volver al portafolio -->
+  <header class="jugador__barra">
+    <nav class="jugador__nav" aria-label="Salir del juego">
+      <a class="jugador__volver" href="juegos.html"><span aria-hidden="true">←</span> Volver</a>
+      <h1 class="jugador__titulo">PetuGol</h1>
+      <details class="jugador__ayuda">
+        <summary>Cómo se juega</summary>
+        <div class="jugador__ayuda-panel">
+          <p>Futbolito 6 contra 6. Manejas al jugador de tu equipo más cerca del balón.</p>
+          <ul>
+            <li>Flechas: mover</li>
+            <li><kbd>Z</kbd> pase / cambiar de jugador</li>
+            <li><kbd>X</kbd> centro / presión</li>
+            <li><kbd>Espacio</kbd> tiro / barrida</li>
+            <li>Pausa: botón del juego</li>
+            <li>En el celular salen botones en la pantalla</li>
+          </ul>
+        </div>
+      </details>
+      <a class="jugador__inicio" href="index.html" aria-label="Ir al inicio del portafolio"><span class="masthead__mark" aria-hidden="true">CC</span></a>
+    </nav>
+  </header>
+
+  <main class="jugador__pantalla">
+    <iframe class="jugador__juego" id="juego" src="juegos/petugol/index.html"
+            title="PetuGol" allow="fullscreen; autoplay; gamepad" allowfullscreen></iframe>
+  </main>
+
+  <script src="js/marcadores.js" defer></script>
+  <script src="js/jugador.js" defer></script>
+
+</body>
+</html>

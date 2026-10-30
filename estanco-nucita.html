@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estanco Nucita — Videojuegos de Cielo Caicedo</title>
+  <meta name="description" content="Estanco Nucita, juego de la saga Petunia de Cielo Caicedo. Pamela atiende su estanco con la perrita Nucita y tiene que vender la cerveza bien fría a los clientes del barrio.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body class="jugador">
+
+  <!-- Barra para salir del juego y volver al portafolio -->
+  <header class="jugador__barra">
+    <nav class="jugador__nav" aria-label="Salir del juego">
+      <a class="jugador__volver" href="juegos.html"><span aria-hidden="true">←</span> Volver</a>
+      <h1 class="jugador__titulo">Estanco Nucita</h1>
+      <details class="jugador__ayuda">
+        <summary>Cómo se juega</summary>
+        <div class="jugador__ayuda-panel">
+          <p>Atiende el estanco con Nucita y vende la cerveza bien fría.</p>
+          <ul>
+            <li>Las instrucciones salen en "Cómo se juega" dentro del juego</li>
+          </ul>
+        </div>
+      </details>
+      <a class="jugador__inicio" href="index.html" aria-label="Ir al inicio del portafolio"><span class="masthead__mark" aria-hidden="true">CC</span></a>
+    </nav>
+  </header>
+
+  <main class="jugador__pantalla">
+    <iframe class="jugador__juego" id="juego" src="juegos/estanco-nucita/index.html"
+            title="Estanco Nucita" allow="fullscreen; autoplay; gamepad" allowfullscreen></iframe>
+  </main>
+
+  <script src="js/marcadores.js" defer></script>
+  <script src="js/jugador.js" defer></script>
+
+</body>
+</html>

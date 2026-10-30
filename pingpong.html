@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetuPong — Videojuegos de Cielo Caicedo</title>
+  <meta name="description" content="PetuPong, juego de la saga Petunia de Cielo Caicedo. Ping-pong contra Petunia, la máquina que casi nunca pierde, en cancha de baloncesto, fútbol o hockey de mesa. También se juega de a dos en el mismo computador.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body class="jugador">
+
+  <!-- Barra para salir del juego y volver al portafolio -->
+  <header class="jugador__barra">
+    <nav class="jugador__nav" aria-label="Salir del juego">
+      <a class="jugador__volver" href="juegos.html"><span aria-hidden="true">←</span> Volver</a>
+      <h1 class="jugador__titulo">PetuPong</h1>
+      <details class="jugador__ayuda">
+        <summary>Cómo se juega</summary>
+        <div class="jugador__ayuda-panel">
+          <p>Devuelve la pelota con tu paleta. Gana el primero que llegue a 5.</p>
+          <ul>
+            <li>Jugador 1: <kbd>W</kbd> y <kbd>S</kbd> (contra Petunia también flechas, mouse o dedo)</li>
+            <li>Jugador 2: <kbd>↑</kbd> y <kbd>↓</kbd></li>
+            <li>Pausa: <kbd>Espacio</kbd>, <kbd>Esc</kbd>, <kbd>P</kbd> o el botón Menú</li>
+          </ul>
+        </div>
+      </details>
+      <a class="jugador__inicio" href="index.html" aria-label="Ir al inicio del portafolio"><span class="masthead__mark" aria-hidden="true">CC</span></a>
+    </nav>
+  </header>
+
+  <main class="jugador__pantalla">
+    <iframe class="jugador__juego" id="juego" src="juegos/petupong/index.html"
+            title="PetuPong" allow="fullscreen; autoplay; gamepad" allowfullscreen></iframe>
+  </main>
+
+  <script src="js/marcadores.js" defer></script>
+  <script src="js/jugador.js" defer></script>
+
+</body>
+</html>

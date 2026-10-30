@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcade — Cielo Caicedo</title>
+  <meta name="description" content="Arcade de Cielo Caicedo: los juegos de la saga Petunia, con récords e historial de partidos.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body class="pagina-juegos">
+
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="masthead">
+    <nav class="masthead__nav" aria-label="Navegación principal">
+      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span>Cielo Yenied Caicedo</a>
+      <ul class="masthead__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html" aria-current="true">Trabajos</a></li>
+        <li><a href="contacto.html" class="nav-cta">Contacto</a></li>
+        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false"><span class="tema-btn__icono" aria-hidden="true">☾</span> <span class="tema-btn__texto">Modo oscuro</span></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <section class="arcade-hero" aria-labelledby="arcade-title">
+      <div class="arcade-hero__piso" aria-hidden="true"></div>
+      <div class="arcade-hero__texto">
+        <p class="migas migas--hero"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
+        <p class="arcade-hero__kicker">Saga Petunia · 5 juegos</p>
+        <h1 id="arcade-title" class="arcade-hero__titulo">Video<span>juegos</span></h1>
+        <p class="arcade-hero__lead">Programados y diseñados por mí. En casi todos el rival es <strong>Petunia</strong>, la máquina que casi nunca pierde. ¿Te le mides?</p>
+        <p class="arcade-hero__acciones">
+          <a class="btn-arcade" href="#lista-juegos">Elige tu juego <span aria-hidden="true">↓</span></a>
+          <span class="arcade-hero__moneda" aria-hidden="true">Inserta una moneda</span>
+        </p>
+      </div>
+      <div class="arcade-hero__fichas" aria-hidden="true">
+        <img class="arcade-hero__ficha arcade-hero__ficha--1" src="img/arcade-petugol.webp" alt="" width="800" height="500" decoding="async">
+        <img class="arcade-hero__ficha arcade-hero__ficha--2" src="img/arcade-pingpong.webp" alt="" width="800" height="500" decoding="async">
+        <img class="arcade-hero__ficha arcade-hero__ficha--3" src="img/arcade-noche-de-espantos.webp" alt="" width="800" height="500" decoding="async">
+        <img class="arcade-hero__ficha arcade-hero__ficha--4" src="img/arcade-condor-de-los-andes.webp" alt="" width="800" height="500" decoding="async">
+        <img class="arcade-hero__ficha arcade-hero__ficha--5" src="img/arcade-estanco-nucita.webp" alt="" width="800" height="500" decoding="async">
+      </div>
+    </section>
+
+    <aside class="cinta cinta--juegos" aria-label="Juegos de la saga">
+      <ul class="cinta__pista">
+        <li class="cinta__oficio">PetuGol</li>
+        <li class="cinta__oficio">PetuPong</li>
+        <li class="cinta__oficio">Noche de Espantos</li>
+        <li class="cinta__oficio">Cóndor de los Andes</li>
+        <li class="cinta__oficio">Estanco Nucita</li>
+      </ul>
+      <ul class="cinta__pista" aria-hidden="true">
+        <li class="cinta__oficio">PetuGol</li>
+        <li class="cinta__oficio">PetuPong</li>
+        <li class="cinta__oficio">Noche de Espantos</li>
+        <li class="cinta__oficio">Cóndor de los Andes</li>
+        <li class="cinta__oficio">Estanco Nucita</li>
+      </ul>
+    </aside>
+
+    <section class="arcade section--wide" id="lista-juegos" aria-label="Lista de juegos">
+      <ul class="arcade__lista">
+        <li class="juego-card juego-card--petugol">
+          <article class="juego-card__caja">
+            <a class="juego-card__portada" href="futbol.html" tabindex="-1" aria-hidden="true">
+              <img src="img/arcade-petugol.webp" alt="" width="800" height="500" loading="lazy" decoding="async">
+              <span class="juego-card__play">▶ Jugar</span>
+            </a>
+            <div class="juego-card__cuerpo">
+              <p class="juego-card__numero" aria-hidden="true">01</p>
+              <p class="juego-card__tag">Fútbol 2D · estilo Atari</p>
+              <h2 class="juego-card__titulo">PetuGol</h2>
+              <p class="juego-card__texto">Futbolito arcade 6 contra 6 visto desde arriba, inspirado en el fútbol clásico de consola. Juegas contra Petunia en un partido o en un mini torneo, o en línea con tus amigos.</p>
+              <div class="juego-card__acciones">
+                <a class="btn-jugar" href="futbol.html">Jugar fútbol<span class="solo-lector"> PetuGol</span></a>
+                <a class="btn-codigo" href="https://github.com/cielocaicon-ship-it/petugol">Ver el código<span class="solo-lector"> de PetuGol</span></a>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="juego-card juego-card--petupong">
+          <article class="juego-card__caja">
+            <a class="juego-card__portada" href="pingpong.html" tabindex="-1" aria-hidden="true">
+              <img src="img/arcade-pingpong.webp" alt="" width="800" height="500" loading="lazy" decoding="async">
+              <span class="juego-card__play">▶ Jugar</span>
+            </a>
+            <div class="juego-card__cuerpo">
+              <p class="juego-card__numero" aria-hidden="true">02</p>
+              <p class="juego-card__tag">Ping-Pong</p>
+              <h2 class="juego-card__titulo">PetuPong</h2>
+              <p class="juego-card__texto">Ping-pong contra Petunia, la máquina que casi nunca pierde, en cancha de baloncesto, fútbol o hockey de mesa. También se juega de a dos en el mismo computador.</p>
+              <div class="juego-card__acciones">
+                <a class="btn-jugar" href="pingpong.html">Jugar ping-pong<span class="solo-lector"> PetuPong</span></a>
+                <a class="btn-codigo" href="https://github.com/cielocaicon-ship-it/petupong">Ver el código<span class="solo-lector"> de PetuPong</span></a>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="juego-card juego-card--noche-de-espantos">
+          <article class="juego-card__caja">
+            <a class="juego-card__portada" href="noche-de-espantos.html" tabindex="-1" aria-hidden="true">
+              <img src="img/arcade-noche-de-espantos.webp" alt="" width="800" height="500" loading="lazy" decoding="async">
+              <span class="juego-card__play">▶ Jugar</span>
+            </a>
+            <div class="juego-card__cuerpo">
+              <p class="juego-card__numero" aria-hidden="true">03</p>
+              <p class="juego-card__tag">3D · terror</p>
+              <h2 class="juego-card__titulo">Noche de Espantos</h2>
+              <p class="juego-card__texto">Un campesino y su perrito defienden la finca de los espantos colombianos hasta que cante el gallo a las 6:00 a. m.: la Patasola, la Llorona, el Mohán y muchos más.</p>
+              <div class="juego-card__acciones">
+                <a class="btn-jugar" href="noche-de-espantos.html">Jugar<span class="solo-lector"> Noche de Espantos</span></a>
+                <a class="btn-codigo" href="https://github.com/cielocaicon-ship-it/noche-de-espantos">Ver el código<span class="solo-lector"> de Noche de Espantos</span></a>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="juego-card juego-card--condor-de-los-andes">
+          <article class="juego-card__caja">
+            <a class="juego-card__portada" href="condor-de-los-andes.html" tabindex="-1" aria-hidden="true">
+              <img src="img/arcade-condor-de-los-andes.webp" alt="" width="800" height="500" loading="lazy" decoding="async">
+              <span class="juego-card__play">▶ Jugar</span>
+            </a>
+            <div class="juego-card__cuerpo">
+              <p class="juego-card__numero" aria-hidden="true">04</p>
+              <p class="juego-card__tag">3D · guerra aérea</p>
+              <h2 class="juego-card__titulo">Cóndor de los Andes</h2>
+              <p class="juego-card__texto">Con Nucita de copiloto persigues a Petunia por la historia de Colombia, desde Cartagena 1741 hasta Cúcuta 2030.</p>
+              <div class="juego-card__acciones">
+                <a class="btn-jugar" href="condor-de-los-andes.html">Jugar<span class="solo-lector"> Cóndor de los Andes</span></a>
+                <a class="btn-codigo" href="https://github.com/cielocaicon-ship-it/condor-de-los-andes">Ver el código<span class="solo-lector"> de Cóndor de los Andes</span></a>
+              </div>
+            </div>
+          </article>
+        </li>
+        <li class="juego-card juego-card--estanco-nucita">
+          <article class="juego-card__caja">
+            <a class="juego-card__portada" href="estanco-nucita.html" tabindex="-1" aria-hidden="true">
+              <img src="img/arcade-estanco-nucita.webp" alt="" width="800" height="500" loading="lazy" decoding="async">
+              <span class="juego-card__play">▶ Jugar</span>
+            </a>
+            <div class="juego-card__cuerpo">
+              <p class="juego-card__numero" aria-hidden="true">05</p>
+              <p class="juego-card__tag">Simulación</p>
+              <h2 class="juego-card__titulo">Estanco Nucita</h2>
+              <p class="juego-card__texto">Pamela atiende su estanco con la perrita Nucita y tiene que vender la cerveza bien fría a los clientes del barrio.</p>
+              <div class="juego-card__acciones">
+                <a class="btn-jugar" href="estanco-nucita.html">Jugar<span class="solo-lector"> Estanco Nucita</span></a>
+                <a class="btn-codigo" href="https://github.com/cielocaicon-ship-it/estanco-nucita">Ver el código<span class="solo-lector"> de Estanco Nucita</span></a>
+              </div>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="records section--wide" id="records" aria-labelledby="records-title">
+      <h2 id="records-title" class="section-title">Récords</h2>
+      <p class="arcade__intro">Los 5 mejores puntajes contra Petunia en PetuGol y PetuPong. Se guardan en tu navegador (LocalStorage) y siguen aquí aunque cierres la página.</p>
+
+      <div class="records__grid">
+        <div>
+          <h3 class="records__titulo"><span class="punto punto--j1" aria-hidden="true"></span> PetuGol</h3>
+          <ul class="stats">
+            <li>Partidos: <strong data-stat="futbol.partidos">0</strong></li>
+            <li>Victorias: <strong data-stat="futbol.victorias">0</strong></li>
+            <li>Derrotas: <strong data-stat="futbol.derrotas">0</strong></li>
+            <li>Goles: <strong data-stat="futbol.goles">0</strong></li>
+          </ul>
+          <div class="tabla-caja">
+          <table class="tabla">
+            <caption>Mejores puntajes de PetuGol</caption>
+            <thead>
+              <tr><th scope="col">#</th><th scope="col">Puntaje</th><th scope="col">Marcador</th><th scope="col">Nivel</th></tr>
+            </thead>
+            <tbody data-marcador="top" data-juego="futbol"></tbody>
+          </table>
+        </div>
+        </div>
+        <div>
+          <h3 class="records__titulo"><span class="punto punto--j2" aria-hidden="true"></span> PetuPong</h3>
+          <ul class="stats">
+            <li>Partidos: <strong data-stat="pingpong.partidos">0</strong></li>
+            <li>Victorias: <strong data-stat="pingpong.victorias">0</strong></li>
+            <li>Derrotas: <strong data-stat="pingpong.derrotas">0</strong></li>
+            <li>Rally más largo: <strong data-stat="pingpong.mejorRacha">0</strong></li>
+          </ul>
+          <div class="tabla-caja">
+          <table class="tabla">
+            <caption>Mejores puntajes de PetuPong</caption>
+            <thead>
+              <tr><th scope="col">#</th><th scope="col">Puntaje</th><th scope="col">Marcador</th><th scope="col">Nivel</th></tr>
+            </thead>
+            <tbody data-marcador="top" data-juego="pingpong"></tbody>
+          </table>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="historial section--wide" id="historial" aria-labelledby="historial-title">
+      <h2 id="historial-title" class="section-title">Historial de partidos</h2>
+      <div class="tabla-caja">
+          <table class="tabla">
+            <caption>Últimos 30 partidos, el más reciente primero</caption>
+            <thead>
+              <tr><th scope="col">Fecha</th><th scope="col">Juego</th><th scope="col">Modo</th><th scope="col">Marcador</th><th scope="col">Resultado</th><th scope="col">Duración</th></tr>
+            </thead>
+            <tbody data-marcador="historial" data-juego="todos"></tbody>
+          </table>
+        </div>
+      <div class="records__acciones">
+          <button class="btn-reiniciar" type="button" data-reiniciar>Reiniciar estadísticas</button>
+          <p class="records__aviso" data-aviso-marcadores role="status"></p>
+        </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Navegación de pie de página">
+      <ul class="site-footer__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__contact"><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></p>
+  </footer>
+
+  <script src="js/marcadores.js" defer></script>
+  <script src="js/animaciones.js" defer></script>
+  <script src="js/arcade.js" defer></script>
+
+</body>
+</html>

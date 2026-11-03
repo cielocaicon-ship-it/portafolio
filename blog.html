@@ -33,7 +33,7 @@
 
     <section class="obra section--wide" id="trabajos" aria-labelledby="obra-title">
       <h1 id="obra-title" class="section-title">Trabajos</h1>
-      <p class="obra__intro">Todo lo que he hecho, repartido en tres oficios. Elige uno para verlo.</p>
+      <p class="obra__intro">Todo lo que he hecho, repartido en cuatro oficios. Elige uno para verlo.</p>
 
       <div class="obra__rail" role="tablist" aria-label="Tipos de trabajo">
         <button class="obra__tab" type="button" role="tab"
@@ -42,6 +42,8 @@
                 id="tab-post" aria-controls="panel-post" aria-selected="false" tabindex="-1">Posproducción</button>
         <button class="obra__tab" type="button" role="tab"
                 id="tab-juegos" aria-controls="panel-juegos" aria-selected="false" tabindex="-1">Videojuegos</button>
+        <button class="obra__tab" type="button" role="tab"
+                id="tab-web" aria-controls="panel-web" aria-selected="false" tabindex="-1">Desarrollo web</button>
       </div>
 
         <div class="obra__panel" id="panel-diseno" role="tabpanel"
@@ -236,40 +238,6 @@
           </article>
             </li>
 
-                      <li class="blog__item">
-          <article class="post-card">
-            <div class="post-card__gallery">
-              <a class="post-card__zoom" href="img/blog-slotnova.webp">
-                <img class="post-card__cover"
-                     src="img/blog-slotnova.webp"
-                     alt="Pantalla de SlotNova con el horario semanal generado: 100 % de clases programadas, 0 cruces, 0 pendientes y calidad de 97 sobre 100."
-                     width="960" height="600" loading="lazy" decoding="async">
-                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
-              </a>
-              <a class="post-card__zoom" href="img/blog-slotnova-2.webp">
-                <img class="post-card__cover"
-                     src="img/blog-slotnova-2.webp"
-                     alt="Pantalla de inicio de sesión de SlotNova, con el logo, el lema «Planificación inteligente de horarios escolares» y fondo degradado azul y violeta."
-                     width="960" height="600" loading="lazy" decoding="async">
-                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
-              </a>
-            </div>
-            <p class="post-card__tag">Hackathon · Tercer puesto 🥉</p>
-            <h3 class="post-card__title">SlotNova: horarios escolares sin cruces</h3>
-            <p class="post-card__excerpt">Nuestra propuesta para el Reto Gnosoft de la Hackathon Colombia 5.0 en Cúcuta, que quedó en tercer puesto. Una página que arma el horario de un colegio en segundos a partir de su Excel, explica lo que no cabe y lo reacomoda con frases como «Luis no viene el martes». Yo me encargué del diseño.</p>
-            <div class="post-card__acciones">
-              <a class="btn-jugar" href="proyectos/slotnova/index.html">Abrir SlotNova</a>
-            </div>
-            <footer class="post-card__meta">
-              <time datetime="2026-10-29">2026</time>
-              <ul class="post-card__tags">
-                <li>Diseño UI</li>
-                <li>Hackathon</li>
-              </ul>
-            </footer>
-          </article>
-            </li>
-
           </ul>
         </div>
 
@@ -351,6 +319,63 @@
             <li><a href="condor-de-los-andes.html"><strong>Cóndor de los Andes</strong><span>Guerra aérea 3D por la historia de Colombia.</span></a></li>
             <li><a href="estanco-nucita.html"><strong>Estanco Nucita</strong><span>Pamela atiende su estanco con la perrita Nucita.</span></a></li>
           </ul>
+        </div>
+
+        <div class="obra__panel" id="panel-web" role="tabpanel"
+             aria-labelledby="tab-web" tabindex="0" hidden>
+          <h2 class="obra__grupo">Desarrollo web</h2>
+          <p class="obra__descripcion">Páginas y aplicaciones web que diseño y construyo, pensadas para funcionar en computador y en celular.</p>
+
+          <article class="vitrina" aria-labelledby="slotnova-title">
+            <div class="vitrina__fondo" aria-hidden="true"></div>
+
+            <div class="vitrina__pantallas">
+              <span class="vitrina__medalla" aria-hidden="true"><span class="vitrina__medalla-num">3.<sup>er</sup></span><span>puesto</span></span>
+
+              <figure class="navegador">
+                <div class="navegador__barra" aria-hidden="true">
+                  <span class="navegador__punto"></span><span class="navegador__punto"></span><span class="navegador__punto"></span>
+                  <span class="navegador__url">slotnova · horarios sin cruces</span>
+                </div>
+                <div class="navegador__pantalla">
+                  <img class="navegador__img navegador__img--1" src="img/web-slotnova-resumen.webp" alt="Resumen del horario generado por SlotNova: 100 % de clases programadas, 0 cruces y calidad de 97 sobre 100." width="1200" height="750" loading="lazy" decoding="async">
+                  <img class="navegador__img navegador__img--2" src="img/web-slotnova-horario.webp" alt="Horario semanal del curso 7A en SlotNova, con cada clase de un color por materia y la fila del descanso." width="1200" height="750" loading="lazy" decoding="async">
+                  <img class="navegador__img navegador__img--3" src="img/web-slotnova-cambios.webp" alt="Pantalla Cambios de SlotNova, donde se escribe o se dicta un cambio, con sugerencias como «Ana Torres no está disponible el martes»." width="1200" height="750" loading="lazy" decoding="async">
+                </div>
+              </figure>
+
+              <figure class="celular">
+                <img src="img/web-slotnova-movil.webp" alt="SlotNova en un celular, con el horario completo y sin cruces." width="390" height="844" loading="lazy" decoding="async">
+              </figure>
+            </div>
+
+            <div class="vitrina__texto">
+              <p class="vitrina__kicker">Hackathon Colombia 5.0 · Reto Gnosoft · Cúcuta 2026</p>
+              <h3 id="slotnova-title" class="vitrina__titulo">Slot<span>Nova</span></h3>
+              <p class="vitrina__lema">«La IA entiende, el motor garantiza.»</p>
+              <p class="vitrina__desc">Una aplicación web que arma el horario de un colegio en segundos a partir de su Excel, sin un solo cruce. Explica lo que no se pudo programar y lo reacomoda cuando alguien escribe o dice «Luis no viene el martes». Quedamos en <strong>tercer puesto</strong>.</p>
+
+              <ul class="vitrina__cifras">
+                <li><strong>120/120</strong><span>clases programadas</span></li>
+                <li><strong>0</strong><span>cruces</span></li>
+                <li><strong>97/100</strong><span>calidad del horario</span></li>
+              </ul>
+
+              <ul class="vitrina__chips" aria-label="Lo que hace">
+                <li>Lee el Excel del colegio</li>
+                <li>Cambios por texto o por voz</li>
+                <li>Asistente con IA</li>
+                <li>Avisos para WhatsApp</li>
+                <li>Excel, PDF y código QR</li>
+              </ul>
+
+              <p class="vitrina__equipo">Equipo: Santiago Sarmiento, Santiago Colmenares y Cielo Caicedo</p>
+
+              <p class="vitrina__acciones">
+                <a class="vitrina__btn" href="proyectos/slotnova/index.html">Abrir SlotNova <span aria-hidden="true">→</span></a>
+              </p>
+            </div>
+          </article>
         </div>
     </section>
 

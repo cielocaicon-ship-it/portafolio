@@ -3760,3 +3760,779 @@ main > .cv-cabeza {
 .post-card__cover--pixel {
   image-rendering: pixelated;
 }
+
+/* ============================================================
+   21. Trabajos → Desarrollo web: vitrina de SlotNova
+   ============================================================ */
+:root { --web: #4F46C8; }               /* violeta de SlotNova  7.1:1 sobre el papel */
+:root[data-theme="dark"] { --web: #A9A3FF; }
+
+#tab-web,
+#panel-web {
+  --categoria: var(--web);
+}
+
+.vitrina {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: 1.2rem;
+  color: #fff;
+  isolation: isolate;
+}
+
+/* Fondo degradado azul-violeta (el de SlotNova) con brillos que se mueven */
+.vitrina__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(124, 108, 255, 0.55), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(56, 189, 248, 0.35), transparent 45%),
+    linear-gradient(135deg, #1B1F5E, #2E2390 50%, #12143D);
+  background-size: 140% 140%, 140% 140%, 100% 100%;
+  animation: vitrina-brillo 12s ease-in-out infinite alternate;
+}
+
+@keyframes vitrina-brillo {
+  to { background-position: 30% 20%, 70% 60%, 0 0; }
+}
+
+/* Puntitos que dan textura de "tecnología" */
+.vitrina__fondo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+
+.vitrina__pantallas {
+  position: relative;
+  padding: 0 2.5rem 2.5rem 0;
+}
+
+/* Ventana de navegador */
+.navegador {
+  margin: 0;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 1.5rem 3rem rgba(5, 6, 30, 0.55);
+  transform: perspective(70rem) rotateY(6deg) rotateX(2deg);
+  transition: transform 0.5s var(--curva, ease);
+}
+
+.vitrina:hover .navegador {
+  transform: perspective(70rem) rotateY(0deg) rotateX(0deg) translateY(-0.3rem);
+}
+
+.navegador__barra {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.8rem;
+  background-color: #ECEBF7;
+}
+
+.navegador__punto {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background-color: #FF5F57;
+}
+
+.navegador__punto:nth-child(2) { background-color: #FEBC2E; }
+.navegador__punto:nth-child(3) { background-color: #28C840; }
+
+.navegador__url {
+  flex: 1;
+  margin-left: 0.6rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #5B5A73;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Las tres capturas se turnan (12 s en total, 4 s cada una) */
+.navegador__pantalla {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  background-color: #F4F4FB;
+}
+
+.navegador__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0;
+  animation: pantalla-turno 12s infinite;
+}
+
+.navegador__img--1 { animation-delay: 0s; }
+.navegador__img--2 { animation-delay: 4s; }
+.navegador__img--3 { animation-delay: 8s; }
+
+@keyframes pantalla-turno {
+  0% { opacity: 0; transform: scale(1.03); }
+  5%, 33% { opacity: 1; transform: scale(1); }
+  38%, 100% { opacity: 0; transform: scale(1); }
+}
+
+/* Celular encima de la ventana */
+.celular {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 26%;
+  margin: 0;
+  padding: 0.35rem;
+  border-radius: 1.3rem;
+  background-color: #0E0F24;
+  box-shadow: 0 1.2rem 2.4rem rgba(5, 6, 30, 0.6);
+  animation: celular-flota 5s ease-in-out infinite;
+}
+
+.celular img {
+  width: 100%;
+  border-radius: 1rem;
+}
+
+@keyframes celular-flota {
+  50% { transform: translateY(-0.6rem) rotate(-2deg); }
+}
+
+/* Medalla del tercer puesto */
+.vitrina__medalla {
+  position: absolute;
+  z-index: 2;
+  left: -0.6rem;
+  top: -0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5.2rem;
+  height: 5.2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #F3C28B, #CD7F32 55%, #8C4F1C);
+  color: #2B1405;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.25), 0 0.8rem 1.5rem rgba(0, 0, 0, 0.4);
+  transform: rotate(-12deg);
+  animation: medalla 3s ease-in-out infinite;
+}
+
+.vitrina__medalla-num {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.vitrina__medalla-num sup {
+  font-size: 0.5em;
+}
+
+@keyframes medalla {
+  50% { transform: rotate(-4deg) scale(1.06); }
+}
+
+.vitrina__kicker {
+  margin-bottom: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #A9C7FF;
+}
+
+.vitrina__titulo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 7vw, 4rem);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.vitrina__titulo span {
+  background: linear-gradient(90deg, #7DD3FC, #A78BFA, #7DD3FC);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: degradado-corre 5s linear infinite;
+}
+
+.vitrina__lema {
+  font-style: italic;
+  color: #C7D2FE;
+  margin-bottom: var(--space-sm);
+}
+
+.vitrina__desc {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.vitrina__desc strong {
+  color: #F3C28B;
+}
+
+.vitrina__cifras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: var(--space-sm) 0;
+}
+
+.vitrina__cifras li {
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.7rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.vitrina__cifras strong {
+  display: block;
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.vitrina__cifras span {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.vitrina__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: var(--space-sm);
+}
+
+.vitrina__chips li {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(169, 199, 255, 0.5);
+  color: #DCE6FF;
+  font-size: 0.8rem;
+}
+
+.vitrina__equipo {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.vitrina__acciones {
+  margin: var(--space-sm) 0 0;
+}
+
+.vitrina__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38BDF8, #8B5CF6);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 0.6rem 1.4rem rgba(56, 189, 248, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vitrina__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.9rem 1.8rem rgba(139, 92, 246, 0.45);
+}
+
+.vitrina__btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (max-width: 62rem) {
+  .vitrina {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .vitrina__pantallas {
+    padding: 0 1.5rem 1.5rem 0;
+  }
+}
+
+@media (max-width: 30rem) {
+  .vitrina__cifras {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .vitrina__medalla {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vitrina__fondo,
+  .celular,
+  .vitrina__medalla,
+  .vitrina__titulo span {
+    animation: none;
+  }
+
+  .navegador__img {
+    animation: none;
+  }
+
+  .navegador__img--1 {
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   22. El jardín de Nucita (juegos.html): cada flor es un juego
+   ============================================================ */
+main > .jardin {
+  max-width: var(--max-width-wide);
+  padding-bottom: var(--space-md);
+}
+
+.jardin__titulo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  margin-bottom: 0.3rem;
+}
+
+.jardin__intro {
+  color: var(--gray);
+  margin-bottom: var(--space-sm);
+}
+
+.jardin__escena {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.2rem;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  --cielo-1: #9ED8FF;
+  --cielo-2: #E8F7FF;
+}
+
+:root[data-theme="dark"] .jardin__escena {
+  --cielo-1: #0F1B3D;
+  --cielo-2: #2C3B6E;
+}
+
+.cielo__arriba { stop-color: var(--cielo-1); }
+.cielo__abajo { stop-color: var(--cielo-2); }
+
+.jardin__sol {
+  fill: #FFD23F;
+  filter: drop-shadow(0 0 18px rgba(255, 210, 63, 0.8));
+}
+
+:root[data-theme="dark"] .jardin__sol {
+  fill: #F4F1DE;               /* de noche es la luna */
+  filter: drop-shadow(0 0 16px rgba(244, 241, 222, 0.6));
+}
+
+.jardin__estrellas circle {
+  fill: #fff;
+  opacity: 0;
+}
+
+:root[data-theme="dark"] .jardin__estrellas circle {
+  opacity: 0.85;
+  animation: titila 2.5s ease-in-out infinite alternate;
+}
+
+.jardin__estrellas circle:nth-child(2n) { animation-delay: 1.2s; }
+
+@keyframes titila {
+  to { opacity: 0.2; }
+}
+
+.nube ellipse {
+  fill: #fff;
+  opacity: 0.9;
+}
+
+:root[data-theme="dark"] .nube ellipse {
+  opacity: 0.18;
+}
+
+.nube--1 { animation: nube-pasa 60s linear infinite; }
+.nube--2 { animation: nube-pasa 85s linear infinite -40s; }
+
+@keyframes nube-pasa {
+  from { transform: translate(-120px, 90px); }
+  to { transform: translate(1320px, 90px); }
+}
+
+.nube--2 { animation-name: nube-pasa-2; }
+
+@keyframes nube-pasa-2 {
+  from { transform: translate(-120px, 170px); }
+  to { transform: translate(1320px, 170px); }
+}
+
+.jardin__loma { fill: #8FD18A; }
+.jardin__pasto { fill: #5DB75A; }
+.jardin__pastito { fill: none; stroke: #3E9B4F; stroke-width: 3; stroke-linecap: round; }
+
+:root[data-theme="dark"] .jardin__loma { fill: #2D5A3A; }
+:root[data-theme="dark"] .jardin__pasto { fill: #234A2F; }
+:root[data-theme="dark"] .jardin__pastito { stroke: #3A7048; }
+
+/* Mariposas */
+.mariposa path { fill: #FF8AC6; }
+.mariposa--2 path { fill: #9F8FF0; }
+.mariposa--1 { animation: mariposa-vuela-1 14s ease-in-out infinite; }
+.mariposa--2 { animation: mariposa-vuela-2 18s ease-in-out infinite; }
+.mariposa path { transform-box: fill-box; transform-origin: center; animation: aletea 0.25s ease-in-out infinite alternate; }
+
+@keyframes aletea { to { transform: scaleX(0.3); } }
+
+@keyframes mariposa-vuela-1 {
+  0%, 100% { transform: translate(300px, 260px); }
+  25% { transform: translate(480px, 200px); }
+  50% { transform: translate(640px, 280px); }
+  75% { transform: translate(420px, 300px); }
+}
+
+@keyframes mariposa-vuela-2 {
+  0%, 100% { transform: translate(980px, 230px); }
+  30% { transform: translate(800px, 180px); }
+  60% { transform: translate(900px, 290px); }
+}
+
+/* ---------- Flores ---------- */
+.flor a { cursor: pointer; }
+
+.flor__planta {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flor-mece 4s ease-in-out infinite alternate;
+}
+
+.flor:nth-of-type(2n) .flor__planta { animation-delay: -1.5s; }
+.flor:nth-of-type(3n) .flor__planta { animation-delay: -2.7s; }
+
+@keyframes flor-mece {
+  from { transform: rotate(-3deg); }
+  to { transform: rotate(3deg); }
+}
+
+.flor__tallo { fill: none; stroke: #3E9B4F; stroke-width: 7; stroke-linecap: round; }
+.flor__hoja { fill: #4CAF50; }
+
+.flor__cabeza {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s var(--curva, ease);
+}
+
+.flor__petalo {
+  fill: var(--neon);
+  stroke: color-mix(in srgb, var(--neon) 60%, #000);
+  stroke-width: 2;
+}
+
+.flor__petalos {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.flor__centro { fill: #FFE27A; stroke: #E0A800; stroke-width: 3; }
+.flor__icono { font-size: 22px; }
+
+.flor__etiqueta rect {
+  fill: #fff;
+  stroke: var(--neon);
+  stroke-width: 3;
+}
+
+.flor__etiqueta text {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 700;
+  fill: #16130F;
+}
+
+.flor:hover .flor__cabeza,
+.flor--elegida .flor__cabeza {
+  transform: scale(1.18);
+}
+
+.flor:hover .flor__petalos,
+.flor--elegida .flor__petalos {
+  animation: petalos-giran 6s linear infinite;
+}
+
+@keyframes petalos-giran { to { transform: rotate(360deg); } }
+
+.flor--elegida .flor__etiqueta rect { fill: var(--neon); }
+
+.flor--feliz .flor__planta {
+  animation: flor-salta 0.6s ease;
+}
+
+@keyframes flor-salta {
+  30% { transform: scale(1.08, 0.92); }
+  60% { transform: scale(0.95, 1.06); }
+}
+
+.corazon {
+  fill: #FF4FA3;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: corazon-sube 1.4s ease-out forwards;
+}
+
+.corazon--2 { fill: #FF8AC6; animation-delay: 0.15s; }
+.corazon--3 { fill: #FF4FA3; animation-delay: 0.3s; }
+
+@keyframes corazon-sube {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx, 0px), -80px) scale(1.2); }
+}
+
+.corazon--1 { --dx: -30px; }
+.corazon--3 { --dx: 30px; }
+
+/* ---------- Nucita ---------- */
+.perrita__pelo circle,
+.perrita__oreja,
+.perrita__hocico {
+  fill: #fff;
+  stroke: #D8CDBF;
+  stroke-width: 3;
+}
+
+.perrita__cuerpo,
+.perrita__relleno { fill: #fff; }
+.perrita__oreja--crema { fill: #F6EAD6; }
+.perrita__cola ellipse,
+.perrita__cola circle { fill: #fff; stroke: #D8CDBF; stroke-width: 3; }
+.pata { fill: #fff; stroke: #D8CDBF; stroke-width: 3; }
+.perrita__arnes { fill: #9F8FF0; }
+.perrita__argolla { fill: #D9D9E6; }
+.perrita__panoleta { fill: #FF6FA8; }
+.perrita__punto { fill: #fff; }
+.perrita__mono path,
+.perrita__mono circle { fill: #FF6FA8; }
+.perrita__rubor { fill: #FFB3D0; opacity: 0.8; }
+.perrita__ojo,
+.perrita__nariz { fill: #161214; }
+.perrita__brillo { fill: #fff; }
+.perrita__boca { fill: none; stroke: #4A1622; stroke-width: 2.5; stroke-linecap: round; }
+.perrita__lengua {
+  fill: #FF7FA0;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: jadea 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes jadea { to { transform: scaleY(0.75); } }
+
+/* La cola siempre se mueve; más rápido cuando corre */
+.perrita__cola {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+  animation: cola 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes cola {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(16deg); }
+}
+
+.perrita--corre .perrita__cola { animation-duration: 0.15s; }
+
+/* Respira cuando está quieta */
+.perrita__salto {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: respira 1.6s ease-in-out infinite;
+}
+
+@keyframes respira { 50% { transform: scale(1.02, 0.98); } }
+
+/* Galope: brinquitos y patas que se mueven */
+.perrita--corre .perrita__salto { animation: galope 0.28s ease-in-out infinite; }
+
+@keyframes galope {
+  50% { transform: translateY(-14px) rotate(-3deg); }
+}
+
+.pata { transform-box: fill-box; transform-origin: 50% 0; }
+.perrita--corre .pata--a { animation: pata 0.28s ease-in-out infinite alternate; }
+.perrita--corre .pata--b { animation: pata 0.28s ease-in-out infinite alternate-reverse; }
+
+@keyframes pata {
+  from { transform: rotate(-28deg); }
+  to { transform: rotate(28deg); }
+}
+
+/* Brinco de felicidad al llegar a la flor */
+.perrita__salto--brinca { animation: brinco 0.6s var(--curva, ease-out); }
+
+@keyframes brinco {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-46px) rotate(-8deg); }
+  70% { transform: translateY(0) scale(1.06, 0.92); }
+  100% { transform: translateY(0); }
+}
+
+.perrita__cabeza {
+  transform-box: fill-box;
+  transform-origin: 30% 80%;
+  animation: cabecea 3s ease-in-out infinite;
+}
+
+@keyframes cabecea {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-6deg); }
+}
+
+/* Burbuja de lo que dice Nucita */
+.burbuja__caja { fill: #fff; stroke: #16130F; stroke-width: 2.5; }
+.burbuja__pico { fill: #fff; stroke: #16130F; stroke-width: 2.5; stroke-dasharray: 0 22 60; }
+.burbuja__texto {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 700;
+  fill: #16130F;
+}
+
+.burbuja--nueva {
+  animation: burbuja-aparece 0.35s var(--curva, ease-out);
+}
+
+@keyframes burbuja-aparece {
+  from { opacity: 0; }
+}
+
+/* ---------- María ---------- */
+.maria__sombra { fill: rgba(0, 0, 0, 0.15); }
+.maria__pierna { fill: #3F6FB5; }
+.maria__zapato { fill: #2B2B2B; }
+.maria__camisa,
+.maria__brazo-atras,
+.maria__manga { fill: #FF6FA8; }
+.maria__cuello { fill: #FFB3D6; }
+.maria__piel,
+.maria__cara { fill: #F5CFA8; }
+.maria__pelo { fill: #4A2614; }
+.maria__mono path,
+.maria__mono circle { fill: #FF6FA8; }
+.maria__ojos ellipse { fill: #2A1A10; }
+.maria__rubor { fill: #FF9FB8; opacity: 0.6; }
+.maria__sonrisa { fill: none; stroke: #8A3B2E; stroke-width: 2.5; stroke-linecap: round; }
+
+/* Saluda con la mano */
+.maria__brazo {
+  transform-box: fill-box;
+  transform-origin: 50% 6%;
+  animation: saluda 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes saluda {
+  from { transform: rotate(-150deg); }
+  to { transform: rotate(-115deg); }
+}
+
+.maria__cabeza {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: cabecea 3.6s ease-in-out infinite;
+}
+
+.maria__ojos {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: parpadea 4s infinite;
+}
+
+.perrita__ojos {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: parpadea 5s infinite 1s;
+}
+
+@keyframes parpadea {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.1); }
+}
+
+/* ---------- Botones de los juegos (debajo del dibujo) ---------- */
+.jardin__lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: var(--space-sm);
+}
+
+.jardin__lista a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--neon);
+  background-color: var(--surface);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.jardin__lista a:hover,
+.jardin__lista a:focus-visible,
+.jardin__boton--elegido {
+  background-color: var(--neon) !important;
+  color: #08090B !important;
+  transform: translateY(-3px);
+}
+
+.jardin__lista a:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jardin__escena *,
+  .jardin__escena *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .maria__brazo { transform: rotate(-130deg); }
+  .nube--1 { transform: translate(260px, 90px); }
+  .nube--2 { transform: translate(760px, 170px); }
+  .mariposa--1 { transform: translate(480px, 220px); }
+  .mariposa--2 { transform: translate(900px, 240px); }
+}

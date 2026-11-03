@@ -39,7 +39,7 @@
         <h1 id="arcade-title" class="arcade-hero__titulo">Video<span>juegos</span></h1>
         <p class="arcade-hero__lead">Programados y diseñados por mí. En casi todos el rival es <strong>Petunia</strong>, la máquina que casi nunca pierde. ¿Te le mides?</p>
         <p class="arcade-hero__acciones">
-          <a class="btn-arcade" href="#lista-juegos">Elige tu juego <span aria-hidden="true">↓</span></a>
+          <a class="btn-arcade" href="#jardin">Elige tu juego <span aria-hidden="true">↓</span></a>
           <span class="arcade-hero__moneda" aria-hidden="true">Inserta una moneda</span>
         </p>
       </div>
@@ -50,6 +50,256 @@
         <img class="arcade-hero__ficha arcade-hero__ficha--4" src="img/arcade-condor-de-los-andes.webp" alt="" width="800" height="500" decoding="async">
         <img class="arcade-hero__ficha arcade-hero__ficha--5" src="img/arcade-estanco-nucita.webp" alt="" width="800" height="500" decoding="async">
       </div>
+    </section>
+
+    <!-- El jardín de Nucita: cada flor es un juego -->
+    <section class="jardin" id="jardin" aria-labelledby="jardin-title">
+      <h2 id="jardin-title" class="jardin__titulo">El jardín de Nucita</h2>
+      <p class="jardin__intro">Nucita quiere jugar: pasa el mouse o toca una flor y ella corre hacia ese juego.</p>
+      <svg class="jardin__escena" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
+            <stop class="cielo__arriba" offset="0"/>
+            <stop class="cielo__abajo" offset="1"/>
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="520" fill="url(#cielo)"/>
+        <circle class="jardin__sol" cx="1080" cy="90" r="46"/>
+        <g class="jardin__estrellas">
+          <circle cx="120" cy="60" r="2"/><circle cx="300" cy="110" r="1.6"/><circle cx="520" cy="50" r="2.2"/>
+          <circle cx="700" cy="120" r="1.5"/><circle cx="860" cy="70" r="2"/><circle cx="980" cy="160" r="1.6"/>
+        </g>
+        <g class="nube nube--1"><ellipse cx="0" cy="0" rx="60" ry="22"/><ellipse cx="-30" cy="-12" rx="30" ry="22"/><ellipse cx="22" cy="-18" rx="34" ry="26"/></g>
+        <g class="nube nube--2"><ellipse cx="0" cy="0" rx="48" ry="18"/><ellipse cx="-22" cy="-10" rx="24" ry="18"/><ellipse cx="16" cy="-14" rx="26" ry="20"/></g>
+        <path class="jardin__loma" d="M0 400 Q 200 330 420 380 T 840 370 T 1200 360 L1200 520 L0 520 Z"/>
+        <rect class="jardin__pasto" x="0" y="420" width="1200" height="100"/>
+        <path class="jardin__pastito" d="M30 420 l6 -14 l6 14 M210 420 l5 -12 l5 12 M460 420 l6 -15 l6 15 M630 420 l5 -12 l5 12 M790 420 l6 -14 l6 14 M960 420 l5 -13 l5 13 M1130 420 l6 -15 l6 15"/>
+        <g class="mariposa mariposa--1"><path d="M0 0 C -14 -16 -22 2 0 4 C 22 2 14 -16 0 0 Z"/></g>
+        <g class="mariposa mariposa--2"><path d="M0 0 C -12 -14 -19 2 0 3 C 19 2 12 -14 0 0 Z"/></g>
+      <!-- María, la piloto del Cóndor de los Andes -->
+      <g class="maria" transform="translate(140 420)">
+        <ellipse class="maria__sombra" cx="0" cy="2" rx="38" ry="8"/>
+        <rect class="maria__pierna" x="-17" y="-64" width="14" height="58" rx="6"/>
+        <rect class="maria__pierna" x="3" y="-64" width="14" height="58" rx="6"/>
+        <ellipse class="maria__zapato" cx="-10" cy="-4" rx="11" ry="6"/>
+        <ellipse class="maria__zapato" cx="12" cy="-4" rx="11" ry="6"/>
+        <rect class="maria__brazo-atras" x="-39" y="-120" width="12" height="50" rx="6"/>
+        <circle class="maria__piel" cx="-33" cy="-68" r="7"/>
+        <rect class="maria__camisa" x="-30" y="-126" width="60" height="70" rx="18"/>
+        <path class="maria__cuello" d="M-12 -126 L0 -112 L12 -126 Z"/>
+        <g class="maria__brazo">
+          <rect class="maria__manga" x="24" y="-120" width="12" height="48" rx="6"/>
+          <circle class="maria__piel" cx="30" cy="-70" r="7"/>
+        </g>
+        <g transform="translate(0 -162)">
+          <g class="maria__cabeza">
+            <circle class="maria__pelo" cx="0" cy="0" r="38"/>
+            <rect class="maria__pelo" x="-36" y="-4" width="72" height="44" rx="16"/>
+            <ellipse class="maria__pelo maria__trenza" cx="-38" cy="32" rx="9" ry="22"/>
+            <ellipse class="maria__pelo maria__trenza" cx="38" cy="32" rx="9" ry="22"/>
+            <g class="maria__mono" transform="translate(-38 10)"><path d="M0 0 L-10 -6 L-10 6 Z M0 0 L10 -6 L10 6 Z"/><circle r="3.5"/></g>
+            <g class="maria__mono" transform="translate(38 10)"><path d="M0 0 L-10 -6 L-10 6 Z M0 0 L10 -6 L10 6 Z"/><circle r="3.5"/></g>
+            <circle class="maria__cara" cx="4" cy="4" r="30"/>
+            <path class="maria__pelo" d="M-30 -4 Q-22 -38 8 -35 Q36 -33 36 -2 Q20 -16 2 -14 Q-16 -12 -30 -4 Z"/>
+            <g class="maria__ojos">
+              <ellipse cx="-1" cy="6" rx="3.6" ry="5"/><ellipse cx="17" cy="6" rx="3.6" ry="5"/>
+            </g>
+            <circle class="maria__rubor" cx="-9" cy="16" r="5"/><circle class="maria__rubor" cx="26" cy="16" r="5"/>
+            <path class="maria__sonrisa" d="M2 19 q7 7 13 0"/>
+          </g>
+        </g>
+      </g>
+      <g class="flor juego-card--petugol" data-indice="0" data-x="380" data-nombre="PetuGol" transform="translate(380 420)">
+        <a href="futbol.html" tabindex="-1">
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -52 12 -105 0 -150"/>
+            <ellipse class="flor__hoja" cx="-16" cy="-57" rx="18" ry="8" transform="rotate(-30 -16 -57)"/>
+            <ellipse class="flor__hoja" cx="15" cy="-90" rx="17" ry="7" transform="rotate(28 15 -90)"/>
+            <g transform="translate(0 -150)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(0)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(45)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(90)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(135)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(180)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(225)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(270)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(315)"/>
+                </g>
+                <circle class="flor__centro" r="21"/>
+                <text class="flor__icono" y="8" text-anchor="middle">⚽</text>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <g class="flor juego-card--petupong" data-indice="1" data-x="545" data-nombre="PetuPong" transform="translate(545 420)">
+        <a href="pingpong.html" tabindex="-1">
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -68 12 -136 0 -195"/>
+            <ellipse class="flor__hoja" cx="-16" cy="-74" rx="18" ry="8" transform="rotate(-30 -16 -74)"/>
+            <ellipse class="flor__hoja" cx="15" cy="-117" rx="17" ry="7" transform="rotate(28 15 -117)"/>
+            <g transform="translate(0 -195)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(0)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(45)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(90)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(135)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(180)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(225)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(270)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(315)"/>
+                </g>
+                <circle class="flor__centro" r="21"/>
+                <text class="flor__icono" y="8" text-anchor="middle">🏓</text>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <g class="flor juego-card--noche-de-espantos" data-indice="2" data-x="710" data-nombre="Noche de Espantos" transform="translate(710 420)">
+        <a href="noche-de-espantos.html" tabindex="-1">
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -56 12 -112 0 -160"/>
+            <ellipse class="flor__hoja" cx="-16" cy="-61" rx="18" ry="8" transform="rotate(-30 -16 -61)"/>
+            <ellipse class="flor__hoja" cx="15" cy="-96" rx="17" ry="7" transform="rotate(28 15 -96)"/>
+            <g transform="translate(0 -160)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(0)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(45)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(90)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(135)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(180)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(225)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(270)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(315)"/>
+                </g>
+                <circle class="flor__centro" r="21"/>
+                <text class="flor__icono" y="8" text-anchor="middle">👻</text>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <g class="flor juego-card--condor-de-los-andes" data-indice="3" data-x="875" data-nombre="Cóndor de los Andes" transform="translate(875 420)">
+        <a href="condor-de-los-andes.html" tabindex="-1">
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -72 12 -144 0 -205"/>
+            <ellipse class="flor__hoja" cx="-16" cy="-78" rx="18" ry="8" transform="rotate(-30 -16 -78)"/>
+            <ellipse class="flor__hoja" cx="15" cy="-123" rx="17" ry="7" transform="rotate(28 15 -123)"/>
+            <g transform="translate(0 -205)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(0)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(45)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(90)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(135)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(180)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(225)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(270)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(315)"/>
+                </g>
+                <circle class="flor__centro" r="21"/>
+                <text class="flor__icono" y="8" text-anchor="middle">✈️</text>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <g class="flor juego-card--estanco-nucita" data-indice="4" data-x="1040" data-nombre="Estanco Nucita" transform="translate(1040 420)">
+        <a href="estanco-nucita.html" tabindex="-1">
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -59 12 -119 0 -170"/>
+            <ellipse class="flor__hoja" cx="-16" cy="-65" rx="18" ry="8" transform="rotate(-30 -16 -65)"/>
+            <ellipse class="flor__hoja" cx="15" cy="-102" rx="17" ry="7" transform="rotate(28 15 -102)"/>
+            <g transform="translate(0 -170)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(0)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(45)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(90)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(135)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(180)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(225)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(270)"/>
+              <ellipse class="flor__petalo" cx="0" cy="-30" rx="15" ry="29" transform="rotate(315)"/>
+                </g>
+                <circle class="flor__centro" r="21"/>
+                <text class="flor__icono" y="8" text-anchor="middle">🏪</text>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <!-- Nucita: perrita blanca peludita con moñitos y pañoleta rosada y arnés lila -->
+      <g id="perrita" class="perrita" transform="translate(250 420)">
+        <g class="perrita__giro">
+          <g class="perrita__salto">
+            <g class="perrita__cola">
+              <ellipse cx="-56" cy="-70" rx="12" ry="19" transform="rotate(-35 -56 -70)"/>
+              <circle cx="-62" cy="-86" r="9"/>
+            </g>
+            <g class="perrita__patas">
+              <rect class="pata pata--a" x="-36" y="-26" width="15" height="26" rx="7"/>
+              <rect class="pata pata--b" x="-18" y="-26" width="15" height="26" rx="7"/>
+              <rect class="pata pata--b" x="16" y="-26" width="15" height="26" rx="7"/>
+              <rect class="pata pata--a" x="32" y="-26" width="15" height="26" rx="7"/>
+            </g>
+            <g class="perrita__pelo">
+              <circle cx="-38" cy="-60" r="13"/><circle cx="-18" cy="-71" r="14"/><circle cx="6" cy="-73" r="14"/>
+              <circle cx="28" cy="-67" r="13"/><circle cx="-47" cy="-40" r="12"/><circle cx="41" cy="-42" r="12"/>
+              <circle cx="-30" cy="-24" r="12"/><circle cx="0" cy="-21" r="13"/><circle cx="29" cy="-25" r="12"/>
+            </g>
+            <ellipse class="perrita__cuerpo" cx="0" cy="-46" rx="47" ry="27"/>
+            <rect class="perrita__arnes" x="6" y="-78" width="14" height="58" rx="7"/>
+            <circle class="perrita__argolla" cx="13" cy="-76" r="4"/>
+            <path class="perrita__panoleta" d="M18 -66 L58 -70 L38 -40 Z"/>
+            <circle class="perrita__punto" cx="34" cy="-62" r="2.2"/><circle class="perrita__punto" cx="44" cy="-58" r="2.2"/><circle class="perrita__punto" cx="38" cy="-50" r="2.2"/>
+            <g transform="translate(48 -86)">
+              <g class="perrita__cabeza">
+                <ellipse class="perrita__oreja" cx="-22" cy="-2" rx="12" ry="21" transform="rotate(18 -22 -2)"/>
+                <g class="perrita__pelo">
+                  <circle cx="0" cy="0" r="30"/><circle cx="-18" cy="-20" r="14"/><circle cx="2" cy="-29" r="14"/>
+                  <circle cx="20" cy="-20" r="13"/><circle cx="-24" cy="6" r="12"/>
+                </g>
+                <circle class="perrita__relleno" cx="0" cy="-4" r="27"/>
+                <ellipse class="perrita__hocico" cx="24" cy="10" rx="17" ry="12"/>
+                <ellipse class="perrita__oreja perrita__oreja--crema" cx="-12" cy="4" rx="11" ry="19" transform="rotate(14 -12 4)"/>
+                <g class="perrita__mono" transform="translate(-20 -22) rotate(-15)">
+                  <path d="M0 0 L-11 -7 L-11 7 Z M0 0 L11 -7 L11 7 Z"/><circle r="3.5"/>
+                </g>
+                <g class="perrita__mono" transform="translate(12 -30) rotate(10)">
+                  <path d="M0 0 L-10 -6 L-10 6 Z M0 0 L10 -6 L10 6 Z"/><circle r="3.2"/>
+                </g>
+                <circle class="perrita__rubor" cx="8" cy="10" r="5"/>
+                <g class="perrita__ojos">
+                  <circle class="perrita__ojo" cx="8" cy="-4" r="5"/><circle class="perrita__brillo" cx="10" cy="-6" r="1.7"/>
+                  <circle class="perrita__ojo" cx="24" cy="-6" r="4.2"/><circle class="perrita__brillo" cx="25.6" cy="-7.6" r="1.4"/>
+                </g>
+                <ellipse class="perrita__nariz" cx="39" cy="5" rx="6" ry="5"/>
+                <path class="perrita__boca" d="M27 15 q6 6 12 0"/>
+                <ellipse class="perrita__lengua" cx="33" cy="22" rx="5" ry="8"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g class="burbuja" transform="translate(-30 -190)">
+          <rect class="burbuja__caja" x="0" y="0" width="230" height="44" rx="22"/>
+          <path class="burbuja__pico" d="M54 43 L68 60 L76 43 Z"/>
+          <text class="burbuja__texto" x="20" y="29">¡Guau! ¿Jugamos?</text>
+        </g>
+      </g>
+      </svg>
+      <ul class="jardin__lista">
+        <li class="juego-card--petugol"><a href="futbol.html" data-indice="0"><span aria-hidden="true">⚽</span> PetuGol</a></li>
+        <li class="juego-card--petupong"><a href="pingpong.html" data-indice="1"><span aria-hidden="true">🏓</span> PetuPong</a></li>
+        <li class="juego-card--noche-de-espantos"><a href="noche-de-espantos.html" data-indice="2"><span aria-hidden="true">👻</span> Noche de Espantos</a></li>
+        <li class="juego-card--condor-de-los-andes"><a href="condor-de-los-andes.html" data-indice="3"><span aria-hidden="true">✈️</span> Cóndor de los Andes</a></li>
+        <li class="juego-card--estanco-nucita"><a href="estanco-nucita.html" data-indice="4"><span aria-hidden="true">🏪</span> Estanco Nucita</a></li>
+      </ul>
     </section>
 
     <aside class="cinta cinta--juegos" aria-label="Juegos de la saga">
@@ -242,6 +492,7 @@
   <script src="js/marcadores.js" defer></script>
   <script src="js/animaciones.js" defer></script>
   <script src="js/arcade.js" defer></script>
+  <script src="js/jardin.js" defer></script>
 
 </body>
 </html>

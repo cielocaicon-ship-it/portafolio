@@ -67,13 +67,13 @@
     });
   });
 
-  /* [Parcial 2] Si se llega con blog.html#videojuegos (por ejemplo,
-     al volver de los juegos), se abre directo la pestaña Videojuegos. */
-  if (window.location.hash === "#videojuegos") {
-    var juegos = document.getElementById("tab-juegos");
-    if (juegos) {
-      activar(juegos, false);
-      seccion.scrollIntoView();
-    }
+  /* Si se llega con un enlace como blog.html#videojuegos o blog.html#web
+     (por ejemplo, al volver de los juegos o desde la hoja de vida),
+     se abre directo esa pestaña. */
+  var porEnlace = { "#diseno": "tab-diseno", "#posproduccion": "tab-post", "#videojuegos": "tab-juegos", "#web": "tab-web" };
+  var elegida = document.getElementById(porEnlace[window.location.hash] || "");
+  if (elegida) {
+    activar(elegida, false);
+    seccion.scrollIntoView();
   }
 })();

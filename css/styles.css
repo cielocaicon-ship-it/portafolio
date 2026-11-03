@@ -3148,3 +3148,615 @@ main > .cinta--juegos + section {
     transform: none;
   }
 }
+
+/* ============================================================
+   19. "Lo que hago" (index.html): contadores y tarjetas que
+       se voltean
+   ============================================================ */
+.oficio__kicker,
+.cv-cabeza__kicker {
+  margin-bottom: var(--space-xs);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.oficio .section-title {
+  margin-bottom: var(--space-sm);
+}
+
+.oficio__intro {
+  color: var(--gray);
+  margin-bottom: var(--space-md);
+}
+
+.oficio__contadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.oficio__contadores li {
+  padding: var(--space-sm);
+  border-top: 3px solid var(--accent);
+  background-color: var(--surface);
+}
+
+.oficio__contadores li:nth-child(2) { border-top-color: var(--post); }
+.oficio__contadores li:nth-child(3) { border-top-color: var(--juegos); }
+
+.oficio__contadores strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.oficio__contadores span {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.oficio__tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.oficio-card--diseno { --color-oficio: var(--diseno); }
+.oficio-card--post { --color-oficio: var(--post); }
+.oficio-card--juegos { --color-oficio: var(--juegos); }
+
+/* El botón es la tarjeta: se puede voltear con mouse, dedo o teclado */
+.oficio-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 13rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  perspective: 60rem;
+}
+
+.oficio-card__cara {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  border-radius: 0.9rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.6s var(--curva, ease);
+}
+
+.oficio-card__cara--frente {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-bottom: 4px solid var(--color-oficio);
+}
+
+.oficio-card__cara--atras {
+  justify-content: space-between;
+  background-color: var(--color-oficio);
+  color: var(--sobre-acento);
+  transform: rotateY(180deg);
+}
+
+.oficio-card[aria-pressed="true"] .oficio-card__cara--frente {
+  transform: rotateY(-180deg);
+}
+
+.oficio-card[aria-pressed="true"] .oficio-card__cara--atras {
+  transform: rotateY(0deg);
+}
+
+.oficio-card:hover .oficio-card__cara--frente {
+  border-color: var(--color-oficio);
+}
+
+.oficio-card:hover .oficio-card__icono {
+  transform: scale(1.12) rotate(-6deg);
+}
+
+.oficio-card:focus-visible {
+  outline: 3px solid var(--color-oficio);
+  outline-offset: 4px;
+  border-radius: 0.9rem;
+}
+
+.oficio-card__icono {
+  width: 2.6rem;
+  height: 2.6rem;
+  fill: none;
+  stroke: var(--color-oficio);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+
+.oficio-card__num {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-oficio);
+  opacity: 0.5;
+}
+
+.oficio-card__titulo {
+  margin-top: auto;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.oficio-card__pista {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.oficio-card__texto {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.oficio-card__herramientas {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Sin JavaScript la tarjeta no se puede voltear: se muestra todo de frente */
+:root:not(.con-js) .oficio-card {
+  min-height: 0;
+}
+
+:root:not(.con-js) .oficio-card__cara {
+  position: static;
+  transform: none;
+}
+
+:root:not(.con-js) .oficio-card__pista {
+  display: none;
+}
+
+.oficio__accion {
+  margin: var(--space-md) 0 0;
+}
+
+.btn-outline--oscuro {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.btn-outline--oscuro:hover {
+  background-color: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+/* ============================================================
+   20. Hoja de vida (hoja-de-vida.html)
+   ============================================================ */
+main > .cv-cabeza {
+  max-width: none;
+}
+
+.cv-cabeza {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) max(var(--space-sm), calc((100vw - var(--max-width)) / 2));
+  background: radial-gradient(circle at 18% -10%, #3B2616, #231A12 45%, var(--dark) 78%);
+  color: #fff;
+}
+
+:root[data-theme="dark"] .cv-cabeza {
+  background: radial-gradient(circle at 18% -10%, #1D2530, #12161C 45%, var(--dark) 78%);
+}
+
+.cv-cabeza__foto {
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.4rem solid #fff;
+  box-shadow: 0 0 0 0.4rem var(--diseno);
+  animation: foto-entra 0.8s var(--curva, ease-out) both;
+}
+
+@keyframes foto-entra {
+  from { opacity: 0; transform: scale(0.85) rotate(-6deg); }
+}
+
+.cv-cabeza__kicker {
+  color: #E2895A;
+}
+
+.cv-cabeza__nombre {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  margin-bottom: 0.4rem;
+}
+
+.cv-cabeza__cargo {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.cv-cabeza__perfil {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cv-cabeza__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0 0;
+}
+
+.btn-cv {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-cv--pendiente {
+  border: 1px dashed rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
+  cursor: not-allowed;
+}
+
+.btn-cv--borde {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.btn-cv--borde:hover {
+  background-color: #fff;
+  color: #16130F;
+}
+
+.btn-cv:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Menú interno que se queda pegado arriba al bajar */
+.cv-indice {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.cv-indice ul {
+  display: flex;
+  gap: var(--space-sm);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.75rem var(--space-sm);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.cv-indice a {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background-color: var(--chip-bg);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cv-indice a:hover {
+  background-color: var(--ink);
+  color: var(--bg);
+}
+
+.cv-seccion {
+  scroll-margin-top: 4rem;   /* para que el menú pegado no tape el título */
+}
+
+/* Línea de tiempo */
+.linea {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2.2rem;
+}
+
+.linea::before {
+  content: "";
+  position: absolute;
+  left: 0.55rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  background: linear-gradient(var(--diseno), var(--post), var(--juegos));
+  border-radius: 3px;
+}
+
+.linea__item {
+  position: relative;
+  margin-bottom: var(--space-sm);
+}
+
+/* El punto de cada momento */
+.linea__item::before {
+  content: "";
+  position: absolute;
+  left: -2.2rem;
+  top: 1.15rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background-color: var(--bg);
+  border: 3px solid var(--accent);
+  transition: transform 0.4s ease, background-color 0.4s ease;
+}
+
+.con-js .linea__item:not(.linea__item--visto)::before {
+  transform: scale(0.4);
+}
+
+.linea__item--visto::before,
+.linea__item--actual::before {
+  background-color: var(--accent);
+}
+
+.linea__item--actual::before {
+  box-shadow: 0 0 0 0.35rem color-mix(in srgb, var(--accent) 25%, transparent);
+  animation: punto-late 2s ease-out infinite;
+}
+
+@keyframes punto-late {
+  70% { box-shadow: 0 0 0 0.7rem transparent; }
+}
+
+.linea__caja {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.linea__caja:hover,
+.linea__caja[open] {
+  border-color: var(--accent);
+}
+
+.linea__caja summary {
+  position: relative;
+  display: block;
+  padding: 1rem 3rem 1rem 1.2rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.linea__caja summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Flechita que gira al abrir */
+.linea__caja summary::after {
+  content: "+";
+  position: absolute;
+  right: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: var(--accent);
+  transition: transform 0.25s ease;
+}
+
+.linea__caja[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.linea__caja summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0.8rem;
+}
+
+.linea__fecha {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.linea__titulo {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.linea__lugar {
+  display: block;
+  color: var(--gray);
+  font-size: 0.92rem;
+}
+
+.linea__detalle {
+  padding: 0 1.2rem 1rem;
+  animation: abre-detalle 0.3s ease;
+}
+
+@keyframes abre-detalle {
+  from { opacity: 0; transform: translateY(-0.4rem); }
+}
+
+.linea__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.linea__chips li {
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--chip-bg);
+  font-size: 0.8rem;
+}
+
+/* Lo que falta completar con la hoja de vida */
+.pendiente {
+  color: var(--gray);
+  font-style: italic;
+}
+
+.linea__item--pendiente .linea__caja {
+  border-style: dashed;
+}
+
+/* Habilidades agrupadas */
+.cv-habilidades {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.cv-grupo {
+  --color-grupo: var(--ink);
+  padding: 1.2rem;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--color-grupo);
+  border-radius: 0.6rem;
+}
+
+.cv-grupo--diseno { --color-grupo: var(--diseno); }
+.cv-grupo--post { --color-grupo: var(--post); }
+.cv-grupo--juegos { --color-grupo: var(--juegos); }
+
+.cv-grupo h3 {
+  font-size: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+.cv-grupo ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.cv-grupo li {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--line-ui);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.cv-grupo li:hover {
+  background-color: var(--color-grupo);
+  border-color: var(--color-grupo);
+  color: var(--surface);
+  transform: translateY(-2px);
+}
+
+.cv-contacto {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.cv-contacto li {
+  padding: 1rem 1.2rem;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  overflow-wrap: anywhere;
+}
+
+.cv-contacto span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+@media (max-width: 48rem) {
+  .oficio__contadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .oficio__tarjetas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cv-cabeza {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .cv-cabeza__foto {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .cv-habilidades,
+  .cv-contacto {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 30rem) {
+  .oficio__tarjetas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .oficio-card {
+    min-height: 11rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oficio-card__cara,
+  .linea__item::before {
+    transition: none;
+  }
+
+  .cv-cabeza__foto,
+  .linea__item--actual::before,
+  .linea__detalle {
+    animation: none;
+  }
+}
+
+/* Pixel art: que los píxeles se vean nítidos al ampliar, sin desenfoque */
+.post-card__cover--pixel {
+  image-rendering: pixelated;
+}

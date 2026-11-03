@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoja de vida — Cielo Caicedo</title>
+  <meta name="description" content="Hoja de vida de Cielo Yenied Caicedo Contreras, estudiante de Ingeniería Multimedia: formación, experiencia, proyectos, habilidades y contacto.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="masthead">
+    <nav class="masthead__nav" aria-label="Navegación principal">
+      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span>Cielo Yenied Caicedo</a>
+      <ul class="masthead__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="hoja-de-vida.html" aria-current="page">Hoja de vida</a></li>
+        <li><a href="contacto.html" class="nav-cta">Contacto</a></li>
+        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false"><span class="tema-btn__icono" aria-hidden="true">☾</span> <span class="tema-btn__texto">Modo oscuro</span></button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- Encabezado de la hoja de vida -->
+    <section class="cv-cabeza" aria-labelledby="cv-title">
+      <img class="cv-cabeza__foto" src="img/retrato.webp" alt="Retrato ilustrado de Cielo Caicedo." width="483" height="483" decoding="async">
+      <div class="cv-cabeza__texto">
+        <p class="cv-cabeza__kicker">Hoja de vida</p>
+        <h1 id="cv-title" class="cv-cabeza__nombre">Cielo Yenied Caicedo Contreras</h1>
+        <p class="cv-cabeza__cargo">Estudiante de Ingeniería Multimedia · Técnica en sistemas</p>
+        <p class="cv-cabeza__perfil">Combino la formación técnica con la sensibilidad creativa. Diseño piezas gráficas, produzco contenido audiovisual, animo en 2D, modelo en 3D y programo videojuegos y sitios web, siempre pensando en qué necesita ver la persona que lo recibe.</p>
+        <p class="cv-cabeza__acciones">
+          <span class="btn-cv btn-cv--pendiente" aria-disabled="true">Descargar hoja de vida (PDF) · pronto</span>
+          <a class="btn-cv btn-cv--borde" href="contacto.html">Escríbeme</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Menú interno: salta a cada parte -->
+    <nav class="cv-indice" aria-label="Partes de la hoja de vida">
+      <ul>
+        <li><a href="#formacion">Formación</a></li>
+        <li><a href="#experiencia">Experiencia y proyectos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#datos">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Formación -->
+    <section class="cv-seccion" id="formacion" aria-labelledby="formacion-title">
+      <h2 id="formacion-title" class="section-title">Formación</h2>
+      <ol class="linea">
+        <li class="linea__item linea__item--actual">
+          <details class="linea__caja" open>
+            <summary>
+              <span class="linea__fecha">En curso · 6.º semestre</span>
+              <span class="linea__titulo">Ingeniería Multimedia</span>
+              <span class="linea__lugar">Universidad Simón Bolívar · Sede Cúcuta</span>
+            </summary>
+            <div class="linea__detalle">
+              <p>Formación en diseño, producción audiovisual, animación, desarrollo web y videojuegos.</p>
+              <ul class="linea__chips">
+                <li>Ingeniería Web</li><li>Diseño gráfico</li><li>Fotografía</li><li>Growth hacking</li>
+              </ul>
+            </div>
+          </details>
+        </li>
+        <li class="linea__item">
+          <details class="linea__caja">
+            <summary>
+              <span class="linea__fecha">En curso</span>
+              <span class="linea__titulo">Emprendimiento e innovación</span>
+              <span class="linea__lugar">MacondoLab · Centro de Crecimiento Empresarial e Innovación</span>
+            </summary>
+            <div class="linea__detalle">
+              <p>Proyectos de emprendimiento con metodología de innovación, del problema al pitch.</p>
+            </div>
+          </details>
+        </li>
+        <li class="linea__item">
+          <details class="linea__caja">
+            <summary>
+              <span class="linea__fecha pendiente">Año: pendiente</span>
+              <span class="linea__titulo">Técnica en sistemas</span>
+              <span class="linea__lugar">SENA</span>
+            </summary>
+            <div class="linea__detalle">
+              <p class="pendiente">Detalle pendiente: se completa con la hoja de vida.</p>
+            </div>
+          </details>
+        </li>
+        <li class="linea__item linea__item--pendiente">
+          <details class="linea__caja">
+            <summary>
+              <span class="linea__fecha">Pendiente</span>
+              <span class="linea__titulo">Bachillerato</span>
+              <span class="linea__lugar">Colegio: pendiente</span>
+            </summary>
+            <div class="linea__detalle">
+              <p class="pendiente">Se completa con la hoja de vida.</p>
+            </div>
+          </details>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Experiencia -->
+    <section class="cv-seccion" id="experiencia" aria-labelledby="experiencia-title">
+      <h2 id="experiencia-title" class="section-title">Experiencia y proyectos</h2>
+      <ol class="linea">
+        <li class="linea__item linea__item--actual">
+          <details class="linea__caja" open>
+            <summary>
+              <span class="linea__fecha">2026</span>
+              <span class="linea__titulo">Reto Gnosoft · Hackathon Colombia 5.0</span>
+              <span class="linea__lugar">Participante</span>
+            </summary>
+            <div class="linea__detalle">
+              <p>Diseño de una página web de horarios escolares, presentada con su propuesta de valor.</p>
+            </div>
+          </details>
+        </li>
+        <li class="linea__item">
+          <details class="linea__caja">
+            <summary>
+              <span class="linea__fecha">2026</span>
+              <span class="linea__titulo">Saga Petunia · videojuegos web</span>
+              <span class="linea__lugar">Proyecto propio · diseño y programación</span>
+            </summary>
+            <div class="linea__detalle">
+              <p>Cinco juegos publicados en GitHub Pages: PetuGol, PetuPong, Noche de Espantos, Cóndor de los Andes y Estanco Nucita.</p>
+              <p><a href="juegos.html">Ver los juegos →</a></p>
+            </div>
+          </details>
+        </li>
+        <li class="linea__item">
+          <details class="linea__caja">
+            <summary>
+              <span class="linea__fecha">Proyecto</span>
+              <span class="linea__titulo">Campaña de Amor y Amistad · Perfumería 1076</span>
+              <span class="linea__lugar">Diseño para redes sociales</span>
+            </summary>
+            <div class="linea__detalle">
+              <p>Serie de publicaciones con un mismo sistema visual de nubes, corazones y podios.</p>
+              <p><a href="blog.html">Ver en Trabajos →</a></p>
+            </div>
+          </details>
+        </li>
+        <li class="linea__item linea__item--pendiente">
+          <details class="linea__caja">
+            <summary>
+              <span class="linea__fecha">Pendiente</span>
+              <span class="linea__titulo">Experiencia laboral o prácticas</span>
+              <span class="linea__lugar">Empresa: pendiente</span>
+            </summary>
+            <div class="linea__detalle">
+              <p class="pendiente">Se completa con la hoja de vida.</p>
+            </div>
+          </details>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Habilidades -->
+    <section class="cv-seccion" id="habilidades" aria-labelledby="habilidades-title">
+      <h2 id="habilidades-title" class="section-title">Habilidades</h2>
+      <div class="cv-habilidades">
+        <div class="cv-grupo cv-grupo--diseno">
+          <h3>Diseño y audiovisual</h3>
+          <ul><li>Illustrator</li><li>Photoshop</li><li>Premiere Pro</li><li>After Effects</li><li>Fotografía</li></ul>
+        </div>
+        <div class="cv-grupo cv-grupo--post">
+          <h3>Animación y 3D</h3>
+          <ul><li>Animación 2D</li><li>3ds Max</li></ul>
+        </div>
+        <div class="cv-grupo cv-grupo--juegos">
+          <h3>Desarrollo</h3>
+          <ul><li>HTML y CSS</li><li>JavaScript</li><li>Canvas</li><li>Bootstrap</li><li>Git y GitHub</li><li>Visual Studio</li></ul>
+        </div>
+        <div class="cv-grupo">
+          <h3>Otras</h3>
+          <ul><li>Marketing digital</li><li>Trabajo en equipo</li><li>Presentaciones y pitch</li><li class="pendiente">Idiomas: pendiente</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="cv-seccion" id="datos" aria-labelledby="datos-title">
+      <h2 id="datos-title" class="section-title">Contacto</h2>
+      <ul class="cv-contacto">
+        <li><span>Correo</span><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></li>
+        <li><span>Ubicación</span>Los Patios, Norte de Santander, Colombia</li>
+        <li><span>Redes sociales</span>Cielo__Caicedo</li>
+        <li><span>GitHub</span><a href="https://github.com/cielocaicon-ship-it">cielocaicon-ship-it</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Navegación de pie de página">
+      <ul class="site-footer__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="blog.html">Trabajos</a></li>
+        <li><a href="hoja-de-vida.html">Hoja de vida</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__contact"><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></p>
+  </footer>
+
+  <script src="js/animaciones.js" defer></script>
+  <script src="js/oficio.js" defer></script>
+
+</body>
+</html>

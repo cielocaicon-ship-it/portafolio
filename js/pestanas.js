@@ -68,12 +68,26 @@
   });
 
   /* Si se llega con un enlace como blog.html#videojuegos o blog.html#web
-     (por ejemplo, al volver de los juegos o desde la hoja de vida),
-     se abre directo esa pestaña. */
+     se abre directo esa pestaña. Y si el enlace es a un trabajo
+     (blog.html#trabajo-granorte), se abre su pestaña, se baja hasta él
+     y se resalta un momento. */
   var porEnlace = { "#diseno": "tab-diseno", "#posproduccion": "tab-post", "#videojuegos": "tab-juegos", "#web": "tab-web" };
-  var elegida = document.getElementById(porEnlace[window.location.hash] || "");
+  var hash = window.location.hash;
+  var elegida = document.getElementById(porEnlace[hash] || "");
+  var trabajo = null;
+  if (!elegida && hash.indexOf("#trabajo-") === 0) {
+    trabajo = document.getElementById(hash.slice(1));
+    var panel = trabajo && trabajo.closest(".obra__panel");
+    if (panel) elegida = seccion.querySelector('[aria-controls="' + panel.id + '"]');
+  }
   if (elegida) {
     activar(elegida, false);
-    seccion.scrollIntoView();
+    if (trabajo) {
+      trabajo.scrollIntoView({ block: "center" });
+      trabajo.classList.add("trabajo--destacado");
+      setTimeout(function () { trabajo.classList.remove("trabajo--destacado"); }, 2600);
+    } else {
+      seccion.scrollIntoView();
+    }
   }
 })();

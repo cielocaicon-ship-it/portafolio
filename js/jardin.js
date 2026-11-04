@@ -375,4 +375,17 @@
 
   ponerPosicion();
   decir("¡Guau! ¿Jugamos?");
+
+  /* Si se llega con juegos.html#juego-petugol (por ejemplo, desde
+     "Ver un trabajo" en el Inicio), Nucita corre a esa petunia y se
+     abre su carta. */
+  var pedido = /^#juego-(.+)$/.exec(window.location.hash);
+  if (pedido && dialogo) {
+    var carta = dialogo.querySelector(".carta--" + pedido[1]);
+    if (carta) {
+      var indice = parseInt(carta.getAttribute("data-indice"), 10);
+      ultimaAccion = Date.now();
+      setTimeout(function () { irA(indice, function () { abrirCarta(indice); }); }, menosMovimiento ? 0 : 500);
+    }
+  }
 })();

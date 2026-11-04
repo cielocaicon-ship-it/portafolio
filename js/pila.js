@@ -56,3 +56,44 @@
   hero.addEventListener("mousemove", mover);
   hero.addEventListener("mouseleave", volver);
 })();
+
+/* ============================================================
+   Barajar: cada cierto tiempo la pieza de adelante se va al
+   fondo, como cuando se barajan cartas. Funciona también en
+   celular. Se detiene si el mouse está encima o si la persona
+   pidió menos movimiento.
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var pila = document.querySelector(".hero__pila");
+  if (!pila || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var piezas = Array.prototype.slice.call(pila.querySelectorAll(".hero__pieza"));
+  if (piezas.length < 2) return;
+
+  var encima = false;
+  pila.addEventListener("mouseenter", function () { encima = true; });
+  pila.addEventListener("mouseleave", function () { encima = false; });
+
+  // El orden de adelante hacia atrás; el z-index sale de este orden
+  var orden = piezas.slice().reverse();
+  function ordenar() {
+    orden.forEach(function (p, i) { p.style.zIndex = String(orden.length - i); });
+  }
+  ordenar();
+
+  setInterval(function () {
+    if (encima || document.hidden) return;
+    var frente = orden[0];
+    frente.classList.remove("hero__pieza--baraja");
+    void frente.offsetWidth;
+    frente.classList.add("hero__pieza--baraja");
+    // A mitad del movimiento pasa al fondo
+    setTimeout(function () {
+      orden.push(orden.shift());
+      ordenar();
+    }, 400);
+    setTimeout(function () { frente.classList.remove("hero__pieza--baraja"); }, 950);
+  }, 4500);
+})();

@@ -24,7 +24,7 @@
         <li><a href="blog.html" aria-current="page">Trabajos</a></li>
         <li><a href="hoja-de-vida.html">Hoja de vida</a></li>
         <li><a href="contacto.html" class="nav-cta">Contacto</a></li>
-        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false"><span class="tema-btn__icono" aria-hidden="true">☾</span> <span class="tema-btn__texto">Modo oscuro</span></button></li>
+        <li><button class="tema-btn" type="button" id="botonTema" aria-pressed="false" aria-label="Activar modo oscuro" title="Modo oscuro"><svg class="tema-btn__sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="tema-btn__luna" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button></li>
       </ul>
     </nav>
   </header>
@@ -52,7 +52,7 @@
           <p class="obra__descripcion">Empaques y etiquetas, campañas para redes, revista, pósteres y pixel art. Piezas donde la marca tiene que sostenerse sola.</p>
           <ul class="blog__list">
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-cajita">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--ancha">
               <a class="post-card__zoom" href="img/blog-empaque.webp">
@@ -83,7 +83,7 @@
           </article>
             </li>
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-perfumeria">
           <article class="post-card">
             <div class="post-card__gallery">
               <a class="post-card__zoom" href="img/blog-perfumeria.webp">
@@ -114,7 +114,7 @@
           </article>
             </li>
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-revista">
           <article class="post-card">
             <div class="post-card__gallery">
               <a class="post-card__zoom" href="img/blog-editorial.webp">
@@ -145,7 +145,7 @@
           </article>
             </li>
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-empaque-animado">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--single">
               <video class="post-card__cover post-card__video"
@@ -169,7 +169,7 @@
             </footer>
           </article>
             </li>
-                      <li class="blog__item">
+                      <li class="blog__item" id="trabajo-granorte">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--single">
               <a class="post-card__zoom" href="img/blog-granorte.webp">
@@ -192,7 +192,7 @@
           </article>
             </li>
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-pixel-art">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--single">
               <a class="post-card__zoom" href="img/blog-pixel-arana.webp">
@@ -215,7 +215,7 @@
           </article>
             </li>
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-ferrari">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--single">
               <a class="post-card__zoom" href="img/blog-poster-ferrari.webp">
@@ -247,7 +247,7 @@
           <p class="obra__descripcion">Lo que pasa después de grabar: montaje, ritmo y animación. Cada pieza se reproduce desde acá.</p>
           <ul class="blog__list">
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-colegio">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--vertical">
               <video class="post-card__cover post-card__video post-card__video--vertical"
@@ -273,7 +273,7 @@
           </article>
             </li>
 
-            <li class="blog__item">
+            <li class="blog__item" id="trabajo-perfumeria-video">
           <article class="post-card">
             <div class="post-card__gallery post-card__gallery--vertical">
               <video class="post-card__cover post-card__video post-card__video--vertical"
@@ -326,7 +326,7 @@
           <h2 class="obra__grupo">Desarrollo web</h2>
           <p class="obra__descripcion">Páginas y aplicaciones web que diseño y construyo, pensadas para funcionar en computador y en celular.</p>
 
-          <article class="vitrina" aria-labelledby="slotnova-title">
+          <article class="vitrina" id="trabajo-slotnova" aria-labelledby="slotnova-title">
             <div class="vitrina__fondo" aria-hidden="true"></div>
 
             <div class="vitrina__pantallas">

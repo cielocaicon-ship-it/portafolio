@@ -71,10 +71,11 @@
     var oscuro = raiz.getAttribute("data-theme") === "dark";
     // aria-pressed le dice al lector de pantalla si el modo oscuro está activo
     boton.setAttribute("aria-pressed", oscuro ? "true" : "false");
-    var texto = boton.querySelector(".tema-btn__texto");
-    var icono = boton.querySelector(".tema-btn__icono");
-    if (texto) texto.textContent = oscuro ? "Modo claro" : "Modo oscuro";
-    if (icono) icono.textContent = oscuro ? "☀" : "☾";
+    // El botón solo muestra un ícono: en claro la luna (para pasar a oscuro)
+    // y en oscuro el sol. El nombre lo leen los lectores de pantalla.
+    var etiqueta = oscuro ? "Activar modo claro" : "Activar modo oscuro";
+    boton.setAttribute("aria-label", etiqueta);
+    boton.setAttribute("title", oscuro ? "Modo claro" : "Modo oscuro");
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -87,6 +88,10 @@
       aplicar(nuevo);
       guardar(nuevo);
       actualizarBoton(boton);
+      // Pequeño giro del ícono al cambiar
+      boton.classList.remove("tema-btn--gira");
+      void boton.offsetWidth;
+      boton.classList.add("tema-btn--gira");
       // Aviso para los juegos: vuelven a leer los colores del CSS
       window.dispatchEvent(new CustomEvent("tema:cambio", { detail: nuevo }));
     });

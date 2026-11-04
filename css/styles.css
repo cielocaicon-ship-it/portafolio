@@ -5097,3 +5097,308 @@ main > .jardin--portada {
 
   .jardin__petalos-caen { display: none; }
 }
+
+/* ============================================================
+   25. Botón del tema: solo sol y luna
+   ============================================================ */
+.tema-btn {
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.tema-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.tema-btn__sol {
+  fill: #FFD23F;
+  stroke: #FFD23F;
+  stroke-width: 2;
+  stroke-linecap: round;
+  display: none;
+}
+
+.tema-btn__luna {
+  fill: #fff;
+}
+
+:root[data-theme="dark"] .tema-btn__sol { display: block; }
+:root[data-theme="dark"] .tema-btn__luna { display: none; }
+
+.tema-btn--gira svg {
+  animation: tema-gira 0.5s var(--curva, ease-out);
+}
+
+@keyframes tema-gira {
+  from { transform: rotate(-120deg) scale(0.4); opacity: 0; }
+}
+
+/* ============================================================
+   26. Inicio: piezas del hero con más movimiento y ampliables
+   ============================================================ */
+.hero__pieza {
+  cursor: zoom-in;
+  /* Flotan suave cada una a su ritmo ("translate" se suma al transform
+     que ya usan el cursor y el hover, sin pisarlo) */
+  animation: repartir 0.9s cubic-bezier(0.2, 0.8, 0.25, 1.1) backwards,
+             pieza-flota 6s ease-in-out 1.6s infinite;
+}
+
+.hero__pieza--uno { animation-delay: 0.35s, 1.6s; }
+.hero__pieza--dos { animation-delay: 0.5s, 2.6s; }
+.hero__pieza--tres { animation-delay: 0.65s, 3.4s; }
+
+@keyframes pieza-flota {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+
+.hero__pieza:focus-visible {
+  outline: 3px solid #E2895A;
+  outline-offset: 4px;
+}
+
+/* La de adelante se va al fondo cada tanto, como barajando cartas */
+.hero__pieza--baraja {
+  animation: pieza-baraja 0.9s cubic-bezier(0.5, 0, 0.3, 1);
+}
+
+@keyframes pieza-baraja {
+  0% { translate: 0 0; }
+  45% { translate: 70% -18%; rotate: 14deg; }
+  100% { translate: 0 0; rotate: 0deg; }
+}
+
+.hero__pista {
+  position: absolute;
+  left: 50%;
+  bottom: -2.4rem;
+  translate: -50% 0;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  animation: pista-aparece 0.6s 1.6s both;
+}
+
+@keyframes pista-aparece {
+  from { opacity: 0; translate: -50% 0.6rem; }
+}
+
+/* Portadas de los proyectos: se pueden ampliar */
+.project__cover[data-zoom] {
+  cursor: zoom-in;
+  transition: scale 0.4s var(--curva, ease), box-shadow 0.3s ease;
+}
+
+.project__cover[data-zoom]:hover {
+  scale: 1.03;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.18);
+}
+
+.project__cover[data-zoom]:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   27. Visor: pasar entre imágenes del mismo trabajo
+   ============================================================ */
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 3rem;
+  height: 3rem;
+  margin-top: -1.5rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: rgba(12, 10, 8, 0.75);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, scale 0.2s ease;
+}
+
+.lightbox__nav[hidden] { display: none; }
+.lightbox__nav--anterior { left: -1.5rem; }
+.lightbox__nav--siguiente { right: -1.5rem; }
+
+.lightbox__nav:hover {
+  background-color: #fff;
+  color: #16130F;
+  scale: 1.1;
+}
+
+.lightbox__nav:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.lightbox__contador {
+  margin: 0.4rem 0 0;
+  max-width: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.lightbox__img--entra { animation: visor-entra 0.35s var(--curva, ease-out); }
+.lightbox__img--desde-der { animation: visor-desde-der 0.35s var(--curva, ease-out); }
+.lightbox__img--desde-izq { animation: visor-desde-izq 0.35s var(--curva, ease-out); }
+
+@keyframes visor-entra { from { opacity: 0; scale: 0.94; } }
+@keyframes visor-desde-der { from { opacity: 0; translate: 3rem 0; } }
+@keyframes visor-desde-izq { from { opacity: 0; translate: -3rem 0; } }
+
+@media (max-width: 48rem) {
+  .lightbox__nav { width: 2.6rem; height: 2.6rem; font-size: 1.6rem; }
+  .lightbox__nav--anterior { left: 0.4rem; }
+  .lightbox__nav--siguiente { right: 0.4rem; }
+}
+
+
+
+/* ============================================================
+   28. "Lo que hago": tarjetas con botón "Ver un trabajo"
+   ============================================================ */
+.oficio-card {
+  cursor: default;
+}
+
+.oficio-card__cara--frente {
+  width: 100%;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.oficio-card__cara--frente:focus-visible,
+.oficio-card__ver:focus-visible,
+.oficio-card__volver:focus-visible {
+  outline: 3px solid var(--color-oficio);
+  outline-offset: 3px;
+}
+
+.oficio-card__cara--atras:focus-within .oficio-card__ver:focus-visible,
+.oficio-card__cara--atras .oficio-card__volver:focus-visible {
+  outline-color: var(--sobre-acento);
+}
+
+/* La cara de atrás no se puede tocar hasta que la tarjeta se voltee */
+.oficio-card__cara--atras {
+  visibility: hidden;
+  transition: transform 0.6s var(--curva, ease), visibility 0s 0.3s;
+}
+
+.oficio-card--volteada .oficio-card__cara--frente {
+  transform: rotateY(-180deg);
+  visibility: hidden;
+  transition: transform 0.6s var(--curva, ease), visibility 0s 0.3s;
+}
+
+.oficio-card--volteada .oficio-card__cara--atras {
+  transform: rotateY(0deg);
+  visibility: visible;
+  transition: transform 0.6s var(--curva, ease), visibility 0s;
+}
+
+.oficio-card__acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.oficio-card__ver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background-color: var(--sobre-acento);
+  color: var(--color-oficio);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: scale 0.2s ease;
+}
+
+.oficio-card__ver:hover {
+  scale: 1.06;
+}
+
+.oficio-card__volver {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 2px solid var(--sobre-acento);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sobre-acento);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Al darle "Ver un trabajo", la tarjeta sale disparada */
+.oficio-card--sale .oficio-card__cara--atras {
+  animation: tarjeta-sale 0.3s ease-in forwards;
+}
+
+@keyframes tarjeta-sale {
+  to { scale: 1.08; opacity: 0; }
+}
+
+/* Sin JavaScript se ven las dos caras una debajo de la otra */
+:root:not(.con-js) .oficio-card__cara--atras {
+  visibility: visible;
+}
+
+:root:not(.con-js) .oficio-card__volver {
+  display: none;
+}
+
+/* El trabajo al que se llega con "Ver un trabajo" se resalta un momento */
+.trabajo--destacado {
+  animation: trabajo-resalta 2.4s ease-out;
+  border-radius: 1rem;
+}
+
+@keyframes trabajo-resalta {
+  0%, 30% { box-shadow: 0 0 0 0.4rem var(--categoria, var(--accent)); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__pieza,
+  .hero__pieza--baraja,
+  .hero__pista,
+  .lightbox__img--entra,
+  .lightbox__img--desde-der,
+  .lightbox__img--desde-izq,
+  .tema-btn--gira svg {
+    animation: none;
+  }
+
+  .oficio-card__cara--atras,
+  .oficio-card--volteada .oficio-card__cara--frente,
+  .oficio-card--volteada .oficio-card__cara--atras {
+    transition: none;
+  }
+}
+
+/* La pieza apuntada siempre pasa al frente, aunque se esté barajando */
+.hero__pieza:hover {
+  z-index: 10 !important;
+}

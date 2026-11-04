@@ -11,7 +11,11 @@
       juego: de qué se trata, con los botones Jugar y Ver el código.
    4. Al darle Jugar, sale una animación de pétalos y un círculo
       del color del juego que llena la pantalla, y se abre el juego.
-   5. Si nadie hace nada, Nucita va sola de flor en flor.
+   5. Si tocas el pasto o el cielo, María lanza una pelota y
+      Nucita corre a buscarla y se la devuelve.
+   6. En la carta, las flechas ‹ › pasan al juego anterior o siguiente.
+   7. En el celular el jardín se acomoda más compacto para verse grande.
+   8. Si nadie hace nada, Nucita va sola de flor en flor.
    Si la persona pidió "reducir movimiento", no hay animaciones:
    la carta se abre directo y Jugar abre el juego de una vez.
    ============================================================ */
@@ -35,6 +39,8 @@
   var SUELO = 420;
   var VELOCIDAD = 330;          // unidades del dibujo por segundo
   var MIN_X = 230, MAX_X = 1150;
+  var BORDE_DER = 1190;         // borde derecho del dibujo (cambia en celular)
+  var modo = "flor";            // "flor" = va a una petunia; "libre" = va a buscar la pelota
 
   var x = 250;                  // dónde está Nucita
   var destino = 250;            // a dónde va
@@ -62,7 +68,7 @@
     }
     cajaBurbuja.setAttribute("width", ancho.toFixed(0));
     // Que la burbuja no se salga del dibujo
-    var izquierda = Math.min(-30, 1190 - x - ancho);
+    var izquierda = Math.min(-30, BORDE_DER - x - ancho);
     burbuja.setAttribute("transform", "translate(" + izquierda.toFixed(0) + " -190)");
     burbuja.classList.remove("burbuja--nueva");
     void burbuja.getBBox();            // reinicia la animación
@@ -98,6 +104,7 @@
     mira = destino < fx ? 1 : -1;      // siempre mirando a la flor
     if (destino !== x) mira = destino > x ? 1 : -1;
     florActual = indice;
+    modo = "flor";
     alLlegar = luego || null;
 
     flores.forEach(function (f, i) { f.classList.toggle("flor--elegida", i === indice); });
@@ -123,8 +130,14 @@
   }
 
   function llegar() {
-    var flor = flores[florActual];
     perrita.classList.remove("perrita--corre");
+    if (modo === "libre") {
+      var siguiente = alLlegar;
+      alLlegar = null;
+      if (siguiente) siguiente();
+      return;
+    }
+    var flor = flores[florActual];
     if (!flor) return;
     // Al llegar mira hacia la flor
     mira = x < parseFloat(flor.getAttribute("data-x")) ? 1 : -1;
@@ -148,6 +161,26 @@
     }
   }
 
+  // Correr a cualquier punto del pasto (para buscar la pelota)
+  function correrA(xDestino, luego) {
+    modo = "libre";
+    florActual = -1;
+    alLlegar = luego || null;
+    destino = Math.max(MIN_X - 80, Math.min(MAX_X, xDestino));
+    if (Math.abs(destino - x) < 1 || menosMovimiento) {
+      x = destino;
+      ponerPosicion();
+      llegar();
+      return;
+    }
+    mira = destino > x ? 1 : -1;
+    perrita.classList.add("perrita--corre");
+    if (idCuadro === null) {
+      ultimo = performance.now();
+      idCuadro = requestAnimationFrame(cuadro);
+    }
+  }
+
   // Corazones que salen de la flor y se desvanecen (se borran solos)
   function corazones(flor) {
     var cabeza = flor.querySelector(".flor__cabeza");
@@ -167,9 +200,12 @@
 
   function abrirCarta(indice) {
     if (!dialogo) return;
-    cartas.forEach(function (c, i) { c.hidden = i !== indice; });
+    cartas.forEach(function (c, i) {
+      c.hidden = i !== indice;
+      c.classList.remove("carta--desde-der", "carta--desde-izq");
+    });
+    cartaActual = indice;
     abiertaDesde = document.activeElement;
-    pintarRecord(cartas[indice]);
     dialogo.classList.remove("cartas--sale");
     if (!dialogo.open) dialogo.showModal();
     var jugar = cartas[indice].querySelector(".carta__jugar");
@@ -186,8 +222,37 @@
     }, 220);
   }
 
+  // Pasar a la carta del juego anterior o siguiente (y Nucita va a esa petunia)
+  var cartaActual = 0;
+  function cambiarCarta(paso) {
+    var nuevo = (cartaActual + paso + cartas.length) % cartas.length;
+    cartas.forEach(function (c, i) {
+      c.hidden = i !== nuevo;
+      c.classList.remove("carta--desde-der", "carta--desde-izq");
+    });
+    if (!menosMovimiento) cartas[nuevo].classList.add(paso > 0 ? "carta--desde-der" : "carta--desde-izq");
+    cartaActual = nuevo;
+    irA(nuevo);
+  }
+
   if (dialogo) {
     dialogo.querySelector(".cartas__cerrar").addEventListener("click", cerrarCarta);
+    var antes = dialogo.querySelector(".cartas__nav--anterior");
+    var despues = dialogo.querySelector(".cartas__nav--siguiente");
+    if (antes) antes.addEventListener("click", function () { cambiarCarta(-1); });
+    if (despues) despues.addEventListener("click", function () { cambiarCarta(1); });
+    dialogo.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); cambiarCarta(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); cambiarCarta(-1); }
+    });
+    var toqueX = null;
+    dialogo.addEventListener("touchstart", function (e) { toqueX = e.touches[0].clientX; }, { passive: true });
+    dialogo.addEventListener("touchend", function (e) {
+      if (toqueX === null) return;
+      var dx = e.changedTouches[0].clientX - toqueX;
+      toqueX = null;
+      if (Math.abs(dx) > 60) cambiarCarta(dx < 0 ? 1 : -1);
+    });
     // Clic afuera de la carta (en el fondo oscuro) también cierra
     dialogo.addEventListener("click", function (e) {
       if (e.target === dialogo) cerrarCarta();
@@ -291,18 +356,6 @@
     }, 3800);
   }
 
-  /* ---------- Récord personal en la carta (PetuGol y PetuPong) ---------- */
-  function pintarRecord(carta) {
-    var el = carta.querySelector(".carta__record");
-    if (!el || !window.Marcadores) return;
-    var rec = window.Marcadores.leer().records[el.getAttribute("data-record")];
-    if (!rec || !rec.partidos) { el.hidden = true; return; }
-    el.textContent = "🏆 Tu récord contra Petunia: " + rec.victorias +
-      (rec.victorias === 1 ? " victoria" : " victorias") + " en " + rec.partidos +
-      (rec.partidos === 1 ? " partido" : " partidos");
-    el.hidden = false;
-  }
-
   /* ---------- Nucita ladra y María saluda (al hacerles clic) ---------- */
   var audio = null;
   function ladrar() {
@@ -372,6 +425,105 @@
       capas.forEach(function (capa) { capa.setAttribute("transform", ""); });
     });
   }
+
+  /* ---------- La pelota: toca el pasto o el cielo ---------- */
+  var pelota = escena.querySelector(".pelota");
+  var pelotaBoca = escena.querySelector(".perrita__pelota");
+  var mariaX = 140;               // dónde está María (cambia en celular)
+  var lanzando = false;
+
+  function puntoDelDibujo(e) {
+    var p = escena.createSVGPoint();
+    p.x = e.clientX;
+    p.y = e.clientY;
+    return p.matrixTransform(escena.getScreenCTM().inverse());
+  }
+
+  function lanzar(xFin) {
+    if (!pelota || lanzando) return;
+    lanzando = true;
+    ultimaAccion = Date.now();
+    flores.forEach(function (f) { f.classList.remove("flor--elegida"); });
+    botones.forEach(function (b) { b.classList.remove("jardin__boton--elegido"); });
+    var x0 = mariaX + 30, y0 = 290, y1 = SUELO - 10;
+    var dur = menosMovimiento ? 0 : 900;
+    var t0 = performance.now();
+    pelota.removeAttribute("hidden");
+    decir("¡La pelota! ¡Voy!");
+
+    function vuelo(ahora) {
+      var t = dur ? Math.min((ahora - t0) / dur, 1) : 1;
+      var px = x0 + (xFin - x0) * t;
+      var py = y0 + (y1 - y0) * t - Math.sin(Math.PI * t) * 170;   // arco
+      pelota.setAttribute("transform", "translate(" + px.toFixed(1) + " " + py.toFixed(1) + ")");
+      if (t < 1) requestAnimationFrame(vuelo);
+    }
+    requestAnimationFrame(vuelo);
+
+    // Nucita sale corriendo apenas María lanza
+    correrA(xFin - 45, function () {
+      setTimeout(function () {
+        pelota.setAttribute("hidden", "");
+        if (pelotaBoca) pelotaBoca.removeAttribute("hidden");
+        decir("¡La tengo! 🐾");
+        setTimeout(function () {
+          correrA(mariaX + 90, function () {
+            if (pelotaBoca) pelotaBoca.setAttribute("hidden", "");
+            mira = -1;
+            ponerPosicion();
+            decir("¡Otra vez, otra vez!");
+            if (!menosMovimiento) {
+              salto.classList.remove("perrita__salto--brinca");
+              void salto.getBBox();
+              salto.classList.add("perrita__salto--brinca");
+            }
+            lanzando = false;
+          });
+        }, 350);
+      }, Math.max(0, dur - 600));
+    });
+  }
+
+  escena.addEventListener("click", function (e) {
+    if (e.target.closest(".flor, .perrita, .maria")) return;
+    var p = puntoDelDibujo(e);
+    lanzar(Math.max(MIN_X + 40, Math.min(MAX_X - 20, p.x)));
+  });
+
+  /* ---------- En el celular, el jardín se acomoda más compacto ---------- */
+  var COMPACTO = { viewBox: "0 110 790 420", maria: 60, flores: [205, 325, 445, 565, 685], sol: [720, 160], min: 150, max: 760, borde: 785 };
+  var NORMAL = { viewBox: "0 0 1200 520", maria: 140, flores: [380, 545, 710, 875, 1040], sol: [1080, 90], min: 230, max: 1150, borde: 1190 };
+  var mariaGrupo = escena.querySelector(".maria") && escena.querySelector(".maria").parentNode;
+  var sol = escena.querySelector(".jardin__sol");
+  var disposicion = null;
+
+  function acomodar() {
+    var d = escena.getBoundingClientRect().width < 640 ? COMPACTO : NORMAL;
+    if (d === disposicion) return;
+    disposicion = d;
+    escena.setAttribute("viewBox", d.viewBox);
+    escena.classList.toggle("jardin__escena--compacta", d === COMPACTO);
+    mariaX = d.maria;
+    if (mariaGrupo) mariaGrupo.setAttribute("transform", "translate(" + d.maria + " 420)");
+    flores.forEach(function (f, i) {
+      f.setAttribute("data-x", d.flores[i]);
+      f.setAttribute("transform", "translate(" + d.flores[i] + " 420)");
+    });
+    if (sol) { sol.setAttribute("cx", d.sol[0]); sol.setAttribute("cy", d.sol[1]); }
+    MIN_X = d.min;
+    MAX_X = d.max;
+    BORDE_DER = d.borde;
+    x = Math.max(MIN_X, Math.min(MAX_X, d === COMPACTO ? 135 : 250));
+    destino = x;
+    ponerPosicion();
+  }
+
+  acomodar();
+  var esperaAcomodo = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(esperaAcomodo);
+    esperaAcomodo = setTimeout(acomodar, 150);
+  });
 
   ponerPosicion();
   decir("¡Guau! ¿Jugamos?");

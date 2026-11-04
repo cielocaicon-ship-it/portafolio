@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arcade — Cielo Caicedo</title>
-  <meta name="description" content="Arcade de Cielo Caicedo: los juegos de la saga Petunia, con récords e historial de partidos.">
+  <meta name="description" content="Videojuegos de Cielo Caicedo: los juegos de la saga Petunia en el jardín de Nucita, donde cada petunia es un juego.">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,7 @@
         <p class="migas migas--jardin"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
         <p class="jardin__kicker">Saga Petunia · 5 juegos</p>
         <h1 id="arcade-title" class="jardin__h1">Video<span>juegos</span></h1>
-        <p class="jardin__intro">Programados y diseñados por mí. Cada petunia es un juego: pasa el mouse o toca una y Nucita corre a mostrarte de qué se trata.</p>
+        <p class="jardin__intro">Programados y diseñados por mí. Cada petunia es un juego: pasa el mouse o toca una y Nucita corre a mostrarte de qué se trata. Si tocas el pasto, María le lanza la pelota.</p>
       </div>
       <svg class="jardin__escena" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
         <defs>
@@ -310,6 +310,11 @@
           </g>
         </a>
       </g>
+      <!-- La pelota que lanza María -->
+      <g class="pelota" hidden transform="translate(170 290)">
+        <circle r="11"/>
+        <path class="pelota__raya" d="M-11 0 Q0 -8 11 0 M-8 7 Q0 1 8 7"/>
+      </g>
       <!-- Nucita: perrita blanca peludita con moñitos y pañoleta rosada y arnés lila -->
       <g id="perrita" class="perrita" transform="translate(250 420)">
         <g class="perrita__giro">
@@ -358,6 +363,10 @@
                 <ellipse class="perrita__nariz" cx="39" cy="5" rx="6" ry="5"/>
                 <path class="perrita__boca" d="M27 15 q6 6 12 0"/>
                 <ellipse class="perrita__lengua" cx="33" cy="22" rx="5" ry="8"/>
+                <g class="perrita__pelota" hidden>
+                  <circle cx="40" cy="20" r="10"/>
+                  <path class="pelota__raya" d="M30 20 Q40 13 50 20"/>
+                </g>
               </g>
             </g>
           </g>
@@ -381,6 +390,8 @@
     <!-- Carta del juego: se abre al elegir una petunia -->
     <dialog class="cartas" id="cartaJuego" aria-label="Juego elegido">
       <button class="cartas__cerrar" type="button" aria-label="Cerrar la carta">&times;</button>
+      <button class="cartas__nav cartas__nav--anterior" type="button" aria-label="Juego anterior"><span aria-hidden="true">‹</span></button>
+      <button class="cartas__nav cartas__nav--siguiente" type="button" aria-label="Juego siguiente"><span aria-hidden="true">›</span></button>
       <article class="carta carta--petugol juego-card--petugol" data-indice="0" hidden aria-labelledby="carta-titulo-0">
         <div class="carta__portada">
           <img src="img/arcade-petugol.webp" alt="Pantalla de inicio de PetuGol con el formulario para elegir usuario y modo de juego." width="800" height="500" decoding="async">
@@ -391,7 +402,6 @@
           <h3 class="carta__titulo" id="carta-titulo-0">PetuGol</h3>
           <p class="carta__texto">Futbolito arcade 6 contra 6 visto desde arriba, inspirado en el fútbol clásico de consola. Juegas contra Petunia en un partido o en un mini torneo, o en línea con tus amigos.</p>
           <ul class="carta__info"><li>Contra Petunia</li><li>En línea con amigos</li><li>PC y celular</li></ul>
-          <p class="carta__record" data-record="futbol" hidden></p>
           <div class="carta__acciones">
             <a class="carta__jugar" href="futbol.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/petugol">Ver el código<span class="solo-lector"> de PetuGol</span></a>
@@ -408,7 +418,6 @@
           <h3 class="carta__titulo" id="carta-titulo-1">PetuPong</h3>
           <p class="carta__texto">Ping-pong contra Petunia, la máquina que casi nunca pierde, en cancha de baloncesto, fútbol o hockey de mesa. También se juega de a dos en el mismo computador.</p>
           <ul class="carta__info"><li>Contra Petunia</li><li>2 jugadores</li><li>PC y celular</li></ul>
-          <p class="carta__record" data-record="pingpong" hidden></p>
           <div class="carta__acciones">
             <a class="carta__jugar" href="pingpong.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/petupong">Ver el código<span class="solo-lector"> de PetuPong</span></a>
@@ -489,67 +498,6 @@
       </ul>
     </aside>
 
-    <section class="records section--wide" id="records" aria-labelledby="records-title">
-      <h2 id="records-title" class="section-title">Récords</h2>
-      <p class="arcade__intro">Los 5 mejores puntajes contra Petunia en PetuGol y PetuPong. Se guardan en tu navegador (LocalStorage) y siguen aquí aunque cierres la página.</p>
-
-      <div class="records__grid">
-        <div>
-          <h3 class="records__titulo"><span class="punto punto--j1" aria-hidden="true"></span> PetuGol</h3>
-          <ul class="stats">
-            <li>Partidos: <strong data-stat="futbol.partidos">0</strong></li>
-            <li>Victorias: <strong data-stat="futbol.victorias">0</strong></li>
-            <li>Derrotas: <strong data-stat="futbol.derrotas">0</strong></li>
-            <li>Goles: <strong data-stat="futbol.goles">0</strong></li>
-          </ul>
-          <div class="tabla-caja">
-          <table class="tabla">
-            <caption>Mejores puntajes de PetuGol</caption>
-            <thead>
-              <tr><th scope="col">#</th><th scope="col">Puntaje</th><th scope="col">Marcador</th><th scope="col">Nivel</th></tr>
-            </thead>
-            <tbody data-marcador="top" data-juego="futbol"></tbody>
-          </table>
-        </div>
-        </div>
-        <div>
-          <h3 class="records__titulo"><span class="punto punto--j2" aria-hidden="true"></span> PetuPong</h3>
-          <ul class="stats">
-            <li>Partidos: <strong data-stat="pingpong.partidos">0</strong></li>
-            <li>Victorias: <strong data-stat="pingpong.victorias">0</strong></li>
-            <li>Derrotas: <strong data-stat="pingpong.derrotas">0</strong></li>
-            <li>Rally más largo: <strong data-stat="pingpong.mejorRacha">0</strong></li>
-          </ul>
-          <div class="tabla-caja">
-          <table class="tabla">
-            <caption>Mejores puntajes de PetuPong</caption>
-            <thead>
-              <tr><th scope="col">#</th><th scope="col">Puntaje</th><th scope="col">Marcador</th><th scope="col">Nivel</th></tr>
-            </thead>
-            <tbody data-marcador="top" data-juego="pingpong"></tbody>
-          </table>
-        </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="historial section--wide" id="historial" aria-labelledby="historial-title">
-      <h2 id="historial-title" class="section-title">Historial de partidos</h2>
-      <div class="tabla-caja">
-          <table class="tabla">
-            <caption>Últimos 30 partidos, el más reciente primero</caption>
-            <thead>
-              <tr><th scope="col">Fecha</th><th scope="col">Juego</th><th scope="col">Modo</th><th scope="col">Marcador</th><th scope="col">Resultado</th><th scope="col">Duración</th></tr>
-            </thead>
-            <tbody data-marcador="historial" data-juego="todos"></tbody>
-          </table>
-        </div>
-      <div class="records__acciones">
-          <button class="btn-reiniciar" type="button" data-reiniciar>Reiniciar estadísticas</button>
-          <p class="records__aviso" data-aviso-marcadores role="status"></p>
-        </div>
-    </section>
-
   </main>
 
   <footer class="site-footer">
@@ -564,7 +512,6 @@
     <p class="site-footer__contact"><a href="mailto:cxycie22@gmail.com">cxycie22@gmail.com</a></p>
   </footer>
 
-  <script src="js/marcadores.js" defer></script>
   <script src="js/animaciones.js" defer></script>
   <script src="js/jardin.js" defer></script>
 

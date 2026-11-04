@@ -5402,3 +5402,80 @@ main > .jardin--portada {
 .hero__pieza:hover {
   z-index: 10 !important;
 }
+
+/* ============================================================
+   29. Jardín: pelota, flechas en las cartas y modo compacto
+   ============================================================ */
+.jardin__escena [hidden] {
+  display: none;
+}
+
+.jardin__escena {
+  cursor: pointer;          /* se puede tocar el pasto para lanzar la pelota */
+}
+
+.pelota circle,
+.perrita__pelota circle {
+  fill: #FF4FA3;
+  stroke: #B31E66;
+  stroke-width: 2;
+}
+
+.pelota__raya {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+/* Flechas para pasar entre juegos dentro de la carta */
+.cartas__nav {
+  position: absolute;
+  top: 38%;
+  z-index: 3;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: rgba(17, 21, 27, 0.85);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: scale 0.2s ease, background-color 0.2s ease;
+}
+
+.cartas__nav--anterior { left: -1.5rem; }
+.cartas__nav--siguiente { right: -1.5rem; }
+
+.cartas__nav:hover {
+  background-color: #fff;
+  color: #11151B;
+  scale: 1.1;
+}
+
+.cartas__nav:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.cartas--despegando .cartas__nav {
+  visibility: hidden;
+}
+
+.carta--desde-der { animation: carta-desde-der 0.4s var(--curva, ease-out) !important; }
+.carta--desde-izq { animation: carta-desde-izq 0.4s var(--curva, ease-out) !important; }
+
+@keyframes carta-desde-der {
+  from { opacity: 0; transform: translateX(3rem) rotate(4deg); }
+}
+
+@keyframes carta-desde-izq {
+  from { opacity: 0; transform: translateX(-3rem) rotate(-4deg); }
+}
+
+@media (max-width: 40rem) {
+  .cartas__nav { width: 2.5rem; height: 2.5rem; font-size: 1.6rem; top: 28%; }
+  .cartas__nav--anterior { left: 0.4rem; }
+  .cartas__nav--siguiente { right: 0.4rem; }
+}

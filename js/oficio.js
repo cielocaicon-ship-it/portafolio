@@ -24,9 +24,9 @@
     diseno: ["blog.html#trabajo-cajita", "blog.html#trabajo-perfumeria", "blog.html#trabajo-revista",
              "blog.html#trabajo-granorte", "blog.html#trabajo-pixel-art", "blog.html#trabajo-ferrari"],
     audiovisual: ["blog.html#trabajo-colegio", "blog.html#trabajo-perfumeria-video", "blog.html#trabajo-empaque-animado"],
-    animacion: ["blog.html#trabajo-empaque-animado", "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-noche-de-espantos"],
+    animacion: ["blog.html#trabajo-empaque-animado", "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-noche-de-espantos", "juegos.html#juego-turbopix-gp"],
     juegos: ["juegos.html#juego-petugol", "juegos.html#juego-petupong", "juegos.html#juego-noche-de-espantos",
-             "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita"],
+             "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp"],
     web: ["blog.html#trabajo-slotnova", "juegos.html#juego-petugol", "juegos.html#juego-petupong"],
     marketing: ["blog.html#trabajo-perfumeria", "blog.html#trabajo-perfumeria-video", "blog.html#trabajo-granorte"]
   };

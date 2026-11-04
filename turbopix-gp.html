@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TurboPix GP — Videojuegos de Cielo Caicedo</title>
+  <meta name="description" content="TurboPix GP, juego de la saga de Cielo Caicedo: carreras de karts 3D, solo contra bots o con hasta 4 amigos usando el celular como volante.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+</head>
+<body class="jugador">
+
+  <!-- Barra para salir del juego y volver al portafolio -->
+  <header class="jugador__barra">
+    <nav class="jugador__nav" aria-label="Salir del juego">
+      <a class="jugador__volver" href="juegos.html"><span aria-hidden="true">←</span> Volver</a>
+      <h1 class="jugador__titulo">TurboPix GP</h1>
+      <details class="jugador__ayuda">
+        <summary>Cómo se juega</summary>
+        <div class="jugador__ayuda-panel">
+          <p>Carreras de karts en 4 pistas. Gana quien llegue primero después de las vueltas.</p>
+          <ul>
+            <li>Computador: flechas para manejar, <kbd>↓</kbd> o <kbd>Shift</kbd> para frenar y derrapar</li>
+            <li>Pausa: <kbd>Esc</kbd> o el botón II PAUSA</li>
+            <li>Celular solo: tómalo en horizontal y gíralo como un volante</li>
+            <li>En grupo (hasta 4): cada amigo escanea el código QR de la pantalla con su celular, que se vuelve su volante</li>
+          </ul>
+        </div>
+      </details>
+      <a class="jugador__inicio" href="index.html" aria-label="Ir al inicio del portafolio"><span class="masthead__mark" aria-hidden="true">CC</span></a>
+    </nav>
+  </header>
+
+  <main class="jugador__pantalla">
+    <iframe class="jugador__juego" id="juego" src="juegos/turbopix-gp/index.html"
+            title="TurboPix GP" allow="fullscreen; autoplay; gamepad; accelerometer; gyroscope" allowfullscreen></iframe>
+  </main>
+
+  <script src="js/marcadores.js" defer></script>
+  <script src="js/jugador.js" defer></script>
+
+</body>
+</html>

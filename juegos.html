@@ -35,7 +35,7 @@
     <section class="jardin jardin--portada" id="jardin" aria-labelledby="arcade-title">
       <div class="jardin__encabezado">
         <p class="migas migas--jardin"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
-        <p class="jardin__kicker">Saga Petunia · 5 juegos</p>
+        <p class="jardin__kicker">Saga Petunia · 6 juegos</p>
         <h1 id="arcade-title" class="jardin__h1">Video<span>juegos</span></h1>
         <p class="jardin__intro">Programados y diseñados por mí. Cada petunia es un juego: pasa el mouse o toca una y Nucita corre a mostrarte de qué se trata. Si tocas el pasto, María le lanza la pelota.</p>
       </div>
@@ -310,6 +310,44 @@
           </g>
         </a>
       </g>
+      <g class="flor juego-card--turbopix-gp" data-indice="5" data-x="1100" data-nombre="TurboPix GP" transform="translate(1100 420)">
+        <a href="turbopix-gp.html" tabindex="-1">
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -65 12 -130 0 -185"/>
+            <ellipse class="flor__hoja" cx="-17" cy="-67" rx="20" ry="9" transform="rotate(-30 -17 -67)"/>
+            <ellipse class="flor__hoja" cx="16" cy="-107" rx="19" ry="8" transform="rotate(28 16 -107)"/>
+            <g transform="translate(22 -92) rotate(35)">
+              <path class="petunia__boton" d="M0 0 C -8 -10 -6 -26 0 -32 C 6 -26 8 -10 0 0 Z"/>
+            </g>
+            <g transform="translate(0 -185)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(0)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(72)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(144)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(216)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(288)"/>
+                  <circle class="petunia__union" r="24"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="0.0" y2="-34.0"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="32.3" y2="-10.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
+                  <circle class="petunia__garganta" r="13"/>
+                </g>
+                <text class="flor__icono" y="7" text-anchor="middle">🏎️</text>
+              </g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-86" y="-20" width="172" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">TurboPix GP</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
       <!-- La pelota que lanza María -->
       <g class="pelota" hidden transform="translate(170 290)">
         <circle r="11"/>
@@ -384,6 +422,7 @@
         <li class="juego-card--noche-de-espantos"><a href="noche-de-espantos.html" data-indice="2"><span aria-hidden="true">👻</span> Noche de Espantos</a></li>
         <li class="juego-card--condor-de-los-andes"><a href="condor-de-los-andes.html" data-indice="3"><span aria-hidden="true">✈️</span> Cóndor de los Andes</a></li>
         <li class="juego-card--estanco-nucita"><a href="estanco-nucita.html" data-indice="4"><span aria-hidden="true">🏪</span> Estanco Nucita</a></li>
+        <li class="juego-card--turbopix-gp"><a href="turbopix-gp.html" data-indice="5"><span aria-hidden="true">🏎️</span> TurboPix GP</a></li>
       </ul>
     </section>
 
@@ -472,6 +511,22 @@
           </div>
         </div>
       </article>
+      <article class="carta carta--turbopix-gp juego-card--turbopix-gp" data-indice="5" hidden aria-labelledby="carta-titulo-5">
+        <div class="carta__portada">
+          <img src="img/arcade-turbopix-gp.webp" alt="Carrera de TurboPix GP en la pista Pixel City: el kart rosado en la línea de salida junto a un rival, con el semáforo en rojo y el minimapa." width="800" height="500" decoding="async">
+          <span class="carta__numero" aria-hidden="true">06</span>
+        </div>
+        <div class="carta__cuerpo">
+          <p class="carta__tag"><span aria-hidden="true">🏎️</span> 3D · carreras</p>
+          <h3 class="carta__titulo" id="carta-titulo-5">TurboPix GP</h3>
+          <p class="carta__texto">Carreras de karts en low poly por 4 pistas, entre ellas Costa Caribe. Juega solo contra bots o con hasta 4 amigos usando el celular como volante: se unen escaneando un código QR.</p>
+          <ul class="carta__info"><li>Solo contra bots</li><li>Hasta 4 con el celular de volante</li><li>3D</li></ul>
+          <div class="carta__acciones">
+            <a class="carta__jugar" href="turbopix-gp.html"><span aria-hidden="true">▶</span> Jugar</a>
+            <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/turbopix-gp">Ver el código<span class="solo-lector"> de TurboPix GP</span></a>
+          </div>
+        </div>
+      </article>
       <!-- Animación al darle Jugar (se pinta encima de todo) -->
       <div class="arranque" id="arranque" aria-hidden="true" hidden>
         <div class="arranque__circulo"></div>
@@ -488,6 +543,7 @@
         <li class="cinta__oficio">Noche de Espantos</li>
         <li class="cinta__oficio">Cóndor de los Andes</li>
         <li class="cinta__oficio">Estanco Nucita</li>
+        <li class="cinta__oficio">TurboPix GP</li>
       </ul>
       <ul class="cinta__pista" aria-hidden="true">
         <li class="cinta__oficio">PetuGol</li>
@@ -495,6 +551,7 @@
         <li class="cinta__oficio">Noche de Espantos</li>
         <li class="cinta__oficio">Cóndor de los Andes</li>
         <li class="cinta__oficio">Estanco Nucita</li>
+        <li class="cinta__oficio">TurboPix GP</li>
       </ul>
     </aside>
 

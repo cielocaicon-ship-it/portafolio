@@ -5479,3 +5479,6 @@ main > .jardin--portada {
   .cartas__nav--anterior { left: 0.4rem; }
   .cartas__nav--siguiente { right: 0.4rem; }
 }
+
+/* TurboPix GP: violeta neón */
+.juego-card--turbopix-gp { --neon: #9B6BFF; }

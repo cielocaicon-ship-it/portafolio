@@ -7,10 +7,13 @@
    1. Si pasas el mouse, enfocas con el teclado o tocas una flor
       (o su botón de abajo), Nucita corre hacia ella.
    2. Al llegar salta, mueve la cola y salen corazones de la flor.
-   3. Si haces clic, Nucita llega a la flor y luego se abre el juego.
-   4. Si nadie hace nada, Nucita va sola de flor en flor.
-   Si la persona pidió "reducir movimiento", Nucita no corre:
-   las flores son enlaces normales.
+   3. Si haces clic, Nucita llega a la flor y se abre la carta del
+      juego: de qué se trata, con los botones Jugar y Ver el código.
+   4. Al darle Jugar, sale una animación de pétalos y un círculo
+      del color del juego que llena la pantalla, y se abre el juego.
+   5. Si nadie hace nada, Nucita va sola de flor en flor.
+   Si la persona pidió "reducir movimiento", no hay animaciones:
+   la carta se abre directo y Jugar abre el juego de una vez.
    ============================================================ */
 
 (function () {
@@ -141,7 +144,7 @@
     if (alLlegar) {
       var accion = alLlegar;
       alLlegar = null;
-      setTimeout(accion, menosMovimiento ? 0 : 450);
+      setTimeout(accion, menosMovimiento ? 0 : 380);
     }
   }
 
@@ -157,20 +160,113 @@
     }
   }
 
-  /* ---------- Lo que hace la persona ---------- */
-  function abrir(enlace) {
-    window.location.href = enlace.getAttribute("href");
+  /* ---------- La carta del juego ---------- */
+  var dialogo = document.getElementById("cartaJuego");
+  var cartas = dialogo ? Array.prototype.slice.call(dialogo.querySelectorAll(".carta")) : [];
+  var abiertaDesde = null;     // el botón que abrió la carta (para devolverle el foco)
+
+  function abrirCarta(indice) {
+    if (!dialogo) return;
+    cartas.forEach(function (c, i) { c.hidden = i !== indice; });
+    abiertaDesde = document.activeElement;
+    dialogo.classList.remove("cartas--sale");
+    if (!dialogo.open) dialogo.showModal();
+    var jugar = cartas[indice].querySelector(".carta__jugar");
+    if (jugar) jugar.focus();
   }
 
+  function cerrarCarta() {
+    if (!dialogo || !dialogo.open) return;
+    if (menosMovimiento) { dialogo.close(); return; }
+    dialogo.classList.add("cartas--sale");      // se encoge y luego se cierra
+    setTimeout(function () {
+      dialogo.classList.remove("cartas--sale");
+      dialogo.close();
+    }, 220);
+  }
+
+  if (dialogo) {
+    dialogo.querySelector(".cartas__cerrar").addEventListener("click", cerrarCarta);
+    // Clic afuera de la carta (en el fondo oscuro) también cierra
+    dialogo.addEventListener("click", function (e) {
+      if (e.target === dialogo) cerrarCarta();
+    });
+    dialogo.addEventListener("close", function () {
+      if (abiertaDesde && abiertaDesde.focus) abiertaDesde.focus();
+    });
+    cartas.forEach(function (c) {
+      c.querySelector(".carta__jugar").addEventListener("click", function (e) {
+        if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        arrancar(this, c);
+      });
+    });
+  }
+
+  /* ---------- Animación de "Jugar" ----------
+     Un círculo del color del juego crece desde el botón hasta llenar
+     la pantalla, salen pétalos volando y aparece "¡A jugar!".
+     Después se abre el juego. */
+  var arranque = document.getElementById("arranque");
+
+  function arrancar(boton, carta) {
+    var destinoUrl = boton.getAttribute("href");
+    if (menosMovimiento || !arranque) {
+      window.location.href = destinoUrl;
+      return;
+    }
+    var r = boton.getBoundingClientRect();
+    var color = getComputedStyle(carta).getPropertyValue("--neon").trim() || "#2BD47D";
+    arranque.style.setProperty("--x", (r.left + r.width / 2) + "px");
+    arranque.style.setProperty("--y", (r.top + r.height / 2) + "px");
+    arranque.style.setProperty("--color", color);
+
+    // Pétalos: cada uno sale en una dirección distinta
+    var caja = arranque.querySelector(".arranque__petalos");
+    caja.textContent = "";
+    for (var i = 0; i < 18; i++) {
+      var p = document.createElement("span");
+      var angulo = (i / 18) * Math.PI * 2;
+      var distancia = 160 + Math.random() * 260;
+      p.style.setProperty("--dx", (Math.cos(angulo) * distancia).toFixed(0) + "px");
+      p.style.setProperty("--dy", (Math.sin(angulo) * distancia).toFixed(0) + "px");
+      p.style.setProperty("--giro", (Math.random() * 540 - 270).toFixed(0) + "deg");
+      p.style.animationDelay = (Math.random() * 0.12).toFixed(2) + "s";
+      caja.appendChild(p);
+    }
+
+    arranque.hidden = false;
+    void arranque.offsetWidth;          // reinicia las animaciones
+    arranque.classList.add("arranque--activo");
+    dialogo.classList.add("cartas--despegando");
+    carta.classList.add("carta--despega");
+
+    setTimeout(function () {
+      window.location.href = destinoUrl;
+    }, 1300);
+  }
+
+  // Si se vuelve con el botón Atrás, la página puede venir de la memoria:
+  // se quita la animación para que no quede la pantalla tapada.
+  window.addEventListener("pageshow", function () {
+    if (!arranque) return;
+    arranque.hidden = true;
+    arranque.classList.remove("arranque--activo");
+    cartas.forEach(function (c) { c.classList.remove("carta--despega"); });
+    if (dialogo) dialogo.classList.remove("cartas--despegando");
+    if (dialogo && dialogo.open) dialogo.close();
+  });
+
+  /* ---------- Lo que hace la persona ---------- */
   function conectar(el, indice, enlace) {
     el.addEventListener("mouseenter", function () { ultimaAccion = Date.now(); irA(indice); });
     el.addEventListener("focus", function () { ultimaAccion = Date.now(); irA(indice); }, true);
     enlace.addEventListener("click", function (e) {
-      // Ctrl, Cmd, Shift o la rueda del mouse: se deja abrir en otra pestaña
+      // Ctrl, Cmd, Shift o la rueda del mouse: se deja abrir el juego en otra pestaña
       if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
       ultimaAccion = Date.now();
-      irA(indice, function () { abrir(enlace); });
+      irA(indice, function () { abrirCarta(indice); });
     });
   }
 
@@ -188,7 +284,7 @@
       }, { threshold: 0.3 }).observe(escena);
     }
     setInterval(function () {
-      if (!visible || document.hidden || idCuadro !== null) return;
+      if (!visible || document.hidden || idCuadro !== null || (dialogo && dialogo.open)) return;
       if (Date.now() - ultimaAccion < 6000) return;
       irA((florActual + 1) % flores.length);
     }, 3800);

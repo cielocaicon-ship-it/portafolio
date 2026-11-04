@@ -31,32 +31,15 @@
 
   <main id="contenido" tabindex="-1">
 
-    <section class="arcade-hero" aria-labelledby="arcade-title">
-      <div class="arcade-hero__piso" aria-hidden="true"></div>
-      <div class="arcade-hero__texto">
-        <p class="migas migas--hero"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
-        <p class="arcade-hero__kicker">Saga Petunia · 5 juegos</p>
-        <h1 id="arcade-title" class="arcade-hero__titulo">Video<span>juegos</span></h1>
-        <p class="arcade-hero__lead">Programados y diseñados por mí. En casi todos el rival es <strong>Petunia</strong>, la máquina que casi nunca pierde. ¿Te le mides?</p>
-        <p class="arcade-hero__acciones">
-          <a class="btn-arcade" href="#jardin">Elige tu juego <span aria-hidden="true">↓</span></a>
-          <span class="arcade-hero__moneda" aria-hidden="true">Inserta una moneda</span>
-        </p>
+    <!-- Portada: el jardín de Nucita. Cada petunia es un juego -->
+    <section class="jardin jardin--portada" id="jardin" aria-labelledby="arcade-title">
+      <div class="jardin__encabezado">
+        <p class="migas migas--jardin"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
+        <p class="jardin__kicker">Saga Petunia · 5 juegos</p>
+        <h1 id="arcade-title" class="jardin__h1">Video<span>juegos</span></h1>
+        <p class="jardin__intro">Programados y diseñados por mí. Cada petunia es un juego: pasa el mouse o toca una y Nucita corre a mostrarte de qué se trata.</p>
       </div>
-      <div class="arcade-hero__fichas" aria-hidden="true">
-        <img class="arcade-hero__ficha arcade-hero__ficha--1" src="img/arcade-petugol.webp" alt="" width="800" height="500" decoding="async">
-        <img class="arcade-hero__ficha arcade-hero__ficha--2" src="img/arcade-pingpong.webp" alt="" width="800" height="500" decoding="async">
-        <img class="arcade-hero__ficha arcade-hero__ficha--3" src="img/arcade-noche-de-espantos.webp" alt="" width="800" height="500" decoding="async">
-        <img class="arcade-hero__ficha arcade-hero__ficha--4" src="img/arcade-condor-de-los-andes.webp" alt="" width="800" height="500" decoding="async">
-        <img class="arcade-hero__ficha arcade-hero__ficha--5" src="img/arcade-estanco-nucita.webp" alt="" width="800" height="500" decoding="async">
-      </div>
-    </section>
-
-    <!-- El jardín de Nucita: cada petunia es un juego -->
-    <section class="jardin" id="jardin" aria-labelledby="jardin-title">
-      <h2 id="jardin-title" class="jardin__titulo">El jardín de Nucita</h2>
-      <p class="jardin__intro">Cada petunia es un juego. Pasa el mouse o toca una y Nucita corre hacia ella para mostrarte de qué se trata.</p>
-      <svg class="jardin__escena" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+      <svg class="jardin__escena" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
             <stop class="cielo__arriba" offset="0"/>
@@ -64,20 +47,47 @@
           </linearGradient>
         </defs>
         <rect width="1200" height="520" fill="url(#cielo)"/>
-        <circle class="jardin__sol" cx="1080" cy="90" r="46"/>
-        <g class="jardin__estrellas">
-          <circle cx="120" cy="60" r="2"/><circle cx="300" cy="110" r="1.6"/><circle cx="520" cy="50" r="2.2"/>
-          <circle cx="700" cy="120" r="1.5"/><circle cx="860" cy="70" r="2"/><circle cx="980" cy="160" r="1.6"/>
+        <g class="paralaje" data-prof="6">
+          <circle class="jardin__sol" cx="1080" cy="90" r="46"/>
+          <g class="jardin__estrellas">
+            <circle cx="120" cy="60" r="2"/><circle cx="300" cy="110" r="1.6"/><circle cx="520" cy="50" r="2.2"/>
+            <circle cx="700" cy="120" r="1.5"/><circle cx="860" cy="70" r="2"/><circle cx="980" cy="160" r="1.6"/>
+          </g>
         </g>
-        <g class="nube nube--1"><ellipse cx="0" cy="0" rx="60" ry="22"/><ellipse cx="-30" cy="-12" rx="30" ry="22"/><ellipse cx="22" cy="-18" rx="34" ry="26"/></g>
-        <g class="nube nube--2"><ellipse cx="0" cy="0" rx="48" ry="18"/><ellipse cx="-22" cy="-10" rx="24" ry="18"/><ellipse cx="16" cy="-14" rx="26" ry="20"/></g>
-        <path class="jardin__loma" d="M0 400 Q 200 330 420 380 T 840 370 T 1200 360 L1200 520 L0 520 Z"/>
+        <g class="paralaje" data-prof="12">
+          <g class="nube nube--1"><ellipse cx="0" cy="0" rx="60" ry="22"/><ellipse cx="-30" cy="-12" rx="30" ry="22"/><ellipse cx="22" cy="-18" rx="34" ry="26"/></g>
+          <g class="nube nube--2"><ellipse cx="0" cy="0" rx="48" ry="18"/><ellipse cx="-22" cy="-10" rx="24" ry="18"/><ellipse cx="16" cy="-14" rx="26" ry="20"/></g>
+        </g>
+        <g class="paralaje" data-prof="20">
+          <path class="jardin__loma" d="M-40 400 Q 200 330 420 380 T 840 370 T 1240 360 L1240 520 L-40 520 Z"/>
+        </g>
         <rect class="jardin__pasto" x="0" y="420" width="1200" height="100"/>
         <path class="jardin__pastito" d="M30 420 l6 -14 l6 14 M210 420 l5 -12 l5 12 M460 420 l6 -15 l6 15 M630 420 l5 -12 l5 12 M790 420 l6 -14 l6 14 M960 420 l5 -13 l5 13 M1130 420 l6 -15 l6 15"/>
         <g class="mariposa mariposa--1"><path d="M0 0 C -14 -16 -22 2 0 4 C 22 2 14 -16 0 0 Z"/></g>
         <g class="mariposa mariposa--2"><path d="M0 0 C -12 -14 -19 2 0 3 C 19 2 12 -14 0 0 Z"/></g>
+        <g class="jardin__petalos-caen">
+          <ellipse class="cae cae--1" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--2" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--3" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--4" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--5" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--6" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--7" cx="0" cy="0" rx="6" ry="9"/>
+          <ellipse class="cae cae--8" cx="0" cy="0" rx="6" ry="9"/>
+        </g>
+        <g class="jardin__luciernagas">
+          <circle class="luciernaga luciernaga--1" cx="260" cy="300" r="3.5"/>
+          <circle class="luciernaga luciernaga--2" cx="430" cy="250" r="3.5"/>
+          <circle class="luciernaga luciernaga--3" cx="600" cy="330" r="3.5"/>
+          <circle class="luciernaga luciernaga--4" cx="770" cy="260" r="3.5"/>
+          <circle class="luciernaga luciernaga--5" cx="950" cy="310" r="3.5"/>
+          <circle class="luciernaga luciernaga--6" cx="1110" cy="240" r="3.5"/>
+          <circle class="luciernaga luciernaga--7" cx="330" cy="360" r="3.5"/>
+          <circle class="luciernaga luciernaga--8" cx="680" cy="220" r="3.5"/>
+        </g>
       <!-- María, la piloto del Cóndor de los Andes -->
-      <g class="maria" transform="translate(140 420)">
+      <g transform="translate(140 420)">
+        <g class="maria">
         <ellipse class="maria__sombra" cx="0" cy="2" rx="38" ry="8"/>
         <rect class="maria__pierna" x="-17" y="-64" width="14" height="58" rx="6"/>
         <rect class="maria__pierna" x="3" y="-64" width="14" height="58" rx="6"/>
@@ -109,6 +119,7 @@
           </g>
         </g>
       </g>
+      </g>
       <g class="flor juego-card--petugol" data-indice="0" data-x="380" data-nombre="PetuGol" transform="translate(380 420)">
         <a href="futbol.html" tabindex="-1">
           <g class="flor__planta">
@@ -135,6 +146,13 @@
                   <circle class="petunia__garganta" r="13"/>
                 </g>
                 <text class="flor__icono" y="7" text-anchor="middle">⚽</text>
+              </g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-61" y="-20" width="122" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">PetuGol</text>
+                </g>
               </g>
             </g>
           </g>
@@ -167,6 +185,13 @@
                 </g>
                 <text class="flor__icono" y="7" text-anchor="middle">🏓</text>
               </g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-67" y="-20" width="134" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">PetuPong</text>
+                </g>
+              </g>
             </g>
           </g>
         </a>
@@ -197,6 +222,13 @@
                   <circle class="petunia__garganta" r="13"/>
                 </g>
                 <text class="flor__icono" y="7" text-anchor="middle">👻</text>
+              </g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-123" y="-20" width="246" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">Noche de Espantos</text>
+                </g>
               </g>
             </g>
           </g>
@@ -229,6 +261,13 @@
                 </g>
                 <text class="flor__icono" y="7" text-anchor="middle">✈️</text>
               </g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-136" y="-20" width="272" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">Cóndor de los Andes</text>
+                </g>
+              </g>
             </g>
           </g>
         </a>
@@ -259,6 +298,13 @@
                   <circle class="petunia__garganta" r="13"/>
                 </g>
                 <text class="flor__icono" y="7" text-anchor="middle">🏪</text>
+              </g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-104" y="-20" width="209" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">Estanco Nucita</text>
+                </g>
               </g>
             </g>
           </g>
@@ -344,6 +390,8 @@
           <p class="carta__tag"><span aria-hidden="true">⚽</span> Fútbol 2D · estilo Atari</p>
           <h3 class="carta__titulo" id="carta-titulo-0">PetuGol</h3>
           <p class="carta__texto">Futbolito arcade 6 contra 6 visto desde arriba, inspirado en el fútbol clásico de consola. Juegas contra Petunia en un partido o en un mini torneo, o en línea con tus amigos.</p>
+          <ul class="carta__info"><li>Contra Petunia</li><li>En línea con amigos</li><li>PC y celular</li></ul>
+          <p class="carta__record" data-record="futbol" hidden></p>
           <div class="carta__acciones">
             <a class="carta__jugar" href="futbol.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/petugol">Ver el código<span class="solo-lector"> de PetuGol</span></a>
@@ -359,6 +407,8 @@
           <p class="carta__tag"><span aria-hidden="true">🏓</span> Ping-Pong</p>
           <h3 class="carta__titulo" id="carta-titulo-1">PetuPong</h3>
           <p class="carta__texto">Ping-pong contra Petunia, la máquina que casi nunca pierde, en cancha de baloncesto, fútbol o hockey de mesa. También se juega de a dos en el mismo computador.</p>
+          <ul class="carta__info"><li>Contra Petunia</li><li>2 jugadores</li><li>PC y celular</li></ul>
+          <p class="carta__record" data-record="pingpong" hidden></p>
           <div class="carta__acciones">
             <a class="carta__jugar" href="pingpong.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/petupong">Ver el código<span class="solo-lector"> de PetuPong</span></a>
@@ -374,6 +424,7 @@
           <p class="carta__tag"><span aria-hidden="true">👻</span> 3D · terror</p>
           <h3 class="carta__titulo" id="carta-titulo-2">Noche de Espantos</h3>
           <p class="carta__texto">Un campesino y su perrito defienden la finca de los espantos colombianos hasta que cante el gallo a las 6:00 a. m.: la Patasola, la Llorona, el Mohán y muchos más.</p>
+          <ul class="carta__info"><li>Solo</li><li>Hasta 4 amigos en línea</li><li>3D</li></ul>
           <div class="carta__acciones">
             <a class="carta__jugar" href="noche-de-espantos.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/noche-de-espantos">Ver el código<span class="solo-lector"> de Noche de Espantos</span></a>
@@ -389,6 +440,7 @@
           <p class="carta__tag"><span aria-hidden="true">✈️</span> 3D · guerra aérea</p>
           <h3 class="carta__titulo" id="carta-titulo-3">Cóndor de los Andes</h3>
           <p class="carta__texto">Con Nucita de copiloto persigues a Petunia por la historia de Colombia, desde Cartagena 1741 hasta Cúcuta 2030.</p>
+          <ul class="carta__info"><li>1 jugador</li><li>Piloto María o Pedro</li><li>3D</li></ul>
           <div class="carta__acciones">
             <a class="carta__jugar" href="condor-de-los-andes.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/condor-de-los-andes">Ver el código<span class="solo-lector"> de Cóndor de los Andes</span></a>
@@ -404,6 +456,7 @@
           <p class="carta__tag"><span aria-hidden="true">🏪</span> Simulación</p>
           <h3 class="carta__titulo" id="carta-titulo-4">Estanco Nucita</h3>
           <p class="carta__texto">Pamela atiende su estanco con la perrita Nucita y tiene que vender la cerveza bien fría a los clientes del barrio.</p>
+          <ul class="carta__info"><li>1 jugador</li><li>Con la perrita Nucita</li></ul>
           <div class="carta__acciones">
             <a class="carta__jugar" href="estanco-nucita.html"><span aria-hidden="true">▶</span> Jugar</a>
             <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/estanco-nucita">Ver el código<span class="solo-lector"> de Estanco Nucita</span></a>

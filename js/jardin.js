@@ -169,6 +169,7 @@
     if (!dialogo) return;
     cartas.forEach(function (c, i) { c.hidden = i !== indice; });
     abiertaDesde = document.activeElement;
+    pintarRecord(cartas[indice]);
     dialogo.classList.remove("cartas--sale");
     if (!dialogo.open) dialogo.showModal();
     var jugar = cartas[indice].querySelector(".carta__jugar");
@@ -288,6 +289,88 @@
       if (Date.now() - ultimaAccion < 6000) return;
       irA((florActual + 1) % flores.length);
     }, 3800);
+  }
+
+  /* ---------- Récord personal en la carta (PetuGol y PetuPong) ---------- */
+  function pintarRecord(carta) {
+    var el = carta.querySelector(".carta__record");
+    if (!el || !window.Marcadores) return;
+    var rec = window.Marcadores.leer().records[el.getAttribute("data-record")];
+    if (!rec || !rec.partidos) { el.hidden = true; return; }
+    el.textContent = "🏆 Tu récord contra Petunia: " + rec.victorias +
+      (rec.victorias === 1 ? " victoria" : " victorias") + " en " + rec.partidos +
+      (rec.partidos === 1 ? " partido" : " partidos");
+    el.hidden = false;
+  }
+
+  /* ---------- Nucita ladra y María saluda (al hacerles clic) ---------- */
+  var audio = null;
+  function ladrar() {
+    try {
+      if (!audio) audio = new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.22].forEach(function (inicio) {
+        var t = audio.currentTime + inicio;
+        var osc = audio.createOscillator();
+        var vol = audio.createGain();
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(620, t);
+        osc.frequency.exponentialRampToValueAtTime(260, t + 0.12);
+        vol.gain.setValueAtTime(0.0001, t);
+        vol.gain.exponentialRampToValueAtTime(0.12, t + 0.015);
+        vol.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+        osc.connect(vol);
+        vol.connect(audio.destination);
+        osc.start(t);
+        osc.stop(t + 0.15);                 // se apaga solo
+      });
+    } catch (error) {
+      // sin sonido no pasa nada
+    }
+  }
+
+  perrita.addEventListener("click", function () {
+    ultimaAccion = Date.now();
+    ladrar();
+    decir("¡Guau guau! 🐾");
+    if (menosMovimiento) return;
+    salto.classList.remove("perrita__salto--gira");
+    void salto.getBBox();
+    salto.classList.add("perrita__salto--gira");
+  });
+
+  var maria = escena.querySelector(".maria");
+  if (maria) {
+    maria.addEventListener("click", function () {
+      ultimaAccion = Date.now();
+      decir("¡Ella es María, mi piloto!");
+      if (menosMovimiento) return;
+      maria.classList.remove("maria--salta");
+      void maria.getBBox();
+      maria.classList.add("maria--salta");
+    });
+  }
+
+  /* ---------- Paralaje: el fondo se mueve un poquito con el mouse ---------- */
+  var capas = Array.prototype.slice.call(escena.querySelectorAll(".paralaje"));
+  var esperandoCuadro = false;
+  if (!menosMovimiento && window.matchMedia("(pointer: fine)").matches) {
+    escena.addEventListener("pointermove", function (e) {
+      if (esperandoCuadro) return;
+      esperandoCuadro = true;
+      requestAnimationFrame(function () {
+        esperandoCuadro = false;
+        var r = escena.getBoundingClientRect();
+        var dx = (e.clientX - r.left) / r.width - 0.5;     // -0.5 a 0.5
+        var dy = (e.clientY - r.top) / r.height - 0.5;
+        capas.forEach(function (capa) {
+          var p = parseFloat(capa.getAttribute("data-prof")) || 0;
+          capa.setAttribute("transform", "translate(" + (-dx * p).toFixed(1) + " " + (-dy * p * 0.5).toFixed(1) + ")");
+        });
+      });
+    });
+    escena.addEventListener("pointerleave", function () {
+      capas.forEach(function (capa) { capa.setAttribute("transform", ""); });
+    });
   }
 
   ponerPosicion();

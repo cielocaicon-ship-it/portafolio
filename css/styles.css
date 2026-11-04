@@ -1882,8 +1882,7 @@ main > section + section {
    tema.js pone data-theme="dark" en <html>. Aquí solo se
    cambian las variables de color: como TODO el sitio usa esas
    variables, todo cambia de una vez sin repetir reglas.
-   El bloque @media es la red de seguridad por si JavaScript
-   no carga: respeta el tema del sistema operativo.
+   Sin JavaScript la página se queda en modo claro.
    ============================================================ */
 :root {
   color-scheme: light;
@@ -1918,29 +1917,8 @@ main > section + section {
   --j2: #FF6FB1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    color-scheme: dark;
-    --bg: #0F1115;
-    --surface: #181B21;
-    --panel: #1F232A;
-    --band: #14171C;
-    --dark: #08090B;
-    --ink: #EEF0F3;
-    --gray: #A9B0BA;
-    --line: #2A2F37;
-    --line-ui: #6B7480;
-    --chip-bg: #232831;
-    --field: #181B21;
-    --diseno: #E8956A;
-    --post: #8DB3F0;
-    --juegos: #6FCF8F;
-    --sobre-acento: #0F1115;
-    --error: #FF8A7E;
-    --j1: #3EE0D2;
-    --j2: #FF6FB1;
-  }
-}
+/* La página siempre empieza en modo claro (ver js/tema.js): no se sigue
+   el modo oscuro del sistema operativo. */
 
 /* El botón de Contacto del menú se pinta con el acento al pasar
    el mouse: en oscuro el acento es claro, así que el texto va oscuro. */
@@ -4859,4 +4837,263 @@ main > .jardin {
 /* Mientras arranca el juego no se muestra la X de cerrar */
 .cartas--despegando .cartas__cerrar {
   visibility: hidden;
+}
+
+/* ============================================================
+   24. Videojuegos: el jardín es la portada de la página
+   ============================================================ */
+main > .jardin--portada {
+  max-width: none;
+  padding: 0;
+}
+
+.jardin--portada {
+  --cielo-1: #9ED8FF;
+  --cielo-2: #E8F7FF;
+  background-color: var(--cielo-1);
+  border-bottom: 1px solid var(--line);
+}
+
+:root[data-theme="dark"] .jardin--portada {
+  --cielo-1: #0F1B3D;
+  --cielo-2: #2C3B6E;
+}
+
+.jardin--portada .jardin__escena {
+  --cielo-1: inherit;
+  --cielo-2: inherit;
+  border: 0;
+  border-radius: 0;
+}
+
+.jardin__encabezado {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-sm) 0;
+  text-align: center;
+}
+
+.migas--jardin {
+  text-align: left;
+}
+
+.migas--jardin a {
+  color: #0B3D2A;
+}
+
+:root[data-theme="dark"] .migas--jardin a {
+  color: #6FCF8F;
+}
+
+.jardin__kicker {
+  margin: 0 auto 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #0B5C3B;
+}
+
+:root[data-theme="dark"] .jardin__kicker {
+  color: #6FCF8F;
+}
+
+.jardin__h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.8rem, 10vw, 5.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: #16130F;
+  animation: titulo-entra 0.9s var(--curva, ease-out) both;
+}
+
+:root[data-theme="dark"] .jardin__h1 {
+  color: #fff;
+}
+
+/* "juegos" con los cinco colores de las petunias, moviéndose */
+.jardin__h1 span {
+  background: linear-gradient(90deg, #1FA866, #2B8FD9, #E0398A, #E66F0A, #D9A400, #1FA866);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: degradado-corre 6s linear infinite;
+}
+
+:root[data-theme="dark"] .jardin__h1 span {
+  background-image: linear-gradient(90deg, #2BD47D, #3FB6FF, #FF4FA3, #FF8A1F, #FFC93C, #2BD47D);
+}
+
+.jardin--portada .jardin__intro {
+  max-width: 40rem;
+  margin: var(--space-xs) auto 0;
+  color: #24405A;
+}
+
+:root[data-theme="dark"] .jardin--portada .jardin__intro {
+  color: #C9D4EA;
+}
+
+/* En pantallas grandes el dibujo tiene una altura fija y se recorta
+   un poco de cielo; en celular se ve completo */
+@media (min-width: 62rem) {
+  .jardin--portada .jardin__escena {
+    height: clamp(26rem, 44vw, 38rem);
+  }
+}
+
+.jardin--portada .jardin__lista {
+  margin: 0;
+  padding: var(--space-sm) var(--space-sm) var(--space-md);
+  background-color: #5DB75A;
+}
+
+:root[data-theme="dark"] .jardin--portada .jardin__lista {
+  background-color: #234A2F;
+}
+
+/* Cartelito con el nombre encima de cada petunia */
+.flor__cartel {
+  opacity: 0;
+  transform: translateY(10px) scale(0.6);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: opacity 0.25s ease, transform 0.35s var(--curva, ease);
+  pointer-events: none;
+}
+
+.flor:hover .flor__cartel,
+.flor--elegida .flor__cartel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.flor__cartel rect {
+  fill: #fff;
+  stroke: var(--neon);
+  stroke-width: 3;
+}
+
+.flor__cartel text {
+  font-family: var(--font);
+  font-size: 19px;
+  font-weight: 800;
+  fill: #16130F;
+}
+
+/* Nucita y María se pueden tocar */
+.perrita,
+.maria {
+  cursor: pointer;
+}
+
+.perrita__salto--gira {
+  animation: gira-feliz 0.8s var(--curva, ease-out);
+}
+
+@keyframes gira-feliz {
+  0% { transform: translateY(0) rotate(0); }
+  40% { transform: translateY(-60px) rotate(-180deg); }
+  80% { transform: translateY(0) rotate(-360deg); }
+  100% { transform: translateY(0) rotate(-360deg); }
+}
+
+.maria {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.maria--salta {
+  animation: maria-salta 0.7s var(--curva, ease-out);
+}
+
+@keyframes maria-salta {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-40px) scale(1.03); }
+  65% { transform: translateY(0) scale(1.05, 0.95); }
+}
+
+/* Pétalos que caen (de día) */
+.cae {
+  opacity: 0.85;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cae 11s linear infinite;
+}
+
+.cae--1 { fill: #2BD47D; animation-delay: 0s; --x0: 120px; }
+.cae--2 { fill: #FF4FA3; animation-delay: -2s; --x0: 300px; }
+.cae--3 { fill: #FF8A1F; animation-delay: -4s; --x0: 480px; }
+.cae--4 { fill: #3FB6FF; animation-delay: -6s; --x0: 650px; }
+.cae--5 { fill: #FFC93C; animation-delay: -8s; --x0: 820px; }
+.cae--6 { fill: #FF4FA3; animation-delay: -1s; --x0: 990px; animation-duration: 13s; }
+.cae--7 { fill: #2BD47D; animation-delay: -5s; --x0: 1120px; animation-duration: 12s; }
+.cae--8 { fill: #FFC93C; animation-delay: -9s; --x0: 560px; animation-duration: 14s; }
+
+@keyframes cae {
+  0% { transform: translate(var(--x0), -20px) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.85; }
+  50% { transform: translate(calc(var(--x0) + 40px), 210px) rotate(180deg); }
+  90% { opacity: 0.85; }
+  100% { transform: translate(calc(var(--x0) - 20px), 430px) rotate(360deg); opacity: 0; }
+}
+
+:root[data-theme="dark"] .jardin__petalos-caen { display: none; }
+
+/* Luciérnagas (de noche) */
+.jardin__luciernagas { display: none; }
+:root[data-theme="dark"] .jardin__luciernagas { display: inline; }
+
+.luciernaga {
+  fill: #FFF27A;
+  filter: drop-shadow(0 0 6px #FFE45C);
+  animation: luciernaga 4s ease-in-out infinite alternate;
+}
+
+.luciernaga:nth-child(2n) { animation-duration: 5.5s; animation-delay: -2s; }
+.luciernaga:nth-child(3n) { animation-duration: 3.2s; animation-delay: -1s; }
+
+@keyframes luciernaga {
+  0% { opacity: 0.2; transform: translate(0, 0); }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; transform: translate(26px, -22px); }
+}
+
+/* Información y récord en la carta */
+.carta__info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.5rem;
+}
+
+.carta__info li {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background-color: #1E242D;
+  color: #DDE3EA;
+  font-size: 0.78rem;
+}
+
+.carta__record {
+  margin: 0.3rem 0 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.6rem;
+  background-color: color-mix(in srgb, var(--neon) 18%, #11151B);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jardin__h1,
+  .jardin__h1 span,
+  .cae,
+  .luciernaga {
+    animation: none;
+  }
+
+  .jardin__petalos-caen { display: none; }
 }

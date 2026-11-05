@@ -22,6 +22,7 @@
   --linea:rgba(241,231,201,.2);
   --f-display:'Grenze Gotisch', Georgia, 'Times New Roman', serif;
   --f-ui:'Rubik', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-code:ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace; /* códigos de sala: cada letra bien distinta */
   color-scheme:dark;
 }
 html,body{height:100%;margin:0;background:var(--noche);color:var(--luna);overflow:hidden;overscroll-behavior:none}
@@ -386,12 +387,13 @@ kbd{font-family:var(--f-ui);font-size:11px;font-weight:700;display:inline-block;
 .online-btn:hover{border-color:var(--agua);background:rgba(159,233,242,.12)}
 @keyframes netDot{50%{opacity:.35}}
 .lobby .join-row{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
-.lobby .join-row .txt{max-width:190px;text-transform:uppercase;letter-spacing:.2em;font-weight:700}
+.lobby .join-row .txt{max-width:220px;text-transform:uppercase;letter-spacing:.25em;font-weight:700;font-family:var(--f-code);font-size:22px}
 .or-line{display:flex;align-items:center;gap:10px;font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.14em}
 .or-line::before,.or-line::after{content:'';flex:1;height:1px;background:var(--linea)}
 .code-box{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px dashed rgba(255,211,107,.5);padding:12px 16px;background:rgba(255,211,107,.06)}
 .code-box span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-.code-box b{font-family:var(--f-display);font-size:44px;line-height:1;letter-spacing:.12em;color:var(--chispa)}
+.code-box b{display:flex;flex-wrap:wrap;gap:6px;font-family:var(--f-code);font-size:34px;font-weight:700;line-height:1;letter-spacing:0}
+.code-box b i{font-style:normal;display:grid;place-items:center;min-width:1.35em;padding:.2em .12em;border:2px solid var(--chispa);border-radius:6px;background:rgba(8,16,18,.85);color:var(--chispa)}
 .qr-box{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px dashed rgba(255,211,107,.5);padding:12px 16px;background:rgba(255,211,107,.06)}
 .qr-box[hidden]{display:none}
 .qr-img{background:#fff;padding:8px;line-height:0;flex:none}
@@ -4791,6 +4793,12 @@ function useSalaPend(){
   $('codeIn').value=c;netStart('client',c);
   try{history.replaceState(null,'',location.pathname);}catch(_){}
 }
+// El código de la sala, una letra en cada casilla (se lee mejor que con la letra gótica)
+function showCode(c){
+  const b=$('codeTxt');if(b.dataset.code===c)return;b.dataset.code=c;
+  b.textContent='';for(const ch of c){const i=document.createElement('i');i.textContent=ch;b.appendChild(i);}
+  b.setAttribute('aria-label',/[A-Z0-9]/.test(c)?Array.from(c).join(' '):'sin código todavía');
+}
 function lobbyShow(which){$('lobbyPick').hidden=which!=='pick';$('lobbyRoom').hidden=which!=='room';}
 function toastLobbyErr(t){const e=$('lobbyErr');e.textContent=t||'';e.hidden=!t;}
 function openLobby(){initAudio();state='setup';showOnly(null);setMenuScene(true);$('lobby').hidden=false;lobbyShow(NET.on?'room':'pick');toastLobbyErr('');$('lobbyStatus').hidden=true;renderLobby();useSalaPend();}
@@ -4802,7 +4810,7 @@ function renderLobby(){
   rows.sort((a,b)=>a[1]-b[1]);
   for(const p of rows){const li=document.createElement('li');li.style.setProperty('--c',SLOT_COL[p[1]]||'#fff');const i=document.createElement('i');const b=document.createElement('b');b.textContent=cleanName(p[2])+(p[0]===NET.me?' (tú)':'');
     const sm=document.createElement('small');sm.textContent=(p[3]?'Campesina':'Campesino')+' · '+(DOG_NAMES[p[4]]||'Canelo')+(p[1]===0?' · creó la sala':'');li.append(i,b,sm);ul.appendChild(li);}
-  $('codeTxt').textContent=NET.code||'----';
+  showCode(NET.code||'----');
   const n=rows.length;
   if(NET.host){$('goBtn').hidden=false;
     $('lobbyWait').textContent=n<2?'Pásales el código o el QR a tus amigos. Cuando lleguen, empieza la noche (hasta 4 jugadores). También puedes empezar sin ellos: entran cuando quieran.':'Ya son '+n+'. ¡Cuando quieran, empiecen la noche!';

@@ -166,6 +166,7 @@ body.padland #minimap{bottom:auto!important;top:118px;width:clamp(70px,11vw,110p
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <script>
 "use strict";
 /* =========================================================
@@ -1001,26 +1002,45 @@ async function iceServers(){if(ICE)return ICE;const list=ICE_BASE.slice();
     list.push({urls:["turn:staticauth.openrelay.metered.ca:80","turn:staticauth.openrelay.metered.ca:443","turn:staticauth.openrelay.metered.ca:443?transport=tcp","turns:staticauth.openrelay.metered.ca:443?transport=tcp"],username:user,credential:btoa(b)})}catch(e){}
   ICE=list;return ICE}
 const peerOpts=()=>({config:{iceServers:ICE||ICE_BASE}});
+// modo internet: el PC y los celulares se hablan a través de un servidor público (no importa la red de cada uno)
+const BROKERS=window.TPX_BROKERS||["wss://broker.emqx.io:8084/mqtt","wss://broker.hivemq.com:8884/mqtt","wss://test.mosquitto.org:8081/mqtt"];
+const NS="turbopix-gp/v2/";
+function mqConnect(url,onMsg,onUp){if(!window.mqtt)return null;let cl;
+  try{cl=mqtt.connect(url,{clientId:"tpx_"+Math.random().toString(36).slice(2,12),keepalive:20,reconnectPeriod:2500,connectTimeout:8000,clean:true})}catch(e){return null}
+  cl.on("connect",()=>onUp&&onUp(cl));cl.on("message",(t,b)=>{let m;try{m=JSON.parse(b.toString())}catch(e){return}onMsg(t,m,cl)});cl.on("error",()=>{});return cl}
 const newCode=()=>{const L="ABCDEFGHJKLMNPQRSTUVWXYZ";return[0,0,0,0].map(()=>L[(Math.random()*L.length)|0]).join("")};
 const NET={code:"",url:"",msg:"Preparando sala...",conns:[null,null,null,null],peer:null,
   buzz(slot){const cn=this.conns[slot];if(cn&&cn.open){try{cn.send({t:"buzz"})}catch(e){}}else if(slot===G.local&&navigator.vibrate)navigator.vibrate(120)},
   sendAll(){this.conns.forEach((cn,slot)=>{const p=G.players[slot];if(!cn||!cn.open||!p)return;const c=race.cars.find(o=>o.human===slot);
     try{cn.send({t:"ui",scr:G.scr,ready:!!p.ready,row:ROWS[p.row][1],place:c?c.place:0,n:race.cars.length||4,lap:c?Math.min(LAPS,Math.max(1,c.lap)):1,champ:G.mode==="champ",fin:!!(c&&c.finished),paused:!!race.paused,cd:race.on&&race.count>0,me:{hair:p.hair,hc:p.hc,skin:p.skin,out:p.out,hat:p.hat,car:p.car}})}catch(e){}})},
   host(){const fail=t=>{this.msg=t;this.url="";if(G.scr==="lobby")render()};
-    if(!window.Peer||!window.RTCPeerConnection)return fail("La conexión entre celulares no funciona aquí. Publica el juego en GitHub Pages para jugar en grupo.");
+    const p2p=!!(window.Peer&&window.RTCPeerConnection);
+    if(!p2p&&!window.mqtt)return fail("La conexión entre celulares no funciona aquí. Publica el juego en GitHub Pages para jugar en grupo.");
     const start=async()=>{await iceServers();this.code=newCode();this.url=location.href.split("#")[0]+"#mando-"+this.code;let peer;
+      if(!p2p){this.relay();setTimeout(()=>{this.msg=this.mqs.some(c=>c.connected)?"Sala lista por internet. Entran hasta 4 pilotos.":"Sin conexión a internet. Puedes jugar solo en este dispositivo.";if(G.scr==="lobby")render()},4000);if(G.scr==="lobby")render();return}
       try{peer=new Peer(PREFIX+this.code,peerOpts())}catch(e){return fail("La conexión entre celulares no funciona aquí.")}
-      this.peer=peer;const to=setTimeout(()=>fail("Sin conexión a internet. Puedes jugar solo en este dispositivo."),9000);
-      peer.on("open",()=>{clearTimeout(to);this.msg="O abre el juego en el celular y escribe el código. Entran hasta 4 pilotos. Si un celular no logra entrar, conéctalo al mismo wifi del PC.";if(G.scr==="lobby")render()});
+      this.peer=peer;const to=setTimeout(()=>{if(this.mqs.some(c=>c.connected)){this.msg="Sala lista por internet. Entran hasta 4 pilotos.";if(G.scr==="lobby")render()}else fail("Sin conexión a internet. Puedes jugar solo en este dispositivo.")},9000);
+      peer.on("open",()=>{clearTimeout(to);this.msg="O abre el juego en el celular y escribe el código. Entran hasta 4 pilotos, con el wifi o los datos que tengan.";if(G.scr==="lobby")render()});
       peer.on("disconnected",()=>{setTimeout(()=>{try{if(!peer.destroyed&&peer.disconnected)peer.reconnect()}catch(e){}},1500)});
-      peer.on("error",e=>{const t=e&&e.type;clearTimeout(to);
+      peer.on("error",e=>{const t=e&&e.type;clearTimeout(to);if(t!=="unavailable-id"&&t!=="peer-unavailable"&&this.mqs.length){this.msg="Sala lista por internet. Entran hasta 4 pilotos.";if(G.scr==="lobby")render();return}
         if(t==="unavailable-id"){try{peer.destroy()}catch(_){}start();return}
         if(t==="peer-unavailable")return;
         if(t==="network"||t==="server-error"||t==="socket-error"||t==="socket-closed"||t==="disconnected"){this.msg="Reconectando la sala...";if(G.scr==="lobby")render();
           setTimeout(()=>{try{if(!peer.destroyed&&peer.disconnected)peer.reconnect()}catch(_){}},2500);return}
         fail("La conexión entre celulares no funciona aquí. Puedes jugar solo en este dispositivo.")});
-      peer.on("connection",cn=>this.accept(cn))};
+      peer.on("connection",cn=>this.accept(cn));this.relay()};
     start();setInterval(()=>this.watch(),1000)},
+  // conexiones por internet: cada celular es una "conexión virtual" con el mismo manejo que las directas
+  vcs:{},mqs:[],relay(){const top=NS+this.code+"/h";
+    if(!this.mqs.length)this.mqs=BROKERS.map(u=>mqConnect(u,(t,m,cl)=>this.relayIn(t,m,cl),cl=>{try{cl.subscribe(NS+this.code+"/h",{qos:0})}catch(e){}})).filter(Boolean);
+    else this.mqs.forEach(cl=>{try{cl.subscribe(top,{qos:0})}catch(e){}})},
+  relayIn(t,m,cl){if(!m||typeof m.f!=="string"||!m.m||t!==NS+this.code+"/h")return;const f=m.f.slice(0,40),k=f,msg=m.m;let vc=this.vcs[k];
+    if(vc&&vc.cl!==cl){vc.cl=cl}
+    if(!vc||!vc.open){if(msg.t==="bye")return;vc=this.vcs[k]={open:true,cl,h:{},on(e,fn){this.h[e]=fn},
+        send(x){if(!this.open)return;try{this.cl.publish(NS+NET.code+"/p/"+f,JSON.stringify(x),{qos:0})}catch(e){}},
+        close(){if(!this.open)return;this.open=false;try{this.cl.publish(NS+NET.code+"/p/"+f,JSON.stringify({t:"bye"}))}catch(e){}if(NET.vcs[k]===this)delete NET.vcs[k];this.h.close&&this.h.close()}};
+      this.accept(vc);vc.h.open&&vc.h.open();if(msg.t!=="hello")vc.h.data&&vc.h.data({t:"hello",cid:f,name:""})}
+    vc.h.data&&vc.h.data(msg)},
   accept(cn){let slot=-1;
     const bind=(cid,name)=>{if(slot>=0)return;
       if(cid)slot=G.players.findIndex(p=>p&&p.cid===cid);
@@ -1087,7 +1107,8 @@ function startController(code){
     phase=ph;Object.keys(PED).forEach(k=>PED[k]=0);
     if(ph==="dead")return;
     if(ph==="wait")root.innerHTML=`<h1 class="logo">TURBOPIX GP</h1><p class="lead">${tries>1?"Reconectando con":"Conectando a"} la sala ${esc(code)}...</p>
-      ${tries>2?`<p class="small">Si no conecta: 1) conecta este celular al mismo wifi del PC, 2) apaga el VPN o el ahorro de datos, 3) si recargaron la pantalla grande, escanea el QR nuevo.</p>`:""}<button class="btn ghost" id="rty">REINTENTAR AHORA</button>`;
+      ${tries>2?`<p class="small">Si no conecta: 1) conecta este celular al mismo wifi del PC, 2) apaga el VPN o el ahorro de datos, 3) si recargaron la pantalla grande, escanea el QR nuevo.</p>`:""}<button class="btn ghost" id="rty">REINTENTAR AHORA</button>
+      ${mq?`<p class="small">Conectando por internet (sirve con cualquier wifi o datos).</p><button class="btn ghost" id="mdD">PROBAR CONEXIÓN DIRECTA</button>`:`<button class="btn" id="mdN">CONECTAR POR INTERNET (OTRO WIFI O DATOS)</button>`}`;
     if(ph==="select"){root.innerHTML=`<h1 class="logo" style="font-size:30px">TU PILOTO</h1>${selHTML(sel,"C")}
       <button class="btn" id="go">LISTO</button><div class="small" id="sm">Lo que elijas se ve también en la pantalla grande. Al tocar LISTO se activa el sensor; en la carrera sostén el celular en horizontal.</div>`;
       sel.name=name;const i=$("nm");i.value=name;i.oninput=()=>{name=i.value.toUpperCase().slice(0,12);sel.name=name;try{localStorage.setItem("turbopix-name",name)}catch(e){}clearTimeout(nameT);nameT=setTimeout(()=>send({t:"name",v:name}),150)};
@@ -1109,24 +1130,37 @@ function startController(code){
     if(ph==="end"){root.innerHTML=`<h1 class="logo" style="font-size:34px">META</h1><p class="lead">Mira los resultados en la pantalla grande.</p>
       <button class="btn" id="nx">${st.champ&&st.scr==="results"?"SIGUIENTE PISTA":"REVANCHA"}</button><button class="btn ghost" id="mn">MENÚ</button>`;
       $("nx").onclick=()=>send({t:"next"});$("mn").onclick=()=>send({t:"menu"})}
-    const r=$("rty");if(r)r.onclick=()=>{tries=1;clearTimeout(rT);rT=null;busy=false;connect()}};
+    const r=$("rty");if(r)r.onclick=()=>{tries=1;clearTimeout(rT);rT=null;busy=false;connect()};
+    const mdN=$("mdN");if(mdN)mdN.onclick=()=>{netMode="net";try{localStorage.setItem("turbopix-net","net")}catch(e){}clearTimeout(rT);rT=null;busy=false;connect()};
+    const mdD=$("mdD");if(mdD)mdD.onclick=()=>{netMode="auto";direct=0;if(mq&&mq.cl){try{mq.cl.end(true)}catch(e){}}mq=null;try{localStorage.setItem("turbopix-net","auto")}catch(e){}clearTimeout(rT);rT=null;busy=false;connect()}};
+  let netMode=(()=>{try{return localStorage.getItem("turbopix-net")||"auto"}catch(e){return"auto"}})(),mq=null,direct=0;
   function retry(){if(dead||rT)return;conn=null;phase="";show();rT=setTimeout(()=>{rT=null;connect()},Math.min(5000,800+tries*700))}
-  function connect(){if(dead||busy)return;busy=true;tries++;
+  const onMsg=m=>{if(!m)return;lastMsg=Date.now();
+    if(m.t==="bye"){if(conn){conn=null;busy=false;retry()}return}
+    if(m.t==="full"){dead=true;root.innerHTML=`<h1 class="logo">SALA LLENA</h1><p class="lead">Ya hay 4 pilotos en esta sala.</p>`;return}
+    if(m.t==="buzz"&&navigator.vibrate)navigator.vibrate(150);
+    if(m.t==="ui"){const was=st&&st.scr,wasCd=st&&st.cd;st=m;if(m.me&&!selInit){selInit=true;Object.assign(sel,m.me);if(phase==="select")phase=""}if((m.scr==="race"&&was!=="race")||(wasCd&&!m.cd))TILT.calibrate();show()}};
+  // modo internet: prueba los servidores en orden y se queda con el primero que responda
+  function connectNet(){if(dead||busy)return;busy=true;tries++;conn=null;try{if(peer)peer.destroy()}catch(e){}peer=null;
+    if(!window.mqtt){busy=false;root.innerHTML=`<h1 class="logo">SIN RED</h1><p class="lead">No se pudo cargar el modo internet. Revisa la conexión y recarga.</p>`;return}
+    if(mq&&mq.cl){try{mq.cl.end(true)}catch(e){}}
+    const me=mq={i:0,cl:null};const tryB=()=>{if(mq!==me)return;if(me.i>=BROKERS.length)me.i=0;const url=BROKERS[me.i++],box=NS+code+"/p/"+cid;
+      const vc={open:true,send(x){try{cl.publish(NS+code+"/h",JSON.stringify({f:cid,m:x}),{qos:0})}catch(e){}},close(){this.open=false}};
+      const cl=mqConnect(url,(t,m)=>{if(mq===me&&t===box){if(!conn){conn=vc;tries=0;busy=false;show()}onMsg(m)}},c=>{c.subscribe(box,{qos:0},()=>{vc.send({t:"hello",cid,name});setTimeout(()=>{if(mq===me&&!conn)vc.send({t:"hello",cid,name})},1500)})});
+      me.cl=cl;setTimeout(()=>{if(mq===me&&!conn){try{cl.end(true)}catch(e){}tryB()}},7000)};tryB()}
+  function connect(){if(netMode==="net"||(netMode==="auto"&&direct>=2))return connectNet();if(dead||busy)return;busy=true;tries++;direct++;
     try{if(peer)peer.destroy()}catch(e){}conn=null;
     try{peer=new Peer(peerOpts())}catch(e){busy=false;dead=true;root.innerHTML=`<h1 class="logo">SIN RED</h1><p class="lead">Este navegador no permite la conexión.</p>`;return}
-    const me=peer,giveUp=setTimeout(()=>{if(me===peer&&!conn){busy=false;retry()}},9000);
+    const me=peer,giveUp=setTimeout(()=>{if(me===peer&&!conn){busy=false;retry()}},7000);
     me.on("open",()=>{const cn=me.connect(PREFIX+code,{reliable:true});
-      cn.on("open",()=>{if(me!==peer)return;clearTimeout(giveUp);busy=false;tries=0;conn=cn;lastMsg=Date.now();send({t:"hello",cid,name});show()});
-      cn.on("data",m=>{if(me!==peer||!m)return;lastMsg=Date.now();
-        if(m.t==="full"){dead=true;root.innerHTML=`<h1 class="logo">SALA LLENA</h1><p class="lead">Ya hay 4 pilotos en esta sala.</p>`;return}
-        if(m.t==="buzz"&&navigator.vibrate)navigator.vibrate(150);
-        if(m.t==="ui"){const was=st&&st.scr,wasCd=st&&st.cd;st=m;if(m.me&&!selInit){selInit=true;Object.assign(sel,m.me);if(phase==="select")phase=""}if((m.scr==="race"&&was!=="race")||(wasCd&&!m.cd))TILT.calibrate();show()}});
+      cn.on("open",()=>{if(me!==peer)return;clearTimeout(giveUp);busy=false;tries=0;direct=0;conn=cn;lastMsg=Date.now();send({t:"hello",cid,name});show()});
+      cn.on("data",m=>{if(me!==peer)return;onMsg(m)});
       const lost=()=>{if(me===peer&&conn===cn){conn=null;busy=false;retry()}};cn.on("close",lost);cn.on("error",lost)});
     me.on("error",()=>{if(me!==peer)return;clearTimeout(giveUp);busy=false;if(!conn)retry()});
     me.on("disconnected",()=>{try{if(!me.destroyed)me.reconnect()}catch(e){}})}
   // latido y envío del volante
   setInterval(()=>{if(conn&&conn.open){send({t:"hb"});if(Date.now()-lastMsg>6000){const c=conn;conn=null;try{c.close()}catch(e){}busy=false;retry()}}},1000);
-  setInterval(()=>{if(phase!=="race")return;const s=TILT.ok?TILT.steer():PED.l-PED.r;send({t:"in",s,a:PED.a,b:PED.b});
+  let inT=0;setInterval(()=>{if(phase!=="race")return;const s=TILT.ok?TILT.steer():PED.l-PED.r;if(!mq||++inT%2===0)send({t:"in",s,a:PED.a,b:PED.b});
     const wh=$("wh");if(wh)wh.style.transform=`rotate(${-s*90}deg)`},50);
   document.addEventListener("visibilitychange",()=>{if(!document.hidden){wake();if(!conn||!conn.open){tries=1;clearTimeout(rT);rT=null;busy=false;connect()}}});
   let pvT=performance.now();(function pv(){requestAnimationFrame(pv);const n=performance.now();drawPreviews(Math.min(.05,(n-pvT)/1000));pvT=n})();

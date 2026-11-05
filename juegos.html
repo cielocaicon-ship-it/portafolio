@@ -427,11 +427,13 @@
     </section>
 
     <!-- Carta del juego: se abre al elegir una petunia -->
-    <dialog class="cartas" id="cartaJuego" aria-label="Juego elegido">
+    <dialog class="cartas cartas--pantalla" id="cartaJuego" aria-label="Juego elegido">
       <button class="cartas__cerrar" type="button" aria-label="Cerrar la carta">&times;</button>
       <button class="cartas__nav cartas__nav--anterior" type="button" aria-label="Juego anterior"><span aria-hidden="true">‹</span></button>
       <button class="cartas__nav cartas__nav--siguiente" type="button" aria-label="Juego siguiente"><span aria-hidden="true">›</span></button>
       <article class="carta carta--petugol juego-card--petugol" data-indice="0" hidden aria-labelledby="carta-titulo-0">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-petugol.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="carta__portada">
           <img src="img/arcade-petugol.webp" alt="Pantalla de inicio de PetuGol con el formulario para elegir usuario y modo de juego." width="800" height="500" decoding="async">
           <span class="carta__numero" aria-hidden="true">01</span>
@@ -448,6 +450,8 @@
         </div>
       </article>
       <article class="carta carta--petupong juego-card--petupong" data-indice="1" hidden aria-labelledby="carta-titulo-1">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-pingpong.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="carta__portada">
           <img src="img/arcade-pingpong.webp" alt="Partido de PetuPong en la cancha de baloncesto, con las dos paletas y el marcador arriba." width="800" height="500" decoding="async">
           <span class="carta__numero" aria-hidden="true">02</span>
@@ -464,6 +468,8 @@
         </div>
       </article>
       <article class="carta carta--noche-de-espantos juego-card--noche-de-espantos" data-indice="2" hidden aria-labelledby="carta-titulo-2">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-noche-de-espantos.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="carta__portada">
           <img src="img/arcade-noche-de-espantos.webp" alt="Pantalla de inicio de Noche de Espantos con la lista de los espantos de la noche." width="800" height="500" decoding="async">
           <span class="carta__numero" aria-hidden="true">03</span>
@@ -480,6 +486,8 @@
         </div>
       </article>
       <article class="carta carta--condor-de-los-andes juego-card--condor-de-los-andes" data-indice="3" hidden aria-labelledby="carta-titulo-3">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-condor-de-los-andes.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="carta__portada">
           <img src="img/arcade-condor-de-los-andes.webp" alt="Pantalla de inicio de Cóndor de los Andes con la avioneta y la selección de piloto." width="800" height="500" decoding="async">
           <span class="carta__numero" aria-hidden="true">04</span>
@@ -496,6 +504,8 @@
         </div>
       </article>
       <article class="carta carta--estanco-nucita juego-card--estanco-nucita" data-indice="4" hidden aria-labelledby="carta-titulo-4">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-estanco-nucita.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="carta__portada">
           <img src="img/arcade-estanco-nucita.webp" alt="Pantalla de inicio de Estanco Nucita para crear la partida." width="800" height="500" decoding="async">
           <span class="carta__numero" aria-hidden="true">05</span>
@@ -512,6 +522,8 @@
         </div>
       </article>
       <article class="carta carta--turbopix-gp juego-card--turbopix-gp" data-indice="5" hidden aria-labelledby="carta-titulo-5">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-turbopix-gp.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="carta__portada">
           <img src="img/arcade-turbopix-gp.webp" alt="Carrera de TurboPix GP en la pista Pixel City: el kart rosado en la línea de salida junto a un rival, con el semáforo en rojo y el minimapa." width="800" height="500" decoding="async">
           <span class="carta__numero" aria-hidden="true">06</span>
@@ -527,6 +539,14 @@
           </div>
         </div>
       </article>
+      <div class="cartas__puntos" role="group" aria-label="Elegir juego">
+        <button class="cartas__punto" type="button" data-indice="0" aria-label="PetuGol"></button>
+        <button class="cartas__punto" type="button" data-indice="1" aria-label="PetuPong"></button>
+        <button class="cartas__punto" type="button" data-indice="2" aria-label="Noche de Espantos"></button>
+        <button class="cartas__punto" type="button" data-indice="3" aria-label="Cóndor de los Andes"></button>
+        <button class="cartas__punto" type="button" data-indice="4" aria-label="Estanco Nucita"></button>
+        <button class="cartas__punto" type="button" data-indice="5" aria-label="TurboPix GP"></button>
+      </div>
       <!-- Animación al darle Jugar (se pinta encima de todo) -->
       <div class="arranque" id="arranque" aria-hidden="true" hidden>
         <div class="arranque__circulo"></div>

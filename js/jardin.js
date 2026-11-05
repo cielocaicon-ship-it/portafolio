@@ -205,6 +205,7 @@
       c.classList.remove("carta--desde-der", "carta--desde-izq");
     });
     cartaActual = indice;
+    prepararCarta(indice);
     abiertaDesde = document.activeElement;
     dialogo.classList.remove("cartas--sale");
     if (!dialogo.open) dialogo.showModal();
@@ -232,7 +233,68 @@
     });
     if (!menosMovimiento) cartas[nuevo].classList.add(paso > 0 ? "carta--desde-der" : "carta--desde-izq");
     cartaActual = nuevo;
+    prepararCarta(nuevo);
     irA(nuevo);
+  }
+
+  /* ---------- Presentación a pantalla completa ----------
+     - El nombre del juego entra letra por letra.
+     - Los puntitos de abajo muestran en qué juego vas.
+     - La portada se inclina siguiendo el mouse (efecto 3D). */
+  var puntos = dialogo ? Array.prototype.slice.call(dialogo.querySelectorAll(".cartas__punto")) : [];
+
+  function prepararCarta(indice) {
+    var carta = cartas[indice];
+    if (!carta) return;
+    var titulo = carta.querySelector(".carta__titulo");
+    if (titulo && !titulo.getAttribute("data-letras")) {
+      var texto = titulo.textContent;
+      titulo.textContent = "";
+      var leer = document.createElement("span");   // lo que lee el lector de pantalla
+      leer.className = "solo-lector";
+      leer.textContent = texto;
+      titulo.appendChild(leer);
+      // Cada palabra va junta (para que no se parta) y cada letra entra sola
+      var n = 0;
+      texto.split(" ").forEach(function (palabra, p) {
+        if (p > 0) titulo.appendChild(document.createTextNode(" "));
+        var caja = document.createElement("span");
+        caja.className = "carta__palabra";
+        caja.setAttribute("aria-hidden", "true");
+        Array.prototype.forEach.call(palabra, function (letra) {
+          var span = document.createElement("span");
+          span.className = "carta__letra";
+          span.style.setProperty("--i", n++);
+          span.textContent = letra;
+          caja.appendChild(span);
+        });
+        titulo.appendChild(caja);
+      });
+      titulo.setAttribute("data-letras", "si");
+    }
+    puntos.forEach(function (p, i) {
+      if (i === indice) p.setAttribute("aria-current", "true");
+      else p.removeAttribute("aria-current");
+    });
+    // El color del juego también tiñe los botones de la pantalla
+    dialogo.style.setProperty("--neon", getComputedStyle(carta).getPropertyValue("--neon").trim());
+  }
+
+  puntos.forEach(function (p, i) {
+    p.addEventListener("click", function () {
+      if (i !== cartaActual) cambiarCarta(i - cartaActual);
+    });
+  });
+
+  if (dialogo && !menosMovimiento && window.matchMedia("(pointer: fine)").matches) {
+    dialogo.addEventListener("pointermove", function (e) {
+      var portada = cartas[cartaActual] && cartas[cartaActual].querySelector(".carta__portada");
+      if (!portada) return;
+      var rx = (e.clientY / window.innerHeight - 0.5) * -10;
+      var ry = (e.clientX / window.innerWidth - 0.5) * 16;
+      portada.style.setProperty("--rx", rx.toFixed(2) + "deg");
+      portada.style.setProperty("--ry", ry.toFixed(2) + "deg");
+    });
   }
 
   if (dialogo) {

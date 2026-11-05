@@ -5482,3 +5482,397 @@ main > .jardin--portada {
 
 /* TurboPix GP: violeta neón */
 .juego-card--turbopix-gp { --neon: #9B6BFF; }
+
+/* ============================================================
+   30. Presentación de cada juego a pantalla completa
+   (reemplaza la carta en caja: fondo con la imagen del juego,
+   portada flotando en 3D y el nombre entrando letra por letra)
+   ============================================================ */
+.cartas--pantalla {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: hidden;
+  color: #fff;
+}
+
+.cartas--pantalla::backdrop {
+  background-color: #050608;
+  backdrop-filter: none;
+}
+
+.cartas--pantalla .carta {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: clamp(4rem, 8vh, 6rem) clamp(4.5rem, 8vw, 8rem) 6rem;
+  overflow-y: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.cartas--pantalla .carta[hidden] { display: none; }
+
+/* Sin la vuelta de la carta en caja */
+.cartas--pantalla[open] .carta:not([hidden]) {
+  animation: presenta-fundido 0.45s ease;
+}
+
+@keyframes presenta-fundido {
+  from { opacity: 0; }
+}
+
+/* Fondo: la misma imagen del juego, gigante y borrosa, con el color del juego */
+.carta__fondo {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.carta__fondo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(22px) brightness(0.4) saturate(1.3);
+  transform: scale(1.15);
+  animation: fondo-respira 14s ease-in-out infinite alternate;
+}
+
+@keyframes fondo-respira {
+  to { transform: scale(1.28) translate(-2%, 1%); }
+}
+
+.carta__fondo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 28% 45%, color-mix(in srgb, var(--neon) 45%, transparent), transparent 55%),
+    radial-gradient(circle at 80% 90%, color-mix(in srgb, var(--neon) 25%, transparent), transparent 50%),
+    linear-gradient(to bottom, rgba(5, 6, 8, 0.2), rgba(5, 6, 8, 0.85));
+}
+
+/* Chispas del color del juego que suben despacio */
+.carta__chispas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.carta__chispas i {
+  position: absolute;
+  bottom: -2rem;
+  width: 0.7rem;
+  height: 1rem;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background-color: var(--neon);
+  box-shadow: 0 0 12px var(--neon);
+  opacity: 0;
+  animation: chispa-sube 9s linear infinite;
+}
+
+.carta__chispas i:nth-child(1)  { left: 5%;  animation-delay: 0s; }
+.carta__chispas i:nth-child(2)  { left: 14%; animation-delay: -1.5s; animation-duration: 11s; }
+.carta__chispas i:nth-child(3)  { left: 23%; animation-delay: -4s; }
+.carta__chispas i:nth-child(4)  { left: 32%; animation-delay: -6s; animation-duration: 12s; }
+.carta__chispas i:nth-child(5)  { left: 41%; animation-delay: -2.5s; }
+.carta__chispas i:nth-child(6)  { left: 50%; animation-delay: -7.5s; animation-duration: 10s; }
+.carta__chispas i:nth-child(7)  { left: 59%; animation-delay: -3s; }
+.carta__chispas i:nth-child(8)  { left: 68%; animation-delay: -5.5s; animation-duration: 13s; }
+.carta__chispas i:nth-child(9)  { left: 77%; animation-delay: -1s; }
+.carta__chispas i:nth-child(10) { left: 86%; animation-delay: -8s; animation-duration: 11s; }
+.carta__chispas i:nth-child(11) { left: 93%; animation-delay: -4.5s; }
+.carta__chispas i:nth-child(12) { left: 47%; animation-delay: -6.5s; animation-duration: 14s; }
+
+@keyframes chispa-sube {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0); }
+  10% { opacity: 0.8; }
+  50% { transform: translate(2.5rem, -55vh) rotate(180deg); }
+  90% { opacity: 0.6; }
+  100% { opacity: 0; transform: translate(-1.5rem, -110vh) rotate(360deg); }
+}
+
+/* La portada del juego flotando en 3D */
+.cartas--pantalla .carta__portada {
+  --rx: 0deg;
+  --ry: 0deg;
+  overflow: visible;
+  border-radius: 1.1rem;
+  background: transparent;
+  aspect-ratio: 8 / 5;
+  transform: perspective(70rem) rotateX(calc(4deg + var(--rx))) rotateY(calc(-14deg + var(--ry)));
+  transition: transform 0.25s ease-out;
+  animation: portada-llega 0.8s cubic-bezier(0.2, 0.8, 0.25, 1.1) both;
+}
+
+@keyframes portada-llega {
+  from { opacity: 0; translate: -18vw 6vh; scale: 0.6; rotate: -12deg; }
+}
+
+.cartas--pantalla .carta__portada img {
+  border-radius: 1.1rem;
+  border: 4px solid var(--neon);
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.06),
+    0 0 3rem color-mix(in srgb, var(--neon) 65%, transparent),
+    0 2.5rem 4rem rgba(0, 0, 0, 0.6);
+  -webkit-box-reflect: below 14px linear-gradient(transparent 60%, rgba(255, 255, 255, 0.18));
+  animation: portada-flota 5s ease-in-out 0.8s infinite;
+}
+
+@keyframes portada-flota {
+  50% { translate: 0 -14px; }
+}
+
+/* Brillo que cruza la portada */
+.cartas--pantalla .carta__portada::after {
+  border-radius: 1.1rem;
+  animation: brillo-carta 1.4s 0.7s ease forwards;
+}
+
+.cartas--pantalla .carta__numero {
+  top: -1.4rem;
+  left: -1.2rem;
+  right: auto;
+  bottom: auto;
+  display: grid;
+  place-items: center;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 50%;
+  background-color: var(--neon);
+  color: #08090B;
+  font-size: 1.8rem;
+  text-shadow: none;
+  box-shadow: 0 0 1.5rem var(--neon);
+  transform: rotate(-10deg);
+}
+
+/* Texto: entra por partes */
+.cartas--pantalla .carta__cuerpo {
+  padding: 0;
+  max-width: 34rem;
+}
+
+.cartas--pantalla .carta__cuerpo > * {
+  animation: texto-sube 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.cartas--pantalla .carta__tag { animation-delay: 0.25s; background-color: rgba(8, 9, 11, 0.5); font-size: 0.85rem; }
+.cartas--pantalla .carta__texto { animation-delay: 0.55s; }
+.cartas--pantalla .carta__info { animation-delay: 0.65s; }
+.cartas--pantalla .carta__acciones { animation-delay: 0.75s; }
+.cartas--pantalla .carta__titulo { animation: none; }
+
+@keyframes texto-sube {
+  from { opacity: 0; transform: translateY(1.5rem); }
+}
+
+.cartas--pantalla .carta__titulo {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0.4rem 0 0.8rem;
+  color: #fff;
+  text-shadow: 0 0 2rem color-mix(in srgb, var(--neon) 70%, transparent), 0 0.3rem 0 rgba(0, 0, 0, 0.35);
+}
+
+.carta__letra {
+  display: inline-block;
+  animation: letra-cae 0.55s cubic-bezier(0.2, 0.8, 0.25, 1.3) both;
+  animation-delay: calc(0.3s + var(--i) * 0.04s);
+}
+
+@keyframes letra-cae {
+  from { opacity: 0; transform: translateY(-1.2em) rotate(-12deg) scale(0.6); }
+}
+
+.cartas--pantalla .carta__texto {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.05rem;
+}
+
+.cartas--pantalla .carta__info li {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--neon) 55%, transparent);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.85rem;
+}
+
+.cartas--pantalla .carta__jugar {
+  padding: 1rem 2.4rem;
+  font-size: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Reflejo que pasa por el botón Jugar */
+.cartas--pantalla .carta__jugar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: brillo-boton 2.8s 1.2s ease-in-out infinite;
+}
+
+@keyframes brillo-boton {
+  0% { transform: translateX(-120%); }
+  40%, 100% { transform: translateX(120%); }
+}
+
+.cartas--pantalla .carta__codigo {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+/* Botones de la pantalla: cerrar, flechas y puntitos */
+.cartas--pantalla .cartas__cerrar {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 5;
+  border-color: var(--neon, #fff);
+}
+
+.cartas--pantalla .cartas__nav {
+  position: fixed;
+  top: 50%;
+  margin-top: -1.75rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: var(--neon, #fff);
+  background-color: rgba(8, 9, 11, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.cartas--pantalla .cartas__nav--anterior { left: 1.2rem; }
+.cartas--pantalla .cartas__nav--siguiente { right: 1.2rem; }
+
+.cartas__puntos {
+  position: fixed;
+  left: 50%;
+  bottom: 1.4rem;
+  z-index: 5;
+  display: flex;
+  gap: 0.6rem;
+  translate: -50% 0;
+}
+
+.cartas__punto {
+  width: 0.8rem;
+  height: 0.8rem;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.cartas__punto[aria-current="true"] {
+  width: 2.2rem;
+  background-color: var(--neon, #fff);
+  border-color: var(--neon, #fff);
+}
+
+.cartas__punto:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.cartas--despegando .cartas__puntos { visibility: hidden; }
+
+/* Celular: portada arriba, texto abajo */
+@media (max-width: 48rem) {
+  .cartas--pantalla .carta {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 2.2rem;
+    padding: 4.5rem 1.2rem 5rem;
+  }
+
+  .cartas--pantalla .carta__portada {
+    transform: perspective(60rem) rotateX(3deg) rotateY(-6deg);
+    margin: 0 0.6rem;
+  }
+
+  .cartas--pantalla .carta__portada img {
+    -webkit-box-reflect: unset;
+  }
+
+  .cartas--pantalla .carta__numero {
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 1.4rem;
+  }
+
+  .cartas--pantalla .cartas__nav {
+    top: 1.2rem;
+    margin-top: 0;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .cartas--pantalla .cartas__nav--anterior { left: 1.2rem; }
+  .cartas--pantalla .cartas__nav--siguiente { left: 4.4rem; right: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carta__fondo img,
+  .carta__chispas i,
+  .cartas--pantalla .carta__portada,
+  .cartas--pantalla .carta__portada img,
+  .cartas--pantalla .carta__cuerpo > *,
+  .carta__letra,
+  .cartas--pantalla .carta__jugar::after {
+    animation: none;
+  }
+}
+
+/* Las palabras del nombre no se parten */
+.carta__palabra {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* El brillo de la portada se queda dentro de ella */
+.cartas--pantalla .carta__portada::after {
+  transform: none;
+  border-radius: 1.1rem;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%);
+  background-size: 300% 100%;
+  background-position: 120% 0;
+  animation: brillo-portada 1.4s 0.7s ease both;
+}
+
+@keyframes brillo-portada {
+  from { background-position: 120% 0; }
+  to { background-position: -20% 0; }
+}
+
+/* Sin el recuadro del navegador al hacer clic en una petunia
+   (con teclado se usan los botones de abajo, que sí lo muestran) */
+.flor a:focus {
+  outline: none;
+}
+
+/* La burbuja de Nucita no tapa los clics de las petunias */
+.burbuja {
+  pointer-events: none;
+}

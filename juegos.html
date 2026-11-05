@@ -37,10 +37,15 @@
         <p class="migas migas--jardin"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
         <p class="jardin__kicker">Saga Petunia · 6 juegos</p>
         <h1 id="arcade-title" class="jardin__h1">Video<span>juegos</span></h1>
-        <p class="jardin__intro">Programados y diseñados por mí. Cada petunia es un juego: pasa el mouse o toca una y Nucita corre a mostrarte de qué se trata. Si tocas el pasto, María le lanza la pelota.</p>
+        <p class="jardin__intro"><span>Bienvenido al <strong>jardín de Nucita</strong>: cada petunia es un juego. Tócala para conocerlo.</span></p>
       </div>
       <svg class="jardin__escena" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
         <defs>
+          <clipPath id="centro-petunia"><circle r="22"/></clipPath>
+          <linearGradient id="degradado-pasto" x1="0" y1="0" x2="0" y2="1">
+            <stop class="pasto__arriba" offset="0"/>
+            <stop class="pasto__abajo" offset="1"/>
+          </linearGradient>
           <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
             <stop class="cielo__arriba" offset="0"/>
             <stop class="cielo__abajo" offset="1"/>
@@ -61,7 +66,13 @@
         <g class="paralaje" data-prof="20">
           <path class="jardin__loma" d="M-40 400 Q 200 330 420 380 T 840 370 T 1240 360 L1240 520 L-40 520 Z"/>
         </g>
-        <rect class="jardin__pasto" x="0" y="420" width="1200" height="100"/>
+        <g class="jardin__cerca" aria-hidden="true">
+          <rect class="cerca__riel" x="0" y="396" width="1200" height="6" rx="3"/>
+          <rect class="cerca__riel" x="0" y="410" width="1200" height="6" rx="3"/>
+          <rect x="6" y="386" width="11" height="36" rx="5"/><rect x="44" y="386" width="11" height="36" rx="5"/><rect x="82" y="386" width="11" height="36" rx="5"/><rect x="120" y="386" width="11" height="36" rx="5"/><rect x="158" y="386" width="11" height="36" rx="5"/><rect x="196" y="386" width="11" height="36" rx="5"/><rect x="234" y="386" width="11" height="36" rx="5"/><rect x="272" y="386" width="11" height="36" rx="5"/><rect x="310" y="386" width="11" height="36" rx="5"/><rect x="348" y="386" width="11" height="36" rx="5"/><rect x="386" y="386" width="11" height="36" rx="5"/><rect x="424" y="386" width="11" height="36" rx="5"/><rect x="462" y="386" width="11" height="36" rx="5"/><rect x="500" y="386" width="11" height="36" rx="5"/><rect x="538" y="386" width="11" height="36" rx="5"/><rect x="576" y="386" width="11" height="36" rx="5"/><rect x="614" y="386" width="11" height="36" rx="5"/><rect x="652" y="386" width="11" height="36" rx="5"/><rect x="690" y="386" width="11" height="36" rx="5"/><rect x="728" y="386" width="11" height="36" rx="5"/><rect x="766" y="386" width="11" height="36" rx="5"/><rect x="804" y="386" width="11" height="36" rx="5"/><rect x="842" y="386" width="11" height="36" rx="5"/><rect x="880" y="386" width="11" height="36" rx="5"/><rect x="918" y="386" width="11" height="36" rx="5"/><rect x="956" y="386" width="11" height="36" rx="5"/><rect x="994" y="386" width="11" height="36" rx="5"/><rect x="1032" y="386" width="11" height="36" rx="5"/><rect x="1070" y="386" width="11" height="36" rx="5"/><rect x="1108" y="386" width="11" height="36" rx="5"/><rect x="1146" y="386" width="11" height="36" rx="5"/><rect x="1184" y="386" width="11" height="36" rx="5"/>
+        </g>
+        <rect class="jardin__pasto" x="0" y="420" width="1200" height="110" fill="url(#degradado-pasto)"/>
+        <g class="jardin__margaritas"><g transform="translate(60 470)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(250 500)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(330 455)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(470 488)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(610 462)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(735 505)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(820 470)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(990 492)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(1080 458)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(1170 480)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(160 505)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g><g transform="translate(540 512)"><circle cx="-4" r="3.4"/><circle cx="4" r="3.4"/><circle cy="-4" r="3.4"/><circle cy="4" r="3.4"/><circle class="margarita__centro" r="2.6"/></g></g>
         <path class="jardin__pastito" d="M30 420 l6 -14 l6 14 M210 420 l5 -12 l5 12 M460 420 l6 -15 l6 15 M630 420 l5 -12 l5 12 M790 420 l6 -14 l6 14 M960 420 l5 -13 l5 13 M1130 420 l6 -15 l6 15"/>
         <g class="mariposa mariposa--1"><path d="M0 0 C -14 -16 -22 2 0 4 C 22 2 14 -16 0 0 Z"/></g>
         <g class="mariposa mariposa--2"><path d="M0 0 C -12 -14 -19 2 0 3 C 19 2 12 -14 0 0 Z"/></g>
@@ -122,6 +133,7 @@
       </g>
       <g class="flor juego-card--petugol" data-indice="0" data-x="380" data-nombre="PetuGol" transform="translate(380 420)">
         <a href="futbol.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
             <path class="flor__tallo" d="M0 0 C -14 -52 12 -105 0 -150"/>
             <ellipse class="flor__hoja" cx="-17" cy="-54" rx="20" ry="9" transform="rotate(-30 -17 -54)"/>
@@ -145,7 +157,8 @@
                   <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
                   <circle class="petunia__garganta" r="13"/>
                 </g>
-                <text class="flor__icono" y="7" text-anchor="middle">⚽</text>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-petugol.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
               </g>
               <!-- Cartelito con el nombre: aparece al pasar el mouse -->
               <g transform="translate(0 -74)">
@@ -160,6 +173,7 @@
       </g>
       <g class="flor juego-card--petupong" data-indice="1" data-x="545" data-nombre="PetuPong" transform="translate(545 420)">
         <a href="pingpong.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
             <path class="flor__tallo" d="M0 0 C -14 -68 12 -136 0 -195"/>
             <ellipse class="flor__hoja" cx="-17" cy="-70" rx="20" ry="9" transform="rotate(-30 -17 -70)"/>
@@ -183,7 +197,8 @@
                   <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
                   <circle class="petunia__garganta" r="13"/>
                 </g>
-                <text class="flor__icono" y="7" text-anchor="middle">🏓</text>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-petupong.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
               </g>
               <!-- Cartelito con el nombre: aparece al pasar el mouse -->
               <g transform="translate(0 -74)">
@@ -198,6 +213,7 @@
       </g>
       <g class="flor juego-card--noche-de-espantos" data-indice="2" data-x="710" data-nombre="Noche de Espantos" transform="translate(710 420)">
         <a href="noche-de-espantos.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
             <path class="flor__tallo" d="M0 0 C -14 -56 12 -112 0 -160"/>
             <ellipse class="flor__hoja" cx="-17" cy="-58" rx="20" ry="9" transform="rotate(-30 -17 -58)"/>
@@ -221,7 +237,8 @@
                   <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
                   <circle class="petunia__garganta" r="13"/>
                 </g>
-                <text class="flor__icono" y="7" text-anchor="middle">👻</text>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-noche-de-espantos.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
               </g>
               <!-- Cartelito con el nombre: aparece al pasar el mouse -->
               <g transform="translate(0 -74)">
@@ -236,6 +253,7 @@
       </g>
       <g class="flor juego-card--condor-de-los-andes" data-indice="3" data-x="875" data-nombre="Cóndor de los Andes" transform="translate(875 420)">
         <a href="condor-de-los-andes.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
             <path class="flor__tallo" d="M0 0 C -14 -72 12 -144 0 -205"/>
             <ellipse class="flor__hoja" cx="-17" cy="-74" rx="20" ry="9" transform="rotate(-30 -17 -74)"/>
@@ -259,7 +277,8 @@
                   <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
                   <circle class="petunia__garganta" r="13"/>
                 </g>
-                <text class="flor__icono" y="7" text-anchor="middle">✈️</text>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-condor-de-los-andes.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
               </g>
               <!-- Cartelito con el nombre: aparece al pasar el mouse -->
               <g transform="translate(0 -74)">
@@ -274,6 +293,7 @@
       </g>
       <g class="flor juego-card--estanco-nucita" data-indice="4" data-x="1040" data-nombre="Estanco Nucita" transform="translate(1040 420)">
         <a href="estanco-nucita.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
             <path class="flor__tallo" d="M0 0 C -14 -59 12 -119 0 -170"/>
             <ellipse class="flor__hoja" cx="-17" cy="-61" rx="20" ry="9" transform="rotate(-30 -17 -61)"/>
@@ -297,7 +317,8 @@
                   <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
                   <circle class="petunia__garganta" r="13"/>
                 </g>
-                <text class="flor__icono" y="7" text-anchor="middle">🏪</text>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-estanco-nucita.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
               </g>
               <!-- Cartelito con el nombre: aparece al pasar el mouse -->
               <g transform="translate(0 -74)">
@@ -312,6 +333,7 @@
       </g>
       <g class="flor juego-card--turbopix-gp" data-indice="5" data-x="1100" data-nombre="TurboPix GP" transform="translate(1100 420)">
         <a href="turbopix-gp.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
             <path class="flor__tallo" d="M0 0 C -14 -65 12 -130 0 -185"/>
             <ellipse class="flor__hoja" cx="-17" cy="-67" rx="20" ry="9" transform="rotate(-30 -17 -67)"/>
@@ -335,7 +357,8 @@
                   <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
                   <circle class="petunia__garganta" r="13"/>
                 </g>
-                <text class="flor__icono" y="7" text-anchor="middle">🏎️</text>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-turbopix-gp.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
               </g>
               <!-- Cartelito con el nombre: aparece al pasar el mouse -->
               <g transform="translate(0 -74)">
@@ -417,12 +440,12 @@
       </g>
       </svg>
       <ul class="jardin__lista">
-        <li class="juego-card--petugol"><a href="futbol.html" data-indice="0"><span aria-hidden="true">⚽</span> PetuGol</a></li>
-        <li class="juego-card--petupong"><a href="pingpong.html" data-indice="1"><span aria-hidden="true">🏓</span> PetuPong</a></li>
-        <li class="juego-card--noche-de-espantos"><a href="noche-de-espantos.html" data-indice="2"><span aria-hidden="true">👻</span> Noche de Espantos</a></li>
-        <li class="juego-card--condor-de-los-andes"><a href="condor-de-los-andes.html" data-indice="3"><span aria-hidden="true">✈️</span> Cóndor de los Andes</a></li>
-        <li class="juego-card--estanco-nucita"><a href="estanco-nucita.html" data-indice="4"><span aria-hidden="true">🏪</span> Estanco Nucita</a></li>
-        <li class="juego-card--turbopix-gp"><a href="turbopix-gp.html" data-indice="5"><span aria-hidden="true">🏎️</span> TurboPix GP</a></li>
+        <li class="juego-card--petugol"><a href="futbol.html" data-indice="0"><img class="jardin__mini" src="img/petunia-petugol.webp" alt="" width="40" height="40"> PetuGol</a></li>
+        <li class="juego-card--petupong"><a href="pingpong.html" data-indice="1"><img class="jardin__mini" src="img/petunia-petupong.webp" alt="" width="40" height="40"> PetuPong</a></li>
+        <li class="juego-card--noche-de-espantos"><a href="noche-de-espantos.html" data-indice="2"><img class="jardin__mini" src="img/petunia-noche-de-espantos.webp" alt="" width="40" height="40"> Noche de Espantos</a></li>
+        <li class="juego-card--condor-de-los-andes"><a href="condor-de-los-andes.html" data-indice="3"><img class="jardin__mini" src="img/petunia-condor-de-los-andes.webp" alt="" width="40" height="40"> Cóndor de los Andes</a></li>
+        <li class="juego-card--estanco-nucita"><a href="estanco-nucita.html" data-indice="4"><img class="jardin__mini" src="img/petunia-estanco-nucita.webp" alt="" width="40" height="40"> Estanco Nucita</a></li>
+        <li class="juego-card--turbopix-gp"><a href="turbopix-gp.html" data-indice="5"><img class="jardin__mini" src="img/petunia-turbopix-gp.webp" alt="" width="40" height="40"> TurboPix GP</a></li>
       </ul>
     </section>
 
@@ -439,7 +462,7 @@
           <span class="carta__numero" aria-hidden="true">01</span>
         </div>
         <div class="carta__cuerpo">
-          <p class="carta__tag"><span aria-hidden="true">⚽</span> Fútbol 2D · estilo Atari</p>
+          <p class="carta__tag">Fútbol 2D · estilo Atari</p>
           <h3 class="carta__titulo" id="carta-titulo-0">PetuGol</h3>
           <p class="carta__texto">Futbolito arcade 6 contra 6 visto desde arriba, inspirado en el fútbol clásico de consola. Juegas contra Petunia en un partido o en un mini torneo, o en línea con tus amigos.</p>
           <ul class="carta__info"><li>Contra Petunia</li><li>En línea con amigos</li><li>PC y celular</li></ul>
@@ -457,7 +480,7 @@
           <span class="carta__numero" aria-hidden="true">02</span>
         </div>
         <div class="carta__cuerpo">
-          <p class="carta__tag"><span aria-hidden="true">🏓</span> Ping-Pong</p>
+          <p class="carta__tag">Ping-Pong</p>
           <h3 class="carta__titulo" id="carta-titulo-1">PetuPong</h3>
           <p class="carta__texto">Ping-pong contra Petunia, la máquina que casi nunca pierde, en cancha de baloncesto, fútbol o hockey de mesa. También se juega de a dos en el mismo computador.</p>
           <ul class="carta__info"><li>Contra Petunia</li><li>2 jugadores</li><li>PC y celular</li></ul>
@@ -475,7 +498,7 @@
           <span class="carta__numero" aria-hidden="true">03</span>
         </div>
         <div class="carta__cuerpo">
-          <p class="carta__tag"><span aria-hidden="true">👻</span> 3D · terror</p>
+          <p class="carta__tag">3D · terror</p>
           <h3 class="carta__titulo" id="carta-titulo-2">Noche de Espantos</h3>
           <p class="carta__texto">Un campesino y su perrito defienden la finca de los espantos colombianos hasta que cante el gallo a las 6:00 a. m.: la Patasola, la Llorona, el Mohán y muchos más.</p>
           <ul class="carta__info"><li>Solo</li><li>Hasta 4 amigos en línea</li><li>3D</li></ul>
@@ -493,7 +516,7 @@
           <span class="carta__numero" aria-hidden="true">04</span>
         </div>
         <div class="carta__cuerpo">
-          <p class="carta__tag"><span aria-hidden="true">✈️</span> 3D · guerra aérea</p>
+          <p class="carta__tag">3D · guerra aérea</p>
           <h3 class="carta__titulo" id="carta-titulo-3">Cóndor de los Andes</h3>
           <p class="carta__texto">Con Nucita de copiloto persigues a Petunia por la historia de Colombia, desde Cartagena 1741 hasta Cúcuta 2030.</p>
           <ul class="carta__info"><li>1 jugador</li><li>Piloto María o Pedro</li><li>3D</li></ul>
@@ -511,7 +534,7 @@
           <span class="carta__numero" aria-hidden="true">05</span>
         </div>
         <div class="carta__cuerpo">
-          <p class="carta__tag"><span aria-hidden="true">🏪</span> Simulación</p>
+          <p class="carta__tag">Simulación</p>
           <h3 class="carta__titulo" id="carta-titulo-4">Estanco Nucita</h3>
           <p class="carta__texto">Pamela atiende su estanco con la perrita Nucita y tiene que vender la cerveza bien fría a los clientes del barrio.</p>
           <ul class="carta__info"><li>1 jugador</li><li>Con la perrita Nucita</li></ul>
@@ -529,7 +552,7 @@
           <span class="carta__numero" aria-hidden="true">06</span>
         </div>
         <div class="carta__cuerpo">
-          <p class="carta__tag"><span aria-hidden="true">🏎️</span> 3D · carreras</p>
+          <p class="carta__tag">3D · carreras</p>
           <h3 class="carta__titulo" id="carta-titulo-5">TurboPix GP</h3>
           <p class="carta__texto">Carreras de karts en low poly por 4 pistas, entre ellas Costa Caribe. Juega solo contra bots o con hasta 4 amigos usando el celular como volante: se unen escaneando un código QR.</p>
           <ul class="carta__info"><li>Solo contra bots</li><li>Hasta 4 con el celular de volante</li><li>3D</li></ul>

@@ -5876,3 +5876,134 @@ main > .jardin--portada {
 .burbuja {
   pointer-events: none;
 }
+
+/* ============================================================
+   31. Jardín: menos cielo, texto de bienvenida, cerca,
+       margaritas y mini imagen de cada juego en su petunia
+   ============================================================ */
+.jardin__escena {
+  -webkit-user-select: none;
+  user-select: none;          /* sin la rayita de escribir al tocar */
+}
+
+/* Menos cielo en computador: el jardín se entiende de una */
+@media (min-width: 62rem) {
+  .jardin--portada .jardin__escena {
+    height: clamp(22rem, 36vw, 32rem);
+  }
+}
+
+.jardin__encabezado {
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-sm);
+}
+
+.jardin__h1 {
+  padding-bottom: 0.12em;     /* espacio para la colita de la "g" */
+  margin-bottom: 0.6rem;
+}
+
+/* Frase de bienvenida en una pastilla, separada del título */
+.jardin--portada .jardin__intro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: none;
+  margin: 0 auto;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(11, 61, 42, 0.15);
+  box-shadow: 0 0.4rem 1.2rem rgba(11, 61, 42, 0.12);
+  color: #16302A;
+  font-size: 1rem;
+  line-height: 1.4;
+  animation: texto-sube 0.6s 0.4s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.jardin--portada .jardin__intro::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFE27A 28%, #FF4FA3 30% 60%, transparent 62%);
+}
+
+.jardin--portada .jardin__intro strong {
+  color: #0B5C3B;
+}
+
+:root[data-theme="dark"] .jardin--portada .jardin__intro {
+  background-color: rgba(15, 27, 61, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #EEF0F3;
+}
+
+:root[data-theme="dark"] .jardin--portada .jardin__intro strong {
+  color: #6FCF8F;
+}
+
+/* Pasto con degradado */
+.pasto__arriba { stop-color: #6CC66A; }
+.pasto__abajo { stop-color: #4A9F48; }
+:root[data-theme="dark"] .pasto__arriba { stop-color: #2B5A37; }
+:root[data-theme="dark"] .pasto__abajo { stop-color: #1C3D25; }
+
+/* Cerca blanca de jardín detrás de las flores */
+.jardin__cerca rect {
+  fill: #FFFFFF;
+  stroke: #D8CDBF;
+  stroke-width: 1.5;
+}
+
+:root[data-theme="dark"] .jardin__cerca rect {
+  fill: #9AA6BE;
+  stroke: #6B7690;
+}
+
+/* Margaritas en el pasto */
+.jardin__margaritas circle { fill: #FFFFFF; }
+.jardin__margaritas .margarita__centro { fill: #FFD23F; }
+:root[data-theme="dark"] .jardin__margaritas circle { fill: #C9D4EA; }
+
+/* Sombra en la base de cada petunia */
+.flor__sombra { fill: rgba(0, 0, 0, 0.16); }
+
+/* Centro de la petunia: la mini imagen del juego */
+.petunia__marco {
+  fill: #fff;
+  stroke: #FFE27A;
+  stroke-width: 3.5;
+}
+
+.petunia__union {
+  fill: color-mix(in srgb, var(--neon) 70%, #fff);
+}
+
+.flor:hover .petunia__marco,
+.flor--elegida .petunia__marco {
+  stroke: #fff;
+  stroke-width: 4.5;
+}
+
+/* Mini imagen en los botones de abajo */
+.jardin__mini {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--neon);
+  margin-left: -0.45rem;
+}
+
+.jardin--portada .jardin__intro {
+  text-align: left;
+}
+
+@media (max-width: 40rem) {
+  .jardin--portada .jardin__intro {
+    border-radius: 1rem;
+    font-size: 0.92rem;
+  }
+}

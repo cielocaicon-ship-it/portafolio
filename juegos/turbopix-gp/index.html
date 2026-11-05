@@ -160,7 +160,7 @@ body.padland #minimap{bottom:auto!important;top:118px;width:clamp(70px,11vw,110p
 <div id="big" hidden></div><div id="lights" hidden><i></i><i></i><i></i><i></i><i></i></div>
 <div id="menu"></div>
 <div id="pause" class="menu" hidden><div class="card" style="max-width:420px"><h1 class="logo" style="font-size:44px">PAUSA</h1>
-  <button class="btn" id="pCont">CONTINUAR</button><button class="btn ghost" id="pRe">REINICIAR CARRERA</button><button class="btn ghost" id="pOut">SALIR AL MENÚ</button></div></div>
+  <p class="lead" id="pMsg" hidden></p><button class="btn" id="pCont">CONTINUAR</button><button class="btn ghost" id="pRe">REINICIAR CARRERA</button><button class="btn ghost" id="pOut">SALIR AL MENÚ</button></div></div>
 <div class="top"><button class="chip" id="btnPause" hidden>II PAUSA</button><button class="chip" id="btnMute">SONIDO ON</button></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -473,21 +473,24 @@ $("btnMute").onclick=e=>{AU.on=!AU.on;e.target.textContent="SONIDO "+(AU.on?"ON"
    SENSOR DE INCLINACIÓN — celular vertical como control
    derecha/izquierda = girar · punta hacia adelante = acelerar · hacia atrás = frenar
    ========================================================= */
-const TILT={ok:false,gx:0,gy:0,a0:null,s:0,inv:false,sens:1,listening:false,
-  load(){try{this.inv=localStorage.getItem("turbopix-inv")==="1";const v=+localStorage.getItem("turbopix-sens");if(v>=0&&v<=2&&localStorage.getItem("turbopix-sens")!=null)this.sens=v}catch(e){}},
-  save(){try{localStorage.setItem("turbopix-inv",this.inv?"1":"0");localStorage.setItem("turbopix-sens",String(this.sens))}catch(e){}},
-  // se gira el celular como un volante (vertical u horizontal): se mide el ángulo de la gravedad en el plano de la pantalla
+const TILT={ok:false,g:[0,0,0],w:null,s:0,inv:false,sens:1,listening:false,
+  load(){try{this.inv=localStorage.getItem("turbopix-inv")==="1";const r=localStorage.getItem("turbopix-sens2"),v=+r;if(r!=null&&v>=0&&v<=2)this.sens=v}catch(e){}},
+  save(){try{localStorage.setItem("turbopix-inv",this.inv?"1":"0");localStorage.setItem("turbopix-sens2",String(this.sens))}catch(e){}},
+  // se toma la posición "recta" y se mide hacia qué lado se va la gravedad: funciona girándolo como volante o inclinándolo
   async enable(){
     try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==="function"){const r=await DeviceMotionEvent.requestPermission();if(r!=="granted")return false}}catch(e){return false}
-    if(!this.listening){this.listening=true;addEventListener("devicemotion",e=>{const g=e.accelerationIncludingGravity;if(!g||g.x==null||g.y==null)return;
-      this.gx+=(g.x-this.gx)*.25;this.gy+=(g.y-this.gy)*.25;if(Math.hypot(g.x,g.y)>.5){this.ok=true;if(this.a0==null)this.calibrate()}})}
+    if(!this.listening){this.listening=true;addEventListener("devicemotion",e=>{const a=e.accelerationIncludingGravity;if(!a||a.x==null||a.y==null)return;const z=a.z||0,G=this.g;
+      G[0]+=(a.x-G[0])*.3;G[1]+=(a.y-G[1])*.3;G[2]+=(z-G[2])*.3;if(Math.hypot(a.x,a.y,z)>3){this.ok=true;if(!this.w)this.calibrate()}})}
     if(!this.ok)await new Promise(r=>setTimeout(r,1000));return this.ok},
-  calibrate(){if(!this.ok||Math.hypot(this.gx,this.gy)<1.2)return;this.a0=Math.atan2(this.gx,this.gy);this.s=0},
-  steer(){if(!this.ok)return 0;if(this.a0==null){this.calibrate();return 0}if(Math.hypot(this.gx,this.gy)<1.2)return this.s;
-    let d=Math.atan2(this.gx,this.gy)-this.a0;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;
-    const full=[1.3,.95,.7][this.sens];let s=Math.max(-1,Math.min(1,d/full));
-    s=Math.abs(s)<.08?0:Math.sign(s)*Math.pow((Math.abs(s)-.08)/.92,1.6);if(this.inv)s=-s;
-    this.s+=(s-this.s)*.35;return this.s}};
+  calibrate(){const [x,y,z]=this.g,m=Math.hypot(x,y,z);if(!this.ok||m<3)return;
+    let wx=-y/m,wy=x/m;const k=Math.hypot(wx,wy);
+    if(k<.25){wx=0;wy=1}else{wx/=k;wy/=k}   // celular casi plano: se usa el eje largo
+    this.w=[wx,wy];this.s=0},
+  steer(){if(!this.ok)return 0;if(!this.w){this.calibrate();return 0}
+    const [x,y,z]=this.g,m=Math.hypot(x,y,z)||1,den=Math.max(Math.hypot(x,y),.6*m),a=Math.asin(Math.max(-1,Math.min(1,(x*this.w[0]+y*this.w[1])/den)));
+    const full=[.78,.56,.4][this.sens];let s=Math.max(-1,Math.min(1,-a/full));
+    s=Math.abs(s)<.05?0:Math.sign(s)*Math.pow((Math.abs(s)-.05)/.95,1.25);if(this.inv)s=-s;
+    this.s+=(s-this.s)*.55;return this.s}};
 TILT.load();
 /* =========================================================
    MOTOR 3D
@@ -732,7 +735,7 @@ function physics(c,dt){
   else{
     if(I.a>0)c.spd+=c.acc*I.a*dt;else c.spd-=8*dt*Math.sign(c.spd);
     if(c.turbo>0)c.spd+=c.acc*dt;
-    const steer=I.s*(c.human!=null?1-.3*Math.min(1,Math.abs(c.spd)/c.maxS):1);
+    const steer=I.s*(c.human!=null?1-.18*Math.min(1,Math.abs(c.spd)/c.maxS):1);
     if(ground&&I.b>.45&&Math.abs(steer)>.35&&c.spd>c.maxS*.45){if(!c.drift){c.drift=true;c.driftT=0;c.driftDir=Math.sign(steer)}c.driftT+=dt}
     else{if(c.drift&&c.driftT>.8){c.turbo=Math.max(c.turbo,c.driftT>1.8?1.2:.7);say(c,"¡MINI TURBO!");if(c.human!=null)AU.sfx("turbo")}c.drift=false;if(I.b>0&&ground)c.spd-=42*I.b*dt}
     if(c.spd>max)c.spd=max+(c.spd-max)*Math.pow(.1,dt);
@@ -989,6 +992,15 @@ function goLand(){try{const d=document.documentElement,f=d.requestFullscreen||d.
    - latido cada segundo: si un celular deja de responder, se libera su puesto
    ========================================================= */
 const PREFIX="turbopix-lp-";
+const ICE_BASE=[{urls:["stun:stun.l.google.com:19302","stun:stun1.l.google.com:19302"]},{urls:"stun:stun.cloudflare.com:3478"},{urls:"stun:global.stun.twilio.com:3478"}];
+let ICE=null;
+// credenciales temporales para el servidor TURN gratuito de Open Relay (se calculan en el navegador)
+async function iceServers(){if(ICE)return ICE;const list=ICE_BASE.slice();
+  try{const user=(Math.floor(Date.now()/1000)+86400)+":turbopix",enc=new TextEncoder(),k=await crypto.subtle.importKey("raw",enc.encode("openrelayprojectsecret"),{name:"HMAC",hash:"SHA-1"},false,["sign"]);
+    const sig=new Uint8Array(await crypto.subtle.sign("HMAC",k,enc.encode(user)));let b="";sig.forEach(v=>b+=String.fromCharCode(v));
+    list.push({urls:["turn:staticauth.openrelay.metered.ca:80","turn:staticauth.openrelay.metered.ca:443","turn:staticauth.openrelay.metered.ca:443?transport=tcp","turns:staticauth.openrelay.metered.ca:443?transport=tcp"],username:user,credential:btoa(b)})}catch(e){}
+  ICE=list;return ICE}
+const peerOpts=()=>({config:{iceServers:ICE||ICE_BASE}});
 const newCode=()=>{const L="ABCDEFGHJKLMNPQRSTUVWXYZ";return[0,0,0,0].map(()=>L[(Math.random()*L.length)|0]).join("")};
 const NET={code:"",url:"",msg:"Preparando sala...",conns:[null,null,null,null],peer:null,
   buzz(slot){const cn=this.conns[slot];if(cn&&cn.open){try{cn.send({t:"buzz"})}catch(e){}}else if(slot===G.local&&navigator.vibrate)navigator.vibrate(120)},
@@ -996,10 +1008,10 @@ const NET={code:"",url:"",msg:"Preparando sala...",conns:[null,null,null,null],p
     try{cn.send({t:"ui",scr:G.scr,ready:!!p.ready,row:ROWS[p.row][1],place:c?c.place:0,n:race.cars.length||4,lap:c?Math.min(LAPS,Math.max(1,c.lap)):1,champ:G.mode==="champ",fin:!!(c&&c.finished),paused:!!race.paused,cd:race.on&&race.count>0,me:{hair:p.hair,hc:p.hc,skin:p.skin,out:p.out,hat:p.hat,car:p.car}})}catch(e){}})},
   host(){const fail=t=>{this.msg=t;this.url="";if(G.scr==="lobby")render()};
     if(!window.Peer||!window.RTCPeerConnection)return fail("La conexión entre celulares no funciona aquí. Publica el juego en GitHub Pages para jugar en grupo.");
-    const start=()=>{this.code=newCode();this.url=location.href.split("#")[0]+"#mando-"+this.code;let peer;
-      try{peer=new Peer(PREFIX+this.code)}catch(e){return fail("La conexión entre celulares no funciona aquí.")}
+    const start=async()=>{await iceServers();this.code=newCode();this.url=location.href.split("#")[0]+"#mando-"+this.code;let peer;
+      try{peer=new Peer(PREFIX+this.code,peerOpts())}catch(e){return fail("La conexión entre celulares no funciona aquí.")}
       this.peer=peer;const to=setTimeout(()=>fail("Sin conexión a internet. Puedes jugar solo en este dispositivo."),9000);
-      peer.on("open",()=>{clearTimeout(to);this.msg="O abre el juego en el celular y escribe el código. Entran hasta 4 pilotos.";if(G.scr==="lobby")render()});
+      peer.on("open",()=>{clearTimeout(to);this.msg="O abre el juego en el celular y escribe el código. Entran hasta 4 pilotos. Si un celular no logra entrar, conéctalo al mismo wifi del PC.";if(G.scr==="lobby")render()});
       peer.on("disconnected",()=>{setTimeout(()=>{try{if(!peer.destroyed&&peer.disconnected)peer.reconnect()}catch(e){}},1500)});
       peer.on("error",e=>{const t=e&&e.type;clearTimeout(to);
         if(t==="unavailable-id"){try{peer.destroy()}catch(_){}start();return}
@@ -1019,6 +1031,7 @@ const NET={code:"",url:"",msg:"Preparando sala...",conns:[null,null,null,null],p
         G.players[slot]={...newSel(slot),input:"remote",cid:cid||null,name:name||""}}
       const p=G.players[slot];this.conns[slot]=cn;p.away=false;p.lastSeen=Date.now();if(name&&!p.name)p.name=name;
       const c=race.cars.find(o=>o.human===slot);if(c&&!c.finished){c.ai=false;c.remote={s:0,a:0,b:0}}
+      if(race.on&&race.paused&&race.pauseWhy==="away"){if(G.players.some(q=>q&&q.away))setPause(true,"away");else setPause(false)}
       if(G.scr==="lobby")updPanels();this.sendAll()};
     cn.on("open",()=>{const t=setTimeout(()=>bind(null,""),1500);
       cn.on("data",m=>{if(!m||typeof m!=="object")return;
@@ -1030,6 +1043,7 @@ const NET={code:"",url:"",msg:"Preparando sala...",conns:[null,null,null,null],p
   drop(slot){const cn=this.conns[slot];this.conns[slot]=null;try{cn&&cn.close()}catch(e){}
     const p=G.players[slot];if(!p)return;p.away=true;p.awayT=Date.now();p.ready=G.scr==="lobby"?false:p.ready;
     const c=race.cars.find(o=>o.human===slot);if(c)c.ai=true;
+    if(G.scr==="race"&&race.on)setPause(true,"away");
     if(G.scr==="lobby")updPanels()},
   // no volvió: se libera el puesto
   remove(slot){this.conns[slot]=null;G.players[slot]=null;const c=race.cars.find(o=>o.human===slot);
@@ -1038,7 +1052,8 @@ const NET={code:"",url:"",msg:"Preparando sala...",conns:[null,null,null,null],p
   watch(){const now=Date.now();
     G.players.forEach((p,slot)=>{if(!p||p.input!=="remote")return;
       if(this.conns[slot]&&now-(p.lastSeen||now)>5000)this.drop(slot);
-      if(p.away&&now-p.awayT>(G.scr==="lobby"?6000:25000))this.remove(slot)});
+      if(p.away&&now-p.awayT>(G.scr==="lobby"?6000:60000))this.remove(slot)});
+    if(race.on&&race.paused&&race.pauseWhy==="away"&&!G.players.some(q=>q&&q.away))setPause(false);
     if(G.scr!=="lobby"&&!G.players.some(Boolean)){clearRace();G.scr="lobby";G.race=0;G.table={};render()}
     this.sendAll()},
   onMsg(slot,m){const p=G.players[slot];if(!p)return;
@@ -1072,7 +1087,7 @@ function startController(code){
     phase=ph;Object.keys(PED).forEach(k=>PED[k]=0);
     if(ph==="dead")return;
     if(ph==="wait")root.innerHTML=`<h1 class="logo">TURBOPIX GP</h1><p class="lead">${tries>1?"Reconectando con":"Conectando a"} la sala ${esc(code)}...</p>
-      ${tries>3?`<p class="small">Si recargaron la pantalla grande, el código cambió: escanea el QR nuevo.</p>`:""}<button class="btn ghost" id="rty">REINTENTAR AHORA</button>`;
+      ${tries>2?`<p class="small">Si no conecta: 1) conecta este celular al mismo wifi del PC, 2) apaga el VPN o el ahorro de datos, 3) si recargaron la pantalla grande, escanea el QR nuevo.</p>`:""}<button class="btn ghost" id="rty">REINTENTAR AHORA</button>`;
     if(ph==="select"){root.innerHTML=`<h1 class="logo" style="font-size:30px">TU PILOTO</h1>${selHTML(sel,"C")}
       <button class="btn" id="go">LISTO</button><div class="small" id="sm">Lo que elijas se ve también en la pantalla grande. Al tocar LISTO se activa el sensor; en la carrera sostén el celular en horizontal.</div>`;
       sel.name=name;const i=$("nm");i.value=name;i.oninput=()=>{name=i.value.toUpperCase().slice(0,12);sel.name=name;try{localStorage.setItem("turbopix-name",name)}catch(e){}clearTimeout(nameT);nameT=setTimeout(()=>send({t:"name",v:name}),150)};
@@ -1098,7 +1113,7 @@ function startController(code){
   function retry(){if(dead||rT)return;conn=null;phase="";show();rT=setTimeout(()=>{rT=null;connect()},Math.min(5000,800+tries*700))}
   function connect(){if(dead||busy)return;busy=true;tries++;
     try{if(peer)peer.destroy()}catch(e){}conn=null;
-    try{peer=new Peer()}catch(e){busy=false;dead=true;root.innerHTML=`<h1 class="logo">SIN RED</h1><p class="lead">Este navegador no permite la conexión.</p>`;return}
+    try{peer=new Peer(peerOpts())}catch(e){busy=false;dead=true;root.innerHTML=`<h1 class="logo">SIN RED</h1><p class="lead">Este navegador no permite la conexión.</p>`;return}
     const me=peer,giveUp=setTimeout(()=>{if(me===peer&&!conn){busy=false;retry()}},9000);
     me.on("open",()=>{const cn=me.connect(PREFIX+code,{reliable:true});
       cn.on("open",()=>{if(me!==peer)return;clearTimeout(giveUp);busy=false;tries=0;conn=cn;lastMsg=Date.now();send({t:"hello",cid,name});show()});
@@ -1115,13 +1130,15 @@ function startController(code){
     const wh=$("wh");if(wh)wh.style.transform=`rotate(${-s*90}deg)`},50);
   document.addEventListener("visibilitychange",()=>{if(!document.hidden){wake();if(!conn||!conn.open){tries=1;clearTimeout(rT);rT=null;busy=false;connect()}}});
   let pvT=performance.now();(function pv(){requestAnimationFrame(pv);const n=performance.now();drawPreviews(Math.min(.05,(n-pvT)/1000));pvT=n})();
-  show();connect()}
+  show();iceServers().then(()=>connect())}
 
 /* =========================================================
    ========================================================= */
 const clock=new THREE.Clock();let attract=0;
-function setPause(v){if(!race.on)return;race.paused=v;$("pause").hidden=!v;if(v){AU.engine(0);AU.skid(0)}}
-$("btnPause").onclick=()=>setPause(true);$("pCont").onclick=()=>setPause(false);$("pRe").onclick=()=>{setPause(false);startRace()};$("pOut").onclick=()=>{setPause(false);menuAct({a:"menu"})};
+function setPause(v,why){if(!race.on)return;race.paused=v;race.pauseWhy=v?(why||"user"):null;$("pause").hidden=!v;if(v){AU.engine(0);AU.skid(0)}
+  const aw=G.players.filter(p=>p&&p.away),m=$("pMsg");m.hidden=!(v&&why==="away");if(v&&why==="away")m.textContent=aw.map(p=>pname(p)).join(", ")+(aw.length>1?" se desconectaron":" se desconectó")+". Esperando que vuelva... (se une escaneando el QR o abriendo el enlace otra vez)";
+  $("pCont").textContent=v&&why==="away"?"SEGUIR SIN ESPERAR":"CONTINUAR";NET.sendAll()}
+$("btnPause").onclick=()=>setPause(true);$("pCont").onclick=()=>{if(race.pauseWhy==="away")G.players.forEach((p,i)=>{if(p&&p.away)NET.remove(i)});setPause(false)};$("pRe").onclick=()=>{setPause(false);startRace()};$("pOut").onclick=()=>{setPause(false);menuAct({a:"menu"})};
 addEventListener("keydown",e=>{if((e.code==="Escape"||e.code==="KeyP")&&race.on&&G.scr==="race")setPause(!race.paused)});
 function loop(){requestAnimationFrame(loop);const raw=Math.min(.05,clock.getDelta()),dt=race.on&&race.paused?0:raw;if(!world)return;
   world.boxes.forEach(b=>{b.m.rotation.y+=dt*2;b.m.rotation.x+=dt;b.m.position.y=b.y+Math.sin(performance.now()/300+b.x)*.3;if(b.cd>0){b.cd-=dt;if(b.cd<=0)b.m.visible=true}});
@@ -1137,7 +1154,7 @@ function loop(){requestAnimationFrame(loop);const raw=Math.min(.05,clock.getDelt
   const W2=innerWidth,H2=innerHeight;
   if(race.on){
     race.cars.forEach(c=>{if(c.ai||c.human==null)return;const p=G.players[c.human];if(!p)return;const tg=p.input==="remote"?(c.remote||{s:0,a:0,b:0}):localInput(p),ps=c.in.s||0;
-      c.in={s:ps+(tg.s-ps)*Math.min(1,dt*(p.input==="keys"?14:9)),a:tg.a,b:tg.b}});
+      c.in={s:ps+(tg.s-ps)*Math.min(1,dt*(p.input==="keys"?14:13)),a:tg.a,b:tg.b}});
     if(race.count>0){race.count-=dt;race.cars.forEach(c=>{if(c.human!=null&&c.in.a>0&&race.count>1.4)c.early=true});const L=$("lights"),on=Math.min(5,Math.floor((4-race.count)/.75)+1);L.hidden=false;
       if(on!==race.lastBeep){race.lastBeep=on;[...L.children].forEach((e,i)=>e.className=i<on?"r":"");AU.sfx("beep")}
       if(race.count<=0){[...L.children].forEach(e=>e.className="g");const big=$("big");big.hidden=false;big.textContent="¡YA!";AU.sfx("go");AU.sfx("cheer");TILT.calibrate();setTimeout(()=>NET.sendAll(),0);

@@ -392,6 +392,11 @@ kbd{font-family:var(--f-ui);font-size:11px;font-weight:700;display:inline-block;
 .code-box{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px dashed rgba(255,211,107,.5);padding:12px 16px;background:rgba(255,211,107,.06)}
 .code-box span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
 .code-box b{font-family:var(--f-display);font-size:44px;line-height:1;letter-spacing:.12em;color:var(--chispa)}
+.qr-box{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border:1px dashed rgba(255,211,107,.5);padding:12px 16px;background:rgba(255,211,107,.06)}
+.qr-box[hidden]{display:none}
+.qr-img{background:#fff;padding:8px;line-height:0;flex:none}
+.qr-img img,.qr-img canvas{display:block;width:150px;height:150px}
+.qr-box p{flex:1 1 160px;margin:0;font-size:14px;line-height:1.45}
 .lobby-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .lobby-list li{display:grid;grid-template-columns:14px 1fr;column-gap:10px;align-items:baseline;padding:8px 10px;background:rgba(8,16,18,.55);border-left:3px solid var(--c)}
 .lobby-list i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);align-self:center;grid-row:span 2}
@@ -616,6 +621,7 @@ kbd{font-family:var(--f-ui);font-size:11px;font-weight:700;display:inline-block;
       <div id="lobbyRoom" class="field" style="gap:12px" hidden>
         <p id="lobbyMsg" class="hint"></p>
         <div class="code-box"><span>Código de la sala</span><b id="codeTxt">----</b><button id="copyBtn" class="btn tiny" type="button">Copiar</button></div>
+        <div id="qrBox" class="qr-box" hidden><div id="qrImg" class="qr-img" role="img" aria-label="Código QR para entrar a esta sala"></div><p>¿Tu amigo no tiene el juego abierto? Que escanee este QR con la cámara del celular y entra directo a la sala.</p></div>
         <ul id="lobbyList" class="lobby-list"></ul>
         <p id="lobbyWait" class="hint"></p>
         <div class="btn-row"><button id="goBtn" class="btn primary" type="button">Empezar la noche</button></div>
@@ -4753,9 +4759,41 @@ function updateNetHud(){
 
 // ---------- the room screen
 function codeGen(){const A='ABCDEFGHJKMNPQRSTUVWXYZ';let s='';for(let i=0;i<4;i++)s+=A[Math.random()*A.length|0];return s+(10+Math.random()*90|0);}
+// ---------- QR: el enlace del juego con ?sala=CODIGO, para entrar sin escribir el código
+const SETUP_ONLINE_TXT=$('setupOnline').textContent;
+let salaPend=(()=>{try{const v=(new URLSearchParams(location.search).get('sala')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);return v.length>=4?v:'';}catch(_){return '';}})();
+// Si el juego está dentro de otra página del mismo sitio (el portafolio), el enlace lleva a esa página
+function salaLink(c){let u=location;try{if(parent!==window&&parent.location.origin===location.origin)u=parent.location;}catch(_){}return u.origin+u.pathname+'?sala='+encodeURIComponent(c);}
+let qrLib=null,qrFor='';
+function loadQR(){
+  if(window.QRCode)return Promise.resolve(true);
+  if(qrLib)return qrLib;
+  qrLib=new Promise(res=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=()=>res(!!window.QRCode);s.onerror=()=>{qrLib=null;res(false);};document.head.appendChild(s);});
+  return qrLib;
+}
+function drawSalaQR(){
+  const box=$('qrBox');
+  const ok=NET.on&&NET.code&&(NET.kind==='peer'||NET.kind==='local')&&/^https?:$/.test(location.protocol);
+  if(!ok){box.hidden=true;qrFor='';return;}
+  if(qrFor===NET.code){box.hidden=false;return;}
+  const code=NET.code;
+  loadQR().then(has=>{
+    if(!has||!NET.on||NET.code!==code){box.hidden=true;return;}
+    const el=$('qrImg');el.textContent='';
+    new QRCode(el,{text:salaLink(code),width:300,height:300,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+    const im=el.querySelector('img');if(im)im.alt='';
+    qrFor=code;box.hidden=false;
+  });
+}
+function useSalaPend(){
+  if(!salaPend||NET.on||NET.connecting)return;
+  const c=salaPend;salaPend='';$('setupOnline').textContent=SETUP_ONLINE_TXT;
+  $('codeIn').value=c;netStart('client',c);
+  try{history.replaceState(null,'',location.pathname);}catch(_){}
+}
 function lobbyShow(which){$('lobbyPick').hidden=which!=='pick';$('lobbyRoom').hidden=which!=='room';}
 function toastLobbyErr(t){const e=$('lobbyErr');e.textContent=t||'';e.hidden=!t;}
-function openLobby(){initAudio();state='setup';showOnly(null);setMenuScene(true);$('lobby').hidden=false;lobbyShow(NET.on?'room':'pick');toastLobbyErr('');$('lobbyStatus').hidden=true;renderLobby();}
+function openLobby(){initAudio();state='setup';showOnly(null);setMenuScene(true);$('lobby').hidden=false;lobbyShow(NET.on?'room':'pick');toastLobbyErr('');$('lobbyStatus').hidden=true;renderLobby();useSalaPend();}
 function closeLobby(){$('lobby').hidden=true;}
 function renderLobby(){
   if($('lobby').hidden)return;
@@ -4767,9 +4805,10 @@ function renderLobby(){
   $('codeTxt').textContent=NET.code||'----';
   const n=rows.length;
   if(NET.host){$('goBtn').hidden=false;
-    $('lobbyWait').textContent=n<2?'Pásales el código a tus amigos. Cuando lleguen, empieza la noche (hasta 4 jugadores). También puedes empezar sin ellos: entran cuando quieran.':'Ya son '+n+'. ¡Cuando quieran, empiecen la noche!';
+    $('lobbyWait').textContent=n<2?'Pásales el código o el QR a tus amigos. Cuando lleguen, empieza la noche (hasta 4 jugadores). También puedes empezar sin ellos: entran cuando quieran.':'Ya son '+n+'. ¡Cuando quieran, empiecen la noche!';
     $('lobbyMsg').textContent='Tú escogiste: '+(mapSel==='rio'?'El río':mapSel==='azar'?'Sorpresa':'La finca')+' · '+(diff==='dificil'?'Difícil':'Normal')+'. Online los espantos son más bravos.';}
   else{$('goBtn').hidden=true;$('lobbyWait').textContent=n?'Esperando a que '+(NET.hostName||'quien creó la sala')+' empiece la noche…':'Conectando…';$('lobbyMsg').textContent='¡Entraste a la sala!';}
+  drawSalaQR();
 }
 async function netStart(role,code){
   if(NET.connecting||NET.on)return;NET.connecting=true;toastLobbyErr('');
@@ -4790,7 +4829,7 @@ async function netStart(role,code){
 }
 function netLeave(){
   if(NET.tr)try{NET.tr.close();}catch(_){}
-  NET.tr=null;NET.on=false;NET.host=false;NET.started=false;NET.clients.clear();NET.duelWait=null;NET.connecting=false;NET.code='';
+  NET.tr=null;NET.on=false;NET.host=false;NET.started=false;NET.clients.clear();NET.duelWait=null;NET.connecting=false;NET.code='';qrFor='';$('qrBox').hidden=true;
   dropAllRemotes();removeAllReplicas();luOpen=false;pauseOpen=false;setHidden('netWait',true);setMyLook('player');
 }
 function hostGo(){
@@ -4847,6 +4886,7 @@ function boot(data){
   setMenuScene(true);setCam(camMode);syncSegs();updateBest();applyHour(hour);resize();
   addEventListener('resize',resize);
   requestAnimationFrame(frame);
+  if(salaPend&&window.THREE){$('setupOnline').textContent='Te invitaron a la sala '+salaPend+'. Escoge tu personaje y dale «Seguir» para entrar.';setupMode='online';openSetup();}
 }
 const hot=window.claude&&window.claude.hot;
 if(hot&&typeof hot.snapshot==='function')hot.snapshot(()=>({best}));

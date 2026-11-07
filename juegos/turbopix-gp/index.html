@@ -825,7 +825,7 @@ function updParts(dt){parts.forEach(p=>{if(p.life<=0)return;p.life-=dt;p.v.y-=14
 function makeRacer(o){const st=CARS[o.car],obj=buildKart({...o,space:!!(world&&world.T.space)});scene.add(obj);
   const sh=new THREE.Mesh(new THREE.IcosahedronGeometry(2.6,1),new THREE.MeshBasicMaterial({color:0x3fd8ff,transparent:true,opacity:.25,wireframe:true}));sh.visible=false;scene.add(sh);
   return Object.assign({obj,shieldM:sh,x:0,z:0,y:0,air:0,vy:0,airT:0,h:0,spd:0,idx:0,prevIdx:0,lap:0,cp:[true,true,true],in:{s:0,a:0,b:0},
-    turbo:0,shield:false,spin:0,tire:1,dmg:0,pit:0,drift:false,driftT:0,driftDir:0,fall:0,finished:false,time:0,prog:0,place:1,msg:"",msgT:0,
+    turbo:0,shield:false,spin:0,tire:1,dmg:0,pit:0,pitTh:.5+Math.random()*.18,drift:false,driftT:0,driftDir:0,fall:0,finished:false,time:0,prog:0,place:1,msg:"",msgT:0,
     maxS:36+st.vel*4.2,acc:13+st.ace*4.5,turn:1.25+st.man*.22,aiLane:(Math.random()-.5)*8,aiSkill:.9+Math.random()*.06},o)}
 function nearLocal(x,z,i0){const P=world.pts;let b=i0,bd=1e9;for(let k=-45;k<=45;k++){const i=(i0+k+N)%N,d=(P[i].x-x)**2+(P[i].z-z)**2;if(d<bd){bd=d;b=i}}return b}
 function triH(x,z,ax,az,ay,bx,bz,by,cx,cz,cy){const d=(bz-cz)*(ax-cx)+(cx-bx)*(az-cz);if(Math.abs(d)<1e-9)return null;
@@ -1063,7 +1063,7 @@ function aiDrive(c,dt){
   if(c.item&&c.human==null){c.aiT-=dt;const it=c.item,ahead=race.cars.some(o=>o!==c&&!o.finished&&o.prog>c.prog&&o.prog-c.prog<70),behind=race.cars.some(o=>o!==c&&o.prog<c.prog&&c.prog-o.prog<45);
     const go=it==="missile"||it==="bomb"?(ahead&&c.aiT<0)||c.aiT<-5:it==="oil"||it==="banana"?(behind&&c.aiT<0)||c.aiT<-6:it==="turbo"?c.aiT<0&&Math.abs(a)<.2:c.aiT<0;if(go)useItem(c,false)}
   // a boxes si las llantas están gastadas o el carro dañado
-  const PT=world.pit;if(PT&&!c.finished&&((c.tire??1)<.42||(c.dmg||0)>.35)&&c.pitLap!==c.lap){const d=((c.idx-(PT.a-40))%N+N)%N;if(d<40+PT.len){c.aiLane=PT.s*(W/2+4.6);c.pitGo=true;const q=P[c.idx],nq=world.nor[c.idx],lt=(c.x-q.x)*nq.x+(c.z-q.z)*nq.z;c.in.s=Math.max(-1,Math.min(1,c.in.s+(c.aiLane-lt)*.09))}}else if(c.pitGo){c.pitGo=false;c.aiLane=0}
+  const PT=world.pit;if(PT&&!c.finished&&((c.tire??1)<(c.pitTh||.55)||(c.dmg||0)>.3)&&c.pitLap!==c.lap&&c.lap<LAPS+1){const d=((c.idx-(PT.a-40))%N+N)%N;if(d<40+PT.len){c.aiLane=PT.s*(W/2+4.6);c.pitGo=true;const q=P[c.idx],nq=world.nor[c.idx],lt=(c.x-q.x)*nq.x+(c.z-q.z)*nq.z;c.in.s=Math.max(-1,Math.min(1,c.in.s+(c.aiLane-lt)*.09))}}else if(c.pitGo){c.pitGo=false;c.aiLane=0}
   // si casi no avanza (aunque vaya rápido), retrocede y cambia de carril
   if(c.spin>0||c.revT>0||c.fall>0||c.air>0||c.pit>0||race.t<3){c.pgT=0;c.pg0=c.prog||0}
   c.pgT=(c.pgT||0)+dt;if(c.pgT>2.2){if((c.prog||0)-(c.pg0||0)<8&&!c.finished){c.revT=.8;c.aiLane=-c.aiLane||((Math.random()<.5?-1:1)*4)}c.pg0=c.prog||0;c.pgT=0}

@@ -49,6 +49,7 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
 .vp .tyr s{display:block;height:100%;width:100%;background:var(--ok)}.vp .tyr.mid s{background:var(--gold)}.vp .tyr.low s{background:var(--bad)}.vp .tyr.low b{color:var(--bad);animation:flick .5s infinite}.vp .tyr b{font-weight:normal}
 .vp::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--sand,0);background:repeating-linear-gradient(100deg,transparent 0 22px,rgba(240,190,110,.45) 22px 25px),rgba(214,150,70,.35);background-size:240px 100%;animation:sandmv .5s linear infinite}
 @keyframes sandmv{to{background-position:240px 0}}
+#songTag{position:fixed;left:50%;top:calc(max(10px,env(safe-area-inset-top,0px)) + 46px);transform:translate(-50%,-8px);z-index:25;font-family:var(--disp);font-size:12px;padding:6px 12px;border-radius:999px;background:rgba(10,8,30,.75);border:1px solid var(--line);opacity:0;pointer-events:none;transition:opacity .4s,transform .4s}#songTag.show{animation:stag 3.6s forwards}@keyframes stag{0%{opacity:0;transform:translate(-50%,-8px)}10%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
 #sndOv{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;font-family:var(--disp);font-size:clamp(13px,1.8vw,18px);padding:14px 22px;border-radius:999px;border:0;background:var(--gold);color:#1a0f00;box-shadow:0 6px 0 rgba(0,0,0,.4),0 0 30px rgba(255,200,61,.5);animation:pulse .8s ease-in-out infinite alternate;cursor:pointer}
 .menu.side{place-items:center end;background:linear-gradient(90deg,rgba(18,15,42,0) 0 35%,rgba(18,15,42,.6) 60%,rgba(18,15,42,.9))}.menu.side .card{margin-right:3vw}
 @media (max-width:760px){.menu.side{place-items:center}.menu.side .card{margin-right:0}}
@@ -186,7 +187,7 @@ body.padland #minimap{bottom:auto!important;top:118px;width:clamp(70px,11vw,110p
 <div id="menu"></div>
 <div id="pause" class="menu" hidden><div class="card" style="max-width:420px"><h1 class="logo" style="font-size:44px">PAUSA</h1>
   <p class="lead" id="pMsg" hidden></p><button class="btn" id="pCont">CONTINUAR</button><button class="btn ghost" id="pRe">REINICIAR CARRERA</button><button class="btn ghost" id="pOut">SALIR AL MENÚ</button></div></div>
-<div class="top"><button class="chip" id="btnPause" hidden>II PAUSA</button><button class="chip" id="btnNarr">NARRADOR ON</button><button class="chip" id="btnMute">SONIDO ON</button></div><button id="sndOv" hidden>🔊 TOCA AQUÍ PARA ACTIVAR EL SONIDO Y EL NARRADOR</button>
+<div class="top"><button class="chip" id="btnPause" hidden>II PAUSA</button><button class="chip" id="btnSong" title="Cambiar canción (tecla M)">🎵 CANCIÓN</button><button class="chip" id="btnMute">SONIDO ON</button></div><div id="songTag"></div><button id="sndOv" hidden>🔊 TOCA AQUÍ PARA ACTIVAR EL SONIDO</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -508,6 +509,29 @@ function buildKart(o){return o.space?buildShip(o,CARS[o.car].ship):buildGround(o
 /* =========================================================
    AUDIO (Web Audio API)
    ========================================================= */
+// ===== canciones (escalas, acordes y ritmos; la melodía se compone sola con una "semilla" fija, así cada canción siempre suena igual) =====
+const MSC={maj:[0,2,4,5,7,9,11],min:[0,2,3,5,7,8,10],phr:[0,1,4,5,7,8,10],dor:[0,2,3,5,7,9,10],mix:[0,2,4,5,7,9,10]};
+function mrng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function genMel(seed,dens){const R=mrng(seed),bar=(end)=>{const a=new Array(16).fill(null),on=[];let d=[0,2,4][R()*3|0];
+    for(let i=0;i<16;i++){if(i===0||R()<(i%4===0?dens+.3:i%2?dens*.55:dens*.95))on.push(i)}
+    on.forEach((i,k)=>{const nx=k+1<on.length?on[k+1]:16;d=i%4===0?[0,2,4,7,-3][R()*5|0]:d+[-2,-1,1,2,1][R()*5|0];d=Math.max(-3,Math.min(9,d));a[i]={d,l:Math.min(nx-i,4)*.92}});
+    if(end){for(let i=10;i<16;i++)a[i]=null;a[10]={d:[0,2,4][R()*3|0],l:5.5}}return a};
+  const A=[bar(false),bar(true)],B=[A[0].map(n=>n&&{d:n.d+(R()<.5?2:-1),l:n.l}),bar(true)];return[A,B]}
+const SONGS=[
+  {n:"Parrilla de Salida",bpm:108,key:57,sc:"dor",prog:[0,0,3,3,6,6,4,4],k:"x.....x...x.....",s:"....x.......x...",h:"..x...x...x...x.",b:"0..8..0.0..8.2..",ch:"x.....x.........",chT:"square",chL:3,cv:.016,lead:"square",dens:.42,seed:7,sw:.14,fill:1},
+  {n:"Taller de Mecánica",bpm:96,key:53,sc:"maj",prog:[1,4,0,5],k:"x.......x.x.....",s:"....x.......x...",h:"x.xox.xox.xox.xo",b:"0...2...0..8.2..",ch:"x...........x...",chT:"triangle",chL:8,cv:.03,lead:"triangle",lv:.06,dens:.35,seed:21,sw:.18},
+  {n:"Podio de Campeones",bpm:128,key:60,sc:"maj",prog:[0,3,4,0,5,3,4,4],k:"x...x...x...x...",s:"....x.......x...",h:"..x...x...x...x.",b:"0.8.0.8.0.8.0.8.",ch:"x.......x.......",chL:5,lead:"square",dbl:1,dens:.5,seed:3,arp:"0123",arpR:2,fill:1},
+  {n:"Neón Nocturno",bpm:120,key:52,sc:"min",prog:[0,5,2,6],k:"x...x...x...x...",s:"....x.......x...",h:"..x...x...x...x.",b:"0.0.0.0.0.0.0.0.",bass:"sawtooth",bv:.07,bl:1.3,ch:"x...............",chL:15,cv:.014,arp:"0123",arpT:"square",lead:"square",dens:.38,seed:41,fill:1},
+  {n:"Pixel Rush",bpm:150,key:55,sc:"maj",prog:[0,4,5,3],k:"x..x..x.x..x..x.",s:"....x.......x..o",h:"xoxoxoxoxoxoxoxo",b:"0.8.0.8.0.8.0.8.",lead:"square",dbl:1,dens:.5,seed:52,fill:1},
+  {n:"Espejismo",bpm:126,key:50,sc:"phr",prog:[0,0,1,0,6,6,1,0],k:"x.....x.x.......",s:"....x.......x...",p:"x..x..x.x..x..x.",h:"..o...o...o...o.",b:"0.....0.0..2....",lead:"sawtooth",lv:.03,dens:.45,seed:63,arp:"0.2.1.2.",arpT:"triangle",av:.03},
+  {n:"Duna Turbo",bpm:158,key:52,sc:"phr",prog:[0,1,0,6,5,6,1,0],k:"x...x...x...x...",s:"....x.......x...",h:"xoxoxoxoxoxoxoxo",p:"..x...x...x..xx.",b:"0.0.8.0.0.0.8.0.",lead:"square",dens:.55,seed:74,fill:1},
+  {n:"Órbita",bpm:138,key:57,sc:"min",prog:[0,5,2,6],k:"x...x...x...x...",s:"....x.......x...",h:"..x...x...x...x.",b:"..0...0...0...0.",bass:"sawtooth",bv:.1,bl:1.8,arp:"0123",arpT:"square",ch:"x...............",chL:16,cv:.018,lead:"triangle",lv:.08,dens:.3,seed:85},
+  {n:"Glitch Galaxia",bpm:174,key:54,sc:"min",prog:[0,3,4,4,5,3,6,6],k:"x...x...x...x...",s:"....x.......x.x.",h:"xoxoxoxoxoxoxoxo",b:"0.0.8.0.0.0.8.0.",lead:"square",dbl:1,dens:.55,seed:96,arp:"0.1.2.1.",fill:1},
+  {n:"Cumbia Turbo",bpm:100,key:55,sc:"maj",prog:[0,4,4,0,0,4,4,0],k:"x.......x.......",s:"....o.......o...",p:"xoxoxoxoxoxoxoxo",b:"0.....2.0.....2.",ch:"..x...x...x...x.",chT:"square",chL:1.4,cv:.018,lead:"sawtooth",lv:.05,bv:.17,dens:.5,seed:107,sw:.08},
+  {n:"Champeta Kart",bpm:122,key:57,sc:"maj",prog:[0,3,4,0],k:"x..x..x...x..x..",s:"....x.......x...",h:"x.x.x.x.x.x.x.x.",b:"0..0..2.0..8.2..",arp:"0120",arpT:"triangle",av:.03,lead:"square",dens:.5,seed:118,sw:.1}];
+SONGS.forEach(s=>s.mel=genMel(s.seed,s.dens));
+const TRACK_SONGS=[[3,4],[5,6],[7,8],[9,10]],RACE_SONGS=[3,4,5,6,7,8,9,10];
+function songTag(n){const e=document.getElementById("songTag");if(!e)return;e.textContent="🎵 "+n;e.classList.remove("show");void e.offsetWidth;e.classList.add("show")}
 const AU={ctx:null,on:true,tempo:1,master:null,eng:null,engG:null,step:0,timer:null,track:0,
   init(){if(this.ctx)return;try{this.ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}
     this.master=this.ctx.createGain();this.master.gain.value=.5;this.master.connect(this.ctx.destination);
@@ -517,7 +541,7 @@ const AU={ctx:null,on:true,tempo:1,master:null,eng:null,engG:null,step:0,timer:n
     const len=this.ctx.sampleRate*2;this.nb=this.ctx.createBuffer(1,len,this.ctx.sampleRate);const d=this.nb.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
     // derrape continuo y ambiente de cada pista
     const loop=(type,fr,q)=>{const s=this.ctx.createBufferSource();s.buffer=this.nb;s.loop=true;const fl=this.ctx.createBiquadFilter();fl.type=type;fl.frequency.value=fr;fl.Q.value=q;const g=this.ctx.createGain();g.gain.value=0;s.connect(fl);fl.connect(g);g.connect(this.master);s.start();return{g,fl}};
-    this.skidN=loop("bandpass",2200,4);this.amb=loop("lowpass",500,1);this.setTrack(this.track)},
+    this.skidN=loop("bandpass",2200,4);this.amb=loop("lowpass",500,1);this.setTrack(this.track);if(this.want!=null){const w=this.want;this.want=null;this.music(w)}},
   noise(dur,vol=.1,fr=1000,type="bandpass",q=1,when=0,fr2){if(!this.ctx||!this.on)return;const t=this.ctx.currentTime+when,s=this.ctx.createBufferSource();s.buffer=this.nb;
     const fl=this.ctx.createBiquadFilter();fl.type=type;fl.frequency.setValueAtTime(fr,t);if(fr2)fl.frequency.exponentialRampToValueAtTime(fr2,t+dur);fl.Q.value=q;
     const g=this.ctx.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(fl);fl.connect(g);g.connect(this.master);s.start(t,Math.random());s.stop(t+dur+.05)},
@@ -541,20 +565,37 @@ const AU={ctx:null,on:true,tempo:1,master:null,eng:null,engG:null,step:0,timer:n
       coin:()=>{T.tone(988,.06,"square",.06);T.tone(1319,.18,"square",.06,.06)},
       roll:()=>{for(let i=0;i<6;i++)T.tone(600+i*120,.05,"square",.04,i*.04)}}[k]||(()=>{}))()},
   engine(spd){if(!this.ctx)return;this.eng.frequency.setTargetAtTime(45+Math.abs(spd||0)*2.6,this.ctx.currentTime,.05);this.eng2.frequency.setTargetAtTime(22+Math.abs(spd||0)*1.3,this.ctx.currentTime,.05);this.engG.gain.setTargetAtTime(this.on&&spd!=null?.03:0,this.ctx.currentTime,.1)},
-  songs:[{lead:[12,null,15,17,19,null,17,15,12,null,10,12,15,null,12,null],bass:[0,0,0,0,-4,-4,-4,-4,-2,-2,-2,-2,-5,-5,-5,-5],bpm:150},
-    {lead:[7,null,10,12,10,7,5,null,7,null,3,5,7,null,null,null],bass:[0,0,7,0,-2,-2,5,-2,-4,-4,3,-4,-5,-5,2,-5],bpm:132},
-    {lead:[19,24,22,null,19,17,19,null,15,19,17,null,15,12,14,null],bass:[0,12,0,12,-3,9,-3,9,-5,7,-5,7,-7,5,-7,5],bpm:168},
-    {lead:[7,9,11,12,null,11,9,7,4,null,7,null,9,7,4,2],bass:[0,0,7,7,0,0,7,7,5,5,12,12,7,7,2,2],bpm:190,cumbia:1}],
-  setTrack(t){this.track=t;if(this.timer){clearInterval(this.timer);this.timer=null}if(!this.ctx)return;
-    const A=[[300,.02],[700,.035],[180,.03],[450,.045]][t];this.amb.fl.frequency.value=A[0];this.amb.g.gain.setTargetAtTime(this.on?A[1]:0,this.ctx.currentTime,.3);
-    this.timer=setInterval(()=>{if(!this.on)return;const s=this.songs[this.track],i=this.step%16,b=220;
-      if(s.lead[i]!=null)this.tone(b*Math.pow(2,s.lead[i]/12),.14,"square",.03);
-      if(s.bass[i]!=null&&i%2===0)this.tone(b/2*Math.pow(2,s.bass[i]/12),.22,"triangle",.07);
-      if(i%4===0)this.tone(60,.06,"square",.03);if(s.cumbia){this.noise(i%2?.05:.09,i%2?.025:.04,6000,"highpass");if(i%4===2)this.noise(.12,.05,250,"lowpass")}this.step++},60000/(this.songs[t].bpm*this.tempo)/2)}};
+  setTrack(t){this.track=t;if(!this.ctx)return;const A=[[300,.02],[700,.035],[180,.03],[450,.045]][t]||[300,.02];this.amb.fl.frequency.value=A[0];this.amb.g.gain.setTargetAtTime(this.on?A[1]:0,this.ctx.currentTime,.3)},
+  // ===== música: todas las canciones están compuestas en el código (no hace falta ningún archivo de audio) =====
+  music(id,force){if(id==null)return;if(id===this.want&&!force)return;this.want=id;this.tempo=1;songTag(SONGS[id].n);if(!this.ctx)return;this.mStep=0;this.mNext=this.ctx.currentTime+.1;
+    if(!this.mBus){const c=this.ctx;this.mBus=c.createGain();this.mBus.gain.value=.85;this.mBus.connect(this.master);const d=c.createDelay(1);d.delayTime.value=.27;const fb=c.createGain();fb.gain.value=.26;const dg=c.createGain();dg.gain.value=.3;this.echo=c.createGain();this.echo.connect(d);d.connect(fb);fb.connect(d);d.connect(dg);dg.connect(this.mBus)}
+    if(!this.timer)this.timer=setInterval(()=>this.mTick(),25)},
+  nextSong(){const inR=G.scr==="race",L=inR?RACE_SONGS:SONGS.map((s,i)=>i),k=L.indexOf(this.want);this.music(L[(k+1)%L.length],true);if(inR&&race.fast)this.tempo=1.2},
+  mTick(){if(!this.ctx||this.want==null||!this.mBus)return;const S=SONGS[this.want],now=this.ctx.currentTime;if(this.mNext<now-.25)this.mNext=now+.05;
+    while(this.mNext<now+.15){const sp=60/(S.bpm*this.tempo)/4,sw=S.sw&&this.mStep%2?sp*S.sw:0;if(this.on)this.mPlay(S,this.mStep,this.mNext+sw,sp);this.mNext+=sp;this.mStep++}},
+  mv(f,t,d,type,v,echo){const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+Math.max(.03,d));o.connect(g);g.connect(this.mBus);if(echo)g.connect(this.echo);o.start(t);o.stop(t+d+.05)},
+  mn(t,d,v,fr,type,q=1){const c=this.ctx,s=c.createBufferSource();s.buffer=this.nb;const fl=c.createBiquadFilter();fl.type=type;fl.frequency.value=fr;fl.Q.value=q;const g=c.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(fl);fl.connect(g);g.connect(this.mBus);s.start(t,Math.random()*1.5);s.stop(t+d+.05)},
+  mPlay(S,k,t,sp){const i=k%16,bar=Math.floor(k/16),L=S.prog.length,deg=S.prog[bar%L],sec=Math.floor(bar/L)%2,sc=MSC[S.sc],hz=m=>440*Math.pow(2,(m-69)/12);
+    const nt=(dg,oct)=>{const o=Math.floor(dg/7),r=((dg%7)+7)%7;return S.key+sc[r]+12*(o+oct)},ch=[0,2,4].map(x=>deg+x),at=p=>p&&p[i%p.length],fill=bar%L===L-1&&i>=12&&S.fill;
+    // batería
+    if(at(S.k)==="x"){const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(42,t+.12);g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.0001,t+.2);o.connect(g);g.connect(this.mBus);o.start(t);o.stop(t+.25)}
+    const sn=fill?"x":at(S.s);if(sn==="x"||sn==="o"){this.mn(t,.15,sn==="x"?.15:.06,1800,"bandpass",.8);this.mv(190,t,.07,"triangle",sn==="x"?.07:.03)}
+    const hh=at(S.h);if(hh==="x"||hh==="o")this.mn(t,hh==="x"?.05:.03,hh==="x"?.05:.022,8000,"highpass");
+    const pc=at(S.p);if(pc==="x"||pc==="o")this.mn(t,.035,pc==="x"?.05:.022,4800,"bandpass",3);
+    if(at(S.c)==="x")this.mn(t,.12,.07,1300,"bandpass",2);
+    // bajo
+    const bs=at(S.b);if(bs&&bs!=="."){const ix=+bs,m=ix===8?nt(ch[0],1):nt(ch[Math.min(2,ix)],0);this.mv(hz(m-24),t,sp*(S.bl||1.6),S.bass||"triangle",S.bv||.12)}
+    // acordes
+    if(at(S.ch)==="x")ch.forEach(dg=>this.mv(hz(nt(dg,0)),t,sp*(S.chL||6),S.chT||"sawtooth",S.cv||.02,true));
+    // arpegio
+    if(S.arp&&i%(S.arpR||1)===0){const a=S.arp[(i/(S.arpR||1))%S.arp.length];if(a!=="."){const dg=ch[+a%3]+(+a>=3?7:0);this.mv(hz(nt(dg,1)),t,sp*1.1,S.arpT||"square",S.av||.016,true)}}
+    // melodía: frase de 2 compases que se acomoda a cada acorde (parte A y parte B)
+    const ml=S.mel[sec][bar%2][i];if(ml&&!(S.rest&&S.rest.includes(bar%(L*2)))){const f=hz(nt(deg+ml.d,1+(S.lo||0)));this.mv(f,t,sp*ml.l,S.lead||"square",S.lv||.042,true);if(S.dbl)this.mv(f*2,t,sp*ml.l,"triangle",.016)}}};
+
 document.addEventListener("pointerdown",()=>{AU.init();if(AU.ctx&&AU.ctx.state==="suspended")AU.ctx.resume()});
-$("btnNarr").onclick=e=>{NARR.on=!NARR.on;e.target.textContent="NARRADOR "+(NARR.on?"ON":"OFF");if(!NARR.on&&window.speechSynthesis)speechSynthesis.cancel();else NARR.say("Narrador activado",2)};
-$("sndOv").onclick=()=>{AU.init();if(AU.ctx&&AU.ctx.resume)AU.ctx.resume().then(()=>{AU.setTrack(AU.track);NARR.say("¡Sonido activado! Bienvenidos a TurboPix",2)}).catch(()=>{})};
-addEventListener("keydown",()=>{AU.init();if(AU.ctx&&AU.ctx.state==="suspended")AU.ctx.resume()});
+$("btnSong").onclick=()=>{AU.init();AU.nextSong()};
+$("sndOv").onclick=()=>{AU.init();if(AU.ctx&&AU.ctx.resume)AU.ctx.resume().then(()=>AU.setTrack(AU.track)).catch(()=>{})};
+addEventListener("keydown",e=>{AU.init();if(AU.ctx&&AU.ctx.state==="suspended")AU.ctx.resume();if(e.code==="KeyM"&&!(e.target&&e.target.tagName==="INPUT"))AU.nextSong()});
 $("btnMute").onclick=e=>{AU.on=!AU.on;e.target.textContent="SONIDO "+(AU.on?"ON":"OFF");if(!AU.on){AU.engine(null);AU.skid(0)}if(AU.amb)AU.amb.g.gain.value=AU.on?.03:0};
 
 /* =========================================================
@@ -629,8 +670,8 @@ function buildTrack(ti){
   // boxes y paso del tren: se calculan antes de las rejas para abrirles espacio
   const curv0=i=>{const a=tan[(i-10+N)%N],b=tan[(i+10)%N];return Math.acos(Math.max(-1,Math.min(1,a.x*b.x+a.z*b.z)))},dI=(i,j)=>Math.min(Math.abs(i-j),N-Math.abs(i-j));
   let PA=N-100,PBC=9;for(let q=N-150;q<=N-72;q+=2){let mc=0;for(let i=q-20;i<=q+50;i+=3)mc=Math.max(mc,curv0((i+N)%N));if(mc<=PBC+.03){if(mc<PBC)PBC=mc;PA=q}}
-  const PL=50,PB=PA+25,clearAt=(i,sd,o,r)=>{const p=pts[i],n=nor[i],x=p.x+n.x*sd*o,z=p.z+n.z*sd*o;for(let k=0;k<N;k+=3){if(dI(k,i)<40)continue;if((pts[k].x-x)**2+(pts[k].z-z)**2<r*r)return false}return true};
-  const PS=clearAt(PB,1,W/2+14,26)?1:-1,inPW=i=>((i-PA)%N+N)%N<=PL,inPB=(i,r=5)=>dI(i,PB)<=r;
+  const PL=50,PB=PA+25,PBS=[PA+14,PA+37],clearAt=(i,sd,o,r)=>{const p=pts[i],n=nor[i],x=p.x+n.x*sd*o,z=p.z+n.z*sd*o;for(let k=0;k<N;k+=3){if(dI(k,i)<40)continue;if((pts[k].x-x)**2+(pts[k].z-z)**2<r*r)return false}return true};
+  const PS=[PB,PA+14,PA+37].every(b=>clearAt(b,1,W/2+14,24))?1:-1,inPW=i=>((i-PA)%N+N)%N<=PL,inPB=(i,r=5)=>PBS.some(b=>dI(i,b)<=r);
   let XI=-1;if(ti===0){const bz=[...T.ramps,...T.pads,.2,.52,.78,.15,.4,.62,.88,.3,.55,.8].map(f=>Math.floor(f*N));
     for(const f of [.43,.33,.58,.68,.24]){for(let j=0;j<50&&XI<0;j+=2){const c=(Math.floor(f*N)+j)%N;if(curv0(c)>.22||bz.some(b=>dI(b,c)<22)||inPW(c)||dI(c,0)<40)continue;
       const p=pts[c],n=nor[c],t0=tan[c];let ok=true;for(let i=0;i<N&&ok;i+=2){if(dI(i,c)<22)continue;const dx=pts[i].x-p.x,dz=pts[i].z-p.z;if(Math.abs(dx*n.x+dz*n.z)<100&&Math.abs(dx*t0.x+dz*t0.z)<W/2+12)ok=false}if(ok)XI=c}if(XI>=0)break}}
@@ -705,16 +746,17 @@ function buildTrack(ti){
     strip(o(W/2+2.4),o(W/2+6.6),0xffc83d,.04,i=>inPB(i,5),true);strip(o(W/2+2.8),o(W/2+6.2),T.road,.045,i=>inPB(i,4));
     const pa=pts[PA],na=nor[PA],sgn=new THREE.Mesh(new THREE.PlaneGeometry(5,1.1),new THREE.MeshBasicMaterial({map:bannerTex("BOXES ▶",0xffc83d),transparent:true}));
     const sg=new THREE.Group();sg.position.set(pa.x+na.x*o(W/2+4.2),pa.y+.06,pa.z+na.z*o(W/2+4.2));sg.rotation.y=ang(PA);sgn.rotation.set(-Math.PI/2,0,Math.PI);sg.add(sgn);g.add(sg);
-    const p=pts[PB],n=nor[PB],gr=new THREE.Group(),L=26;gr.position.set(p.x+n.x*o(W/2+7.6),p.y,p.z+n.z*o(W/2+7.6));gr.rotation.y=Math.atan2(s*n.x,s*n.z);g.add(gr);
-    box(L,6.5,7,ti===2?0x3a2a70:0xe8e8f0,0,3.25,4,gr);box(L-3,4.8,.3,0x1a1a28,0,2.4,.42,gr);box(L+1,.8,8,0xff5470,0,6.9,4,gr);
-    for(let k=0;k<6;k++)box(1.6,.5,.1,k%2?0xffffff:0xff5470,-L/2+3+k*4,5.4,.36,gr,true);
-    const bn=new THREE.Mesh(new THREE.PlaneGeometry(14,2.4),new THREE.MeshBasicMaterial({map:bannerTex("BOXES · PIT STOP",0xffc83d),side:THREE.DoubleSide}));bn.position.set(0,8.8,.5);bn.rotation.y=Math.PI;gr.add(bn);
-    [-7,7].forEach(x=>cyl(.2,.2,8.6,6,0xdddddd,x,4.3,.6,gr));
-    [-1,1].forEach(sd=>{for(let q=0;q<2;q++)for(let k=0;k<3;k++)part(new THREE.TorusGeometry(.46,.2,6,12),mat(0x1b1b22),sd*(L/2-2.2-q*1.2),.2+k*.4,-.4,gr,Math.PI/2)});
-    const crew=[];[[-3.6,0],[-1.2,3],[1.2,1],[3.6,4]].forEach(([x,k])=>{const cg=new THREE.Group(),d=buildDriver({hair:k%6,hc:k%6,skin:k%5,hat:4,outfit:OUTFITS[(k+2)%6],noWheel:true});
-      [-.2,.2].forEach(lx=>box(.24,.75,.28,0x23232e,lx,.37,0,cg));d.position.y=.62;cg.add(d);cg.position.set(x,0,-.5);cg.rotation.y=Math.PI;gr.add(cg);crew.push({g:cg,x,ph:k})});
-    const lamp=sph(.35,mat(0x35d07f,1),0,6.2,-.1,gr,10,8);
-    pit={a:PA,len:PL,b:PB,s,gr,crew,lamp,busy:null}}
+    const boxes=[],TEAM=[[0xff5470,"BOX 1"],[0x2f7fe0,"BOX 2"]];
+    PBS.forEach((pb,bi)=>{const p=pts[pb],n=nor[pb],gr=new THREE.Group(),L=24,tc=TEAM[bi][0];gr.position.set(p.x+n.x*o(W/2+7.6),p.y,p.z+n.z*o(W/2+7.6));gr.rotation.y=Math.atan2(s*n.x,s*n.z);g.add(gr);
+      box(L,6.5,7,ti===2?0x3a2a70:0xe8e8f0,0,3.25,4,gr);box(L-3,4.8,.3,0x1a1a28,0,2.4,.42,gr);box(L+1,.8,8,tc,0,6.9,4,gr);
+      for(let k=0;k<5;k++)box(1.6,.5,.1,k%2?0xffffff:tc,-L/2+3.5+k*4.2,5.4,.36,gr,true);
+      const bn=new THREE.Mesh(new THREE.PlaneGeometry(12,2.4),new THREE.MeshBasicMaterial({map:bannerTex("BOXES · "+TEAM[bi][1],tc),side:THREE.DoubleSide}));bn.position.set(0,8.8,.5);bn.rotation.y=Math.PI;gr.add(bn);
+      [-6,6].forEach(x=>cyl(.2,.2,8.6,6,0xdddddd,x,4.3,.6,gr));
+      [-1,1].forEach(sd=>{for(let q=0;q<2;q++)for(let k=0;k<3;k++)part(new THREE.TorusGeometry(.46,.2,6,12),mat(0x1b1b22),sd*(L/2-2.2-q*1.2),.2+k*.4,-.4,gr,Math.PI/2)});
+      const crew=[];[[-3.6,0],[-1.2,3],[1.2,1],[3.6,4]].forEach(([x,k])=>{const cg=new THREE.Group(),d=buildDriver({hair:(k+bi*2)%6,hc:(k+bi)%6,skin:(k+bi)%5,hat:bi?2:4,outfit:bi?0x2f7fe0:0xe8344e,noWheel:true});
+        [-.2,.2].forEach(lx=>box(.24,.75,.28,0x23232e,lx,.37,0,cg));d.position.y=.62;cg.add(d);cg.position.set(x,0,-.5);cg.rotation.y=Math.PI;gr.add(cg);crew.push({g:cg,x,ph:k})});
+      const lamp=sph(.35,mat(0x35d07f,1),0,6.2,-.1,gr,10,8);boxes.push({b:pb,gr,crew,lamp,busy:null})});
+    pit={a:PA,len:PL,b:PB,s,boxes}}
   // rampas y turbos
   const ramps=[],pads=[];
   T.ramps.forEach(f=>{const i=Math.floor(f*N),p=pts[i],r=new THREE.Group(),w=W/2-1,L=6,H=1.8,geo=new THREE.BufferGeometry();
@@ -876,16 +918,9 @@ function explode(b){blast(b.x,b.y,b.z,7.5,b.owner,"¡Bombazo de {a} contra {v}!"
 
 // ===== boxes (paddock), llantas, sorpresas de pista, narrador y pito =====
 function inPit(c){const P=world&&world.pit;if(!P||c.air>1)return false;const d=((c.idx-P.a)%N+N)%N;if(d>P.len)return false;const q=world.pts[c.idx],n=world.nor[c.idx],l=((c.x-q.x)*n.x+(c.z-q.z)*n.z)*P.s;return l>W/2+.6&&l<W/2+7.6}
-function pitFx(c,dt){const P=world.pit;if(P)P.busy=c;if(Math.random()<.5){const k=Math.random()<.5?-1:1;spark(c.x+Math.cos(c.h)*k*1.3,c.y+.5,c.z-Math.sin(c.h)*k*1.3,Math.random()<.5?3:5)}if(c.human!=null&&Math.random()<dt*4)AU.sfx("gun")}
+function pitFx(c,dt){if(c.pitBox)c.pitBox.busy=c;if(Math.random()<.5){const k=Math.random()<.5?-1:1;spark(c.x+Math.cos(c.h)*k*1.3,c.y+.5,c.z-Math.sin(c.h)*k*1.3,Math.random()<.5?3:5)}if(c.human!=null&&Math.random()<dt*4)AU.sfx("gun")}
 const spk=n=>String(n||"").toLowerCase().replace(/^bot /,"el bot ");
-const NARR={on:true,last:0,v:null,
-  pick(){if(!window.speechSynthesis)return;const vs=speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang));this.v=vs.find(v=>/es[-_](MX|US|CO|419)/i.test(v.lang))||vs.find(v=>/es[-_]ES/i.test(v.lang))||vs[0]||null},
-  say(t,pr=1){if(!this.on||!AU.on||!window.speechSynthesis||!AU.ctx||AU.ctx.state!=="running")return;const now=performance.now();
-    if(speechSynthesis.speaking||speechSynthesis.pending){if(pr<2||now-this.last<900)return;speechSynthesis.cancel()}else if(now-this.last<1400&&pr<2)return;
-    this.last=now;if(!this.v)this.pick();const u=new SpeechSynthesisUtterance(t);u.lang=this.v?this.v.lang:"es-MX";if(this.v)u.voice=this.v;u.rate=1.12;u.pitch=1.05;u.volume=1;
-    u.onstart=()=>{if(AU.master)AU.master.gain.setTargetAtTime(.2,AU.ctx.currentTime,.08)};u.onend=u.onerror=()=>{if(AU.master)AU.master.gain.setTargetAtTime(.5,AU.ctx.currentTime,.25)};
-    try{speechSynthesis.speak(u)}catch(e){}}};
-if(window.speechSynthesis)try{speechSynthesis.onvoiceschanged=()=>NARR.pick()}catch(e){}
+const NARR={on:false,say(){}}; // el narrador se quitó
 // pito: cada vehículo suena distinto
 const HORNS=[[523,659],[740,932],[392,494],[196,247],[587,440],[880,1175]];
 function honk(c){if(!c||c.honkT>0||!race.on)return;c.honkT=.45;const h=HORNS[c.car%HORNS.length];AU.tone(h[0],.3,"square",.07);AU.tone(h[1],.3,"square",.06);AU.tone(h[0]/2,.3,"sawtooth",.03);
@@ -982,7 +1017,7 @@ function physics(c,dt){
   c.twT=(c.twT||0)-dt;if((c.tire??1)<.35&&!c.finished&&!(c.pit>0)&&c.twT<=0){c.twT=9;say(c,"⚫ ¡LLANTAS GASTADAS! ENTRA A BOXES");if(c.human!=null){NET.buzz(c.human,[60,40,60]);AU.sfx("buzz");if(!c.tireSaid){c.tireSaid=true;NARR.say("A "+spk(c.name)+" se le gastaron las llantas")}}}
   if((c.dmg||0)>.3&&Math.random()<.25)spark(c.x,c.y+c.air+1.3,c.z,5);
   if(c.pit>0){c.pit-=dt;c.spd*=Math.pow(.0002,dt);c.drift=false;pitFx(c,dt);
-    if(c.pit<=0){c.tire=1;c.dmg=0;c.tireSaid=false;c.twT=0;c.turbo=Math.max(c.turbo,.9);say(c,"¡LLANTAS NUEVAS!");if(c.human!=null){AU.sfx("turbo");NET.buzz(c.human,[40,60,40])}if(world.pit)world.pit.busy=null}}
+    if(c.pit<=0){c.tire=1;c.dmg=0;c.tireSaid=false;c.twT=0;c.turbo=Math.max(c.turbo,.9);say(c,"¡LLANTAS NUEVAS!");if(c.human!=null){AU.sfx("turbo");NET.buzz(c.human,[40,60,40])}if(c.pitBox){c.pitBox.busy=null;c.pitBox=null}}}
   else if(c.spin>0){c.spin-=dt;c.spd*=Math.pow(.2,dt);c.drift=false}
   else{
     if(I.a>0)c.spd+=c.acc*I.a*dt;else c.spd-=8*dt*Math.sign(c.spd);
@@ -1035,7 +1070,8 @@ function physics(c,dt){
   world.coins.forEach(k=>{if(k.t>0||c.air>2)return;if((c.x-k.x)**2+(c.z-k.z)**2<4.5){k.t=8;k.m.visible=false;c.coins=Math.min(10,(c.coins||0)+1);c.earn=(c.earn||0)+1;if(c.human!=null)AU.sfx("coin")}});
   world.cones.forEach(k=>{if(k.t>0||c.air>1)return;if((c.x-k.x)**2+(c.z-k.z)**2<2.8){k.t=5;k.vx=Math.sin(c.h)*c.spd*.7+(Math.random()-.5)*8;k.vz=Math.cos(c.h)*c.spd*.7+(Math.random()-.5)*8;k.vy=5+Math.abs(c.spd)*.1;c.spd*=.92;if(c.human!=null){AU.sfx("bump");NET.buzz(c.human,30)}}});
   if(c.air<=0)world.pads.forEach(o=>{if((c.x-o.x)**2+(c.z-o.z)**2<10&&c.turbo<.8){c.turbo=1.2;say(c,"¡TURBO!");if(c.human!=null)AU.sfx("turbo")}});
-  if(inP&&!(c.pit>0)&&c.pitLap!==c.lap&&!c.finished&&((c.tire??1)<.85||(c.dmg||0)>.05)&&Math.abs(((c.idx-world.pit.b)%N+N+N/2)%N-N/2)<=4){c.pit=2.4;c.pitLap=c.lap;c.drift=false;c.offT=0;
+  const pbx=inP&&!(c.pit>0)&&c.pitLap!==c.lap&&!c.finished&&((c.tire??1)<.85||(c.dmg||0)>.05)?world.pit.boxes.find(o=>Math.abs(((c.idx-o.b)%N+N+N/2)%N-N/2)<=4&&!(o.busy&&o.busy!==c&&o.busy.pit>0)):null;
+  if(pbx){c.pitBox=pbx;pbx.busy=c;c.pit=2.4;c.pits=(c.pits||0)+1;c.pitLap=c.lap;c.drift=false;c.offT=0;
     say(c,"🔧 PARADA EN BOXES");AU.sfx("pit");NARR.say(spk(c.name)+" entra a boxes");if(c.human!=null)NET.buzz(c.human,60)}
   world.boxes.forEach(bx=>{if(bx.cd<=0&&(c.x-bx.x)**2+(c.z-bx.z)**2<7.5&&c.air<3){bx.cd=3;bx.m.visible=false;if(c.human!=null)AU.sfx("roll");giveItem(c)}});
   world.oils.forEach(o=>{if(o.life<=0||(o.grace>0&&o.owner===c)||c.air>.5)return;if(c.spin<=0&&(c.x-o.x)**2+(c.z-o.z)**2<(o.r2||5)){hit(c,o.owner,o.kind==="banana"?"¡{v} se resbaló en la cáscara de {a}!":"¡{v} pisó el aceite de {a}!");o.life=0;if(o.kind==="banana"&&c.human!=null)say(c,"¡RESBALÓN!")}});
@@ -1063,7 +1099,7 @@ function aiDrive(c,dt){
   if(c.item&&c.human==null){c.aiT-=dt;const it=c.item,ahead=race.cars.some(o=>o!==c&&!o.finished&&o.prog>c.prog&&o.prog-c.prog<70),behind=race.cars.some(o=>o!==c&&o.prog<c.prog&&c.prog-o.prog<45);
     const go=it==="missile"||it==="bomb"?(ahead&&c.aiT<0)||c.aiT<-5:it==="oil"||it==="banana"?(behind&&c.aiT<0)||c.aiT<-6:it==="turbo"?c.aiT<0&&Math.abs(a)<.2:c.aiT<0;if(go)useItem(c,false)}
   // a boxes si las llantas están gastadas o el carro dañado
-  const PT=world.pit;if(PT&&!c.finished&&((c.tire??1)<(c.pitTh||.55)||(c.dmg||0)>.3)&&c.pitLap!==c.lap&&c.lap<LAPS+1){const d=((c.idx-(PT.a-40))%N+N)%N;if(d<40+PT.len){c.aiLane=PT.s*(W/2+4.6);c.pitGo=true;const q=P[c.idx],nq=world.nor[c.idx],lt=(c.x-q.x)*nq.x+(c.z-q.z)*nq.z;c.in.s=Math.max(-1,Math.min(1,c.in.s+(c.aiLane-lt)*.09))}}else if(c.pitGo){c.pitGo=false;c.aiLane=0}
+  const PT=world.pit;if(PT&&!c.finished&&((c.tire??1)<(c.pitTh||.55)||(c.dmg||0)>.45)&&(c.pits||0)<2&&c.pitLap!==c.lap&&c.lap<LAPS+1){const d=((c.idx-(PT.a-40))%N+N)%N;if(d<40+PT.len){c.aiLane=PT.s*(W/2+4.6);c.pitGo=true;const q=P[c.idx],nq=world.nor[c.idx],lt=(c.x-q.x)*nq.x+(c.z-q.z)*nq.z;c.in.s=Math.max(-1,Math.min(1,c.in.s+(c.aiLane-lt)*.09))}}else if(c.pitGo){c.pitGo=false;c.aiLane=0}
   // si casi no avanza (aunque vaya rápido), retrocede y cambia de carril
   if(c.spin>0||c.revT>0||c.fall>0||c.air>0||c.pit>0||race.t<3){c.pgT=0;c.pg0=c.prog||0}
   c.pgT=(c.pgT||0)+dt;if(c.pgT>2.2){if((c.prog||0)-(c.pg0||0)<8&&!c.finished){c.revT=.8;c.aiLane=-c.aiLane||((Math.random()<.5?-1:1)*4)}c.pg0=c.prog||0;c.pgT=0}
@@ -1076,7 +1112,7 @@ function aiDrive(c,dt){
 const race={on:false,t:0,cars:[],count:0,endT:0,lastBeep:4};
 function clearRace(){race.cars.forEach(c=>{scene.remove(c.obj);scene.remove(c.shieldM)});if(world&&world.pod){world.group.remove(world.pod.g);world.pod=null}if(world&&world.ev&&world.ev.list){world.ev.list.forEach(o=>{scene.remove(o.m);scene.remove(o.ring)});world.ev.list=[]}if(window.speechSynthesis)try{speechSynthesis.cancel()}catch(e){}if(world){world.projs.forEach(p=>scene.remove(p.obj));world.bombs.forEach(b=>scene.remove(b.obj));world.flashes.forEach(f=>scene.remove(f.m));world.bombs=[];world.flashes=[]}race.cars=[];race.on=false}
 function startRace(){
-  if(G.scr==="lobby")resetGarage();clearRace();buildTrack(G.track);AU.tempo=1;AU.setTrack(G.track);
+  if(G.scr==="lobby")resetGarage();clearRace();buildTrack(G.track);AU.setTrack(G.track);AU.music(TRACK_SONGS[G.track][Math.random()*2|0],true);
   const hum=G.players.filter(p=>p&&p.ready),cars=[],used=new Set(hum.map(p=>p.car));
   hum.forEach(p=>{const c=makeRacer({...look(p),human:p.slot,name:pname(p),col:PCOL[p.slot],ai:!!p.away});if(G.mode==="champ")applyUp(c,p.up);cars.push(c)});
   let k=0;while(G.mode!=="time"&&cars.length<4){let car=(k*2+1)%CARS.length;for(let j=0;j<CARS.length&&used.has(car);j++)car=(car+1)%CARS.length;used.add(car);
@@ -1147,10 +1183,11 @@ function panelHTML(p){const val=k=>k==="name"?esc(pname(p)):["hc","skin","out"].
 function updPanels(){const el=$("panels");if(!el)return;const ps=G.players.filter(Boolean);
   el.innerHTML=ps.length?ps.map(panelHTML).join(""):`<div class="small">Cuando alguien escanee el código aparece aquí su piloto. Cada uno lo arma desde su celular y aquí se ve en vivo.</div>`;
   const st=$("startBtn");if(st)st.hidden=!G.players.some(p=>p&&p.ready)}
-const hintHTML=`<div class="hint"><div><b>ANILLOS</b>Pasa por dentro de los anillos azules para un turbo</div><div><b>◀ ▶</b>Gira el celular como un volante</div><div><b>ACELERAR</b>Botón derecho. Acelera justo en la 5ª luz roja para salir con turbo</div><div><b>FRENO</b>Botón izquierdo; frena girando para derrapar</div><div><b>MONEDAS</b>Cada una te da más velocidad, hasta 10. En el campeonato sirven para el TALLER</div><div><b>BOXES</b>Si se gastan las llantas, entra al carril amarillo antes de la meta</div><div><b>📢 PITO</b>Tócalo en el celular (o la tecla H)</div></div>`;
+const hintHTML=`<div class="hint"><div><b>ANILLOS</b>Pasa por dentro de los anillos azules para un turbo</div><div><b>◀ ▶</b>Gira el celular como un volante</div><div><b>ACELERAR</b>Botón derecho. Acelera justo en la 5ª luz roja para salir con turbo</div><div><b>FRENO</b>Botón izquierdo; frena girando para derrapar</div><div><b>MONEDAS</b>Cada una te da más velocidad, hasta 10. En el campeonato sirven para el TALLER</div><div><b>BOXES</b>Si se gastan las llantas, entra al carril amarillo antes de la meta</div><div><b>📢 PITO</b>Tócalo en el celular (o la tecla H)</div><div><b>🎵 MÚSICA</b>Hay 11 canciones; cámbiala con el botón 🎵 o la tecla M</div></div>`;
 
 function render(){
-  const m=$("menu");$("hud").hidden=G.scr!=="race";$("btnPause").hidden=G.scr!=="race";{const bn=$("btnNarr");if(bn)bn.hidden=G.scr==="race"}$("pause").hidden=true;race.paused=false;if(G.scr==="race"){m.innerHTML="";buildVPs();return}
+  if(G.scr!=="race")AU.music(G.scr==="shop"?1:(G.scr==="results"||G.scr==="final")?2:0);
+  const m=$("menu");$("hud").hidden=G.scr!=="race";$("btnPause").hidden=G.scr!=="race";$("pause").hidden=true;race.paused=false;if(G.scr==="race"){m.innerHTML="";buildVPs();return}
   $("big").hidden=true;$("lights").hidden=true;document.querySelectorAll(".vp").forEach(e=>e.remove());
   if(G.scr==="lobby"){
     m.innerHTML=`<div class="menu"><div class="card">
@@ -1468,7 +1505,7 @@ function loop(){requestAnimationFrame(loop);const raw=Math.min(.05,clock.getDelt
    world.cones.forEach(k=>{if(k.t<=0)return;k.t-=dt;if(k.t<=0){k.x=k.bx;k.z=k.bz;k.m.position.set(k.x,k.y,k.z);k.m.rotation.set(0,0,0);return}
      k.x+=k.vx*dt;k.z+=k.vz*dt;k.vy-=22*dt;let y=k.m.position.y+k.vy*dt;if(y<k.y){y=k.y;k.vy*=-.35;k.vx*=.6;k.vz*=.6}k.m.position.set(k.x,y,k.z);k.m.rotation.x+=dt*k.vz*.3;k.m.rotation.z-=dt*k.vx*.3})}
   updEvents(dt);
-  if(world.pit){const P=world.pit,b=P.busy,tt=performance.now()/1000;P.crew.forEach(o=>{o.g.position.y=b?Math.abs(Math.sin(tt*9+o.ph))*.35:0;o.g.rotation.z=b?Math.sin(tt*14+o.ph)*.15:0});P.lamp.material=mat(b?(Math.floor(tt*4)%2?0xff3a4a:0xffc83d):0x35d07f,1);if(b&&!(b.pit>0))P.busy=null}
+  if(world.pit){const tt=performance.now()/1000;world.pit.boxes.forEach(B=>{const b=B.busy;B.crew.forEach(o=>{o.g.position.y=b?Math.abs(Math.sin(tt*9+o.ph))*.35:0;o.g.rotation.z=b?Math.sin(tt*14+o.ph)*.15:0});B.lamp.material=mat(b?(Math.floor(tt*4)%2?0xff3a4a:0xffc83d):0x35d07f,1);if(b&&!(b.pit>0))B.busy=null})}
   {const so=$("sndOv");if(so){const need=AU.on&&!(AU.ctx&&AU.ctx.state==="running");if(so.hidden===need)so.hidden=!need}}
   const W2=innerWidth,H2=innerHeight;
   if(race.on){
@@ -1498,7 +1535,7 @@ function loop(){requestAnimationFrame(loop);const raw=Math.min(.05,clock.getDelt
       if(race.t>4&&ranked[0]&&ranked[0]!==race.lead){if(race.lead&&!ranked[0].finished)NARR.say("¡"+spk(ranked[0].name)+" toma la delantera!");race.lead=ranked[0]}
       if(!race.llSaid&&ranked[0]&&ranked[0].lap===LAPS&&!ranked[0].finished){race.llSaid=true;NARR.say("¡Última vuelta! Va adelante "+spk(ranked[0].name),2)}
       let ch=false;ranked.forEach((c,i)=>{if(c.place!==i+1){if(c.human!=null&&i+1<c.place&&race.t>3&&!c.finished){say(c,"¡SUBISTE AL "+(i+1)+"º!");AU.sfx("roll")}c.place=i+1;if(c.human!=null)ch=true}});
-      if(!race.fast&&race.cars.some(c=>c.human!=null&&c.lap===LAPS)){race.fast=true;AU.tempo=1.2;AU.setTrack(G.track)}if(ch||Math.random()<.03)NET.sendAll();
+      if(!race.fast&&race.cars.some(c=>c.human!=null&&c.lap===LAPS)){race.fast=true;AU.tempo=1.2}if(ch||Math.random()<.03)NET.sendAll();
       const hum=race.cars.filter(c=>c.human!=null);
       if(hum.length?hum.every(c=>c.finished):race.cars.some(c=>c.finished)){race.endT+=dt;if(race.endT>3)finishRace()}}
     if(!race.on)return;

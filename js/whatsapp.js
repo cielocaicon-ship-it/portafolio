@@ -12,7 +12,7 @@
 (function () {
   "use strict";
 
-  var NUMERO = "";
+  var NUMERO = "573204819652";
   var MENSAJE = "¡Hola, Cielo! Vi tu portafolio y quiero hablarte de un proyecto.";
 
   var boton = document.getElementById("botonWhatsapp");

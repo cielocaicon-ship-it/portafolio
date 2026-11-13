@@ -13,12 +13,44 @@
   // Frases según la página (la primera sale al tocarla la primera vez)
   var pagina = (location.pathname.split("/").pop() || "index.html").replace(".html", "");
   var FRASES = {
-    "index": ["¡Guau! Soy Nucita", "Toca las tarjetas de colores", "¿Ya viste mis juegos?", "Cielo me dibujó a mí"],
-    "blog": ["¡Aquí está todo su trabajo!", "Toca una imagen para verla grande", "Mi favorito es el pixel art", "¡Guau, guau!"],
-    "hoja-de-vida": ["Esta es la hoja de vida de Cielo", "¡Quedaron de terceras!", "¡Guau! Contrátenla"],
-    "contacto": ["¡Escríbele, no muerde!", "Yo sí muerdo… galletas", "¡Guau! Te responde rápido"]
+    "index": [
+      "¡Guau! Soy Nucita, la perrita de Cielo",
+      "Soy de verdad, no solo un dibujo",
+      "Salgo en los juegos de la saga Petunia",
+      "Toca las tarjetas de colores, se voltean",
+      "Cielo me dibujó… y quedé divina",
+      "¿Ya pasaste por el jardín de juegos?"
+    ],
+    "blog": [
+      "¡Aquí está todo su trabajo!",
+      "Toca una imagen para verla grande",
+      "Mi favorito es el pixel art",
+      "Yo superviso cada diseño desde el sofá",
+      "Este empaque huele a galletas… creo",
+      "¡Guau, guau! Eso significa \"contrátenla\""
+    ],
+    "hoja-de-vida": [
+      "Esta es la hoja de vida de Cielo",
+      "¡Quedaron de terceras en la Hackathon!",
+      "Yo también tengo experiencia: 100 % en siestas",
+      "Contrátenla, que me debe concentrado",
+      "Técnica del SENA e ingeniera… y mi dueña"
+    ],
+    "contacto": [
+      "¡Escríbele, ya no muerde!",
+      "Yo sí muerdo… pero solo galletas",
+      "¡Guau! Te responde rápido",
+      "Por WhatsApp contesta más rápido",
+      "Si traes premio, te atiendo yo"
+    ]
   };
-  var frases = FRASES[pagina] || FRASES.index;
+  // Frases que pueden salir en cualquier página
+  var COMUNES = [
+    "Soy Nucita, la mascota de Cielo",
+    "Inspiré a la saga Petunia, ¿sabías?",
+    "Rasca aquí… digo, toca aquí"
+  ];
+  var frases = (FRASES[pagina] || FRASES.index).concat(COMUNES);
   var turno = 0;
 
   var DIBUJO =

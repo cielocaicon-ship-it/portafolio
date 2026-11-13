@@ -16,7 +16,7 @@
     "index": [
       "¡Guau! Soy Nucita, la perrita de Cielo",
       "Soy de verdad, no solo un dibujo",
-      "Salgo en los juegos de la saga Petunia",
+      "También salgo en sus videojuegos",
       "Toca las tarjetas de colores, se voltean",
       "Cielo me dibujó… y quedé divina",
       "¿Ya pasaste por el jardín de juegos?"
@@ -47,7 +47,7 @@
   // Frases que pueden salir en cualquier página
   var COMUNES = [
     "Soy Nucita, la mascota de Cielo",
-    "Inspiré a la saga Petunia, ¿sabías?",
+    "Soy la perrita de Cielo, de verdad",
     "Rasca aquí… digo, toca aquí"
   ];
   var frases = (FRASES[pagina] || FRASES.index).concat(COMUNES);

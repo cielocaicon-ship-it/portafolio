@@ -6922,3 +6922,288 @@ main > :first-child {
   font-size: 0.85rem;
   font-weight: 800;
 }
+
+/* ============================================================
+   39. Sobre mí (versión nueva)
+   La ilustración va en un marco tipo foto, girado, con un
+   saludo escrito a mano. Al lado: frase grande, el texto,
+   "Así trabajo" en tres pasos, datos rápidos y herramientas.
+   Para cambiar la ilustración basta con reemplazar
+   img/retrato.webp por la nueva (cuadrada).
+   ============================================================ */
+
+/* Los saltos a una sección (#sobre-mi, #ingeniera...) no quedan
+   tapados por el menú flotante */
+[id] {
+  scroll-margin-top: calc(var(--alto-menu) + 1rem);
+}
+
+.about--nuevo {
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.about--nuevo .about__text,
+.about--nuevo .about__subtitle,
+.about--nuevo .tool-list {
+  grid-column: auto;
+}
+
+/* ---------- Marco de la ilustración ---------- */
+.about__foto {
+  position: relative;
+  margin: 0;
+  padding: 0.9rem 0.9rem 3.2rem;
+  border-radius: 0.4rem;
+  background-color: var(--surface);
+  box-shadow: 0 1.2rem 2.6rem rgba(40, 30, 20, 0.16);
+  rotate: -3deg;
+  transition: rotate 0.5s var(--curva, ease), scale 0.5s var(--curva, ease);
+}
+
+/* Lámina de color detrás del marco */
+.about__lamina {
+  position: relative;
+  isolation: isolate;
+}
+
+.about__lamina::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 1.2rem;
+  background: linear-gradient(140deg, var(--diseno), var(--post));
+  rotate: 7deg;
+  scale: 1.02;
+  transition: rotate 0.5s var(--curva, ease);
+}
+
+/* Cinta de papel arriba, como foto pegada */
+.about__foto::after {
+  content: "";
+  position: absolute;
+  top: -0.8rem;
+  left: 50%;
+  width: 6rem;
+  height: 1.7rem;
+  margin-left: -3rem;
+  background-color: color-mix(in srgb, var(--band) 75%, transparent);
+  rotate: 4deg;
+}
+
+.about__foto:hover {
+  rotate: 0deg;
+  scale: 1.02;
+}
+
+.about__lamina:hover::before {
+  rotate: 3deg;
+}
+
+.about--nuevo .about__portrait,
+.about--nuevo .about__portrait:hover {
+  grid-column: auto;
+  grid-row: auto;
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 0.2rem;
+  box-shadow: none;
+  transform: none;
+}
+
+.about__saludo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.5rem;
+  font-family: "Caveat", var(--font);
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink);
+}
+
+/* ---------- Texto ---------- */
+.about__kicker {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.about__titulo {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.about__titulo span {
+  display: block;
+  color: var(--post);
+}
+
+.about__subtitle {
+  margin-top: var(--space-md);
+}
+
+.about__pasos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+
+.about__pasos li {
+  counter-increment: paso;
+  position: relative;
+  padding: 2.4rem 1rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background-color: var(--surface);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.about__pasos li::before {
+  content: counter(paso, decimal-leading-zero);
+  position: absolute;
+  top: 0.7rem;
+  left: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.about__pasos strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.about__datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about__datos li {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--post) 12%, transparent);
+  color: var(--post);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.about__firma {
+  margin: var(--space-sm) 0 0;
+  font-family: "Caveat", var(--font);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  rotate: -4deg;
+  transform-origin: left center;
+}
+
+@media (max-width: 52rem) {
+  .about--nuevo {
+    grid-template-columns: 1fr;
+  }
+
+  .about__lamina {
+    width: 100%;
+    max-width: 18rem;
+    justify-self: center;
+  }
+
+  .about__pasos {
+    grid-template-columns: 1fr;
+  }
+
+  .about__pasos li {
+    padding: 0.9rem 1rem 0.9rem 3.4rem;
+  }
+
+  .about__pasos li::before {
+    top: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__foto,
+  .about__lamina::before {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   40. Botón de WhatsApp en Contacto
+   ============================================================ */
+.whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: var(--space-md) 0;
+  padding: 0.9rem 1.2rem;
+  border-radius: 1rem;
+  background-color: #1F8F4E;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 0.7rem 1.6rem rgba(31, 143, 78, 0.28);
+  transition: translate 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp[hidden] {
+  display: none;
+}
+
+.whatsapp:hover {
+  translate: 0 -3px;
+  box-shadow: 0 1rem 2rem rgba(31, 143, 78, 0.38);
+  color: #fff;
+}
+
+.whatsapp:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.whatsapp__icono {
+  flex: none;
+  width: 2.2rem;
+  height: 2.2rem;
+  fill: currentColor;
+}
+
+.whatsapp__texto {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.whatsapp__texto small {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.9;
+}

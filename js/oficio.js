@@ -20,15 +20,23 @@
      Por delante: ícono y nombre del área. Al tocarla se voltea y
      muestra qué hago ahí, con qué programas y un botón
      "Ver un trabajo" que lleva cada vez a un trabajo distinto. */
+  // Cada tarjeta lleva SOLO a trabajos de su área:
+  //   diseno      → las piezas de diseño gráfico (al azar)
+  //   audiovisual → los videos de posproducción (al azar)
+  //   animacion   → la animación del empaque (por ahora es la única)
+  //   juegos      → uno de los juegos del jardín (al azar)
+  //   web         → SlotNova
+  //   marketing   → todavía no hay fotos subidas: la tarjeta dice "muy pronto"
+  // Cuando subas un trabajo nuevo, agrega aquí su dirección (#trabajo-…).
   var TRABAJOS = {
     diseno: ["blog.html#trabajo-cajita", "blog.html#trabajo-perfumeria", "blog.html#trabajo-revista",
              "blog.html#trabajo-granorte", "blog.html#trabajo-pixel-art", "blog.html#trabajo-ferrari"],
-    audiovisual: ["blog.html#trabajo-colegio", "blog.html#trabajo-perfumeria-video", "blog.html#trabajo-empaque-animado"],
-    animacion: ["blog.html#trabajo-empaque-animado", "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-noche-de-espantos", "juegos.html#juego-turbopix-gp"],
+    audiovisual: ["blog.html#trabajo-colegio", "blog.html#trabajo-perfumeria-video"],
+    animacion: ["blog.html#trabajo-empaque-animado"],
     juegos: ["juegos.html#juego-petugol", "juegos.html#juego-petupong", "juegos.html#juego-noche-de-espantos",
              "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp"],
-    web: ["blog.html#trabajo-slotnova", "juegos.html#juego-petugol", "juegos.html#juego-petupong"],
-    marketing: ["blog.html#trabajo-perfumeria", "blog.html#trabajo-perfumeria-video", "blog.html#trabajo-granorte"]
+    web: ["blog.html#trabajo-slotnova"],
+    marketing: []
   };
 
   // Elige uno al azar, sin repetir el último que se vio de esa área

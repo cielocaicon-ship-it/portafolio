@@ -6909,3 +6909,16 @@ main > :first-child {
   background-color: transparent;
   object-fit: contain;
 }
+
+/* Área sin trabajos subidos todavía (Fotografía): en vez del botón,
+   una etiqueta punteada que avisa que vienen pronto */
+.oficio-card__pronto {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.95rem;
+  border: 2px dashed var(--sobre-acento);
+  border-radius: 999px;
+  color: var(--sobre-acento);
+  font-size: 0.85rem;
+  font-weight: 800;
+}

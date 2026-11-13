@@ -3,10 +3,10 @@
    Cielo Yenied Caicedo — Portafolio
 
    Al tocar un enlace a otra página del portafolio:
-   1. Suben tres franjas de color (terracota, azul y verde) que
-      tapan la pantalla.
+   1. Suben tres capas como una ola (terracota, azul y una oscura
+      con mi nombre y una huellita) que tapan la pantalla.
    2. Se abre la página nueva.
-   3. En la página nueva las franjas siguen subiendo y la destapan.
+   3. En la página nueva las capas siguen subiendo y la destapan.
 
    Va en el <head> SIN defer: así la página nueva empieza tapada
    y no se ve un "parpadeo" antes de que la cortina se vaya.
@@ -33,7 +33,7 @@
 
   if (vieneConCortina) {
     raiz.classList.add("cortina-llega");
-    setTimeout(function () { raiz.classList.remove("cortina-llega"); }, 1000);
+    setTimeout(function () { raiz.classList.remove("cortina-llega"); }, 1100);
   }
 
   /* ---------- 1 y 2. Salida: la cortina sube y se abre la página ---------- */
@@ -59,7 +59,7 @@
     var cortina = document.createElement("div");
     cortina.className = "cortina";
     cortina.setAttribute("aria-hidden", "true");
-    cortina.innerHTML = "<span></span><span></span><span></span>";
+    cortina.innerHTML = "<span></span><span></span><span><span class=\"cortina__firma\">Cielo Yenied Caicedo</span></span>";
     document.body.appendChild(cortina);
     void cortina.offsetWidth;            // para que la animación arranque
     cortina.classList.add("cortina--sube");
@@ -68,7 +68,7 @@
     } catch (error) {
       // sin almacenamiento solo no habrá cortina al llegar
     }
-    setTimeout(function () { window.location.href = destino; }, 560);
+    setTimeout(function () { window.location.href = destino; }, 740);
   }
 
   // Otros scripts (por ejemplo "Ver un trabajo") pueden usarla también

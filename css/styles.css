@@ -6010,46 +6010,152 @@ main > .jardin--portada {
 
 /* ============================================================
    32. Cortina de color al cambiar de página (js/transicion.js)
-   Tres franjas con los colores de los tres oficios.
+   Tres capas que suben una tras otra como una ola, con el borde
+   de arriba curvo: terracota, azul y por último una capa oscura
+   con mi nombre y una huellita. En la página nueva las capas
+   siguen subiendo en orden inverso y la destapan.
    ============================================================ */
-.cortina,
-.cortina-llega body::before {
+:root {
+  --cortina-1: #B5562B;     /* terracota */
+  --cortina-2: #22477A;     /* azul */
+  --cortina-3: #16130F;     /* oscuro, lleva el nombre */
+  --cortina-curva: cubic-bezier(0.76, 0, 0.24, 1);
+  --huella-cortina: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E2895A'%3E%3Cellipse cx='12' cy='16' rx='5.2' ry='4.4'/%3E%3Cellipse cx='5.2' cy='10.2' rx='2.2' ry='2.8'/%3E%3Cellipse cx='9.4' cy='6.2' rx='2.2' ry='2.9'/%3E%3Cellipse cx='14.6' cy='6.2' rx='2.2' ry='2.9'/%3E%3Cellipse cx='18.8' cy='10.2' rx='2.2' ry='2.8'/%3E%3C/svg%3E");
+}
+
+/* ---------- Salida: las capas suben y tapan la página ---------- */
+.cortina {
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.cortina {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.cortina > span {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  top: 0;
+  height: 100%;
+  border-radius: 50% 50% 0 0 / 22vh 22vh 0 0;
+  transform: translateY(105%);
+  transition: transform 0.62s var(--cortina-curva),
+              border-radius 0.62s var(--cortina-curva);
 }
 
-.cortina span {
-  transform: translateY(100%);
-}
+.cortina > span:nth-child(1) { background-color: var(--cortina-1); }
+.cortina > span:nth-child(2) { background-color: var(--cortina-2); transition-delay: 0.08s; }
+.cortina > span:nth-child(3) { background-color: var(--cortina-3); transition-delay: 0.16s; }
 
-.cortina span:nth-child(1) { background-color: #8F4A24; }
-.cortina span:nth-child(2) { background-color: #22477A; transition-delay: 0.07s; }
-.cortina span:nth-child(3) { background-color: #003E19; transition-delay: 0.14s; }
-
-.cortina span {
-  transition: transform 0.42s cubic-bezier(0.7, 0, 0.3, 1);
-}
-
-.cortina--sube span {
+.cortina--sube > span {
   transform: translateY(0);
+  border-radius: 0;
 }
 
-/* Al llegar a la página nueva: las franjas siguen subiendo y la destapan */
+/* Nombre y huellita en la capa oscura */
+.cortina__firma,
+.cortina-llega body::before {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.cortina__firma {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 0.3s ease 0.45s, transform 0.4s var(--cortina-curva) 0.4s;
+}
+
+.cortina__firma::before,
+.cortina-llega body::after {
+  content: "";
+  width: 2.4rem;
+  height: 2.4rem;
+  background: var(--huella-cortina) center / contain no-repeat;
+}
+
+.cortina--sube .cortina__firma {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Llegada: las capas siguen subiendo y destapan ----------
+   Se dibujan con pseudo-elementos para que estén desde el primer
+   instante, antes de que cargue el resto de la página:
+   html::before = terracota, html::after = azul,
+   body::before = capa oscura con el nombre, body::after = huellita */
+.cortina-llega::before,
+.cortina-llega::after,
 .cortina-llega body::before {
   content: "";
-  background: linear-gradient(90deg, #8F4A24 0 33.34%, #22477A 33.34% 66.67%, #003E19 66.67% 100%);
-  animation: cortina-se-va 0.6s 0.05s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  position: fixed;
+  left: -5%;
+  right: -5%;
+  top: 0;
+  height: 100%;
+  pointer-events: none;
+  animation: cortina-se-va 0.65s var(--cortina-curva) both;
+}
+
+.cortina-llega::before {
+  z-index: 9997;
+  background-color: var(--cortina-1);
+  animation-delay: 0.3s;
+}
+
+.cortina-llega::after {
+  z-index: 9998;
+  background-color: var(--cortina-2);
+  animation-delay: 0.2s;
+}
+
+.cortina-llega body::before {
+  content: "Cielo Yenied Caicedo";
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3.6rem;          /* deja espacio para la huellita */
+  background-color: var(--cortina-3);
+  animation-delay: 0.1s;
+}
+
+.cortina-llega body::after {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 10000;
+  margin: -2.6rem 0 0 -1.2rem;
+  pointer-events: none;
+  animation: cortina-firma-se-va 0.3s ease forwards;
 }
 
 @keyframes cortina-se-va {
-  to { transform: translateY(-100%); }
+  0% {
+    transform: translateY(0);
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-105%);
+    border-radius: 0 0 50% 50% / 0 0 22vh 22vh;
+  }
+}
+
+@keyframes cortina-firma-se-va {
+  to {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
 }
 
 /* ============================================================

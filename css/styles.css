@@ -24,8 +24,8 @@
   --sobre-acento: #FFFFFF;  /* blanco sobre terracota 6.6:1 */
   --error: #C0392B;         /* rojo de error      5.4:1 sobre blanco */
 
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Outfit", "DM Sans", system-ui, sans-serif;
 
   --max-width: 1000px;
   --max-width-wide: 1100px;
@@ -6006,4 +6006,800 @@ main > .jardin--portada {
     border-radius: 1rem;
     font-size: 0.92rem;
   }
+}
+
+/* ============================================================
+   32. Cortina de color al cambiar de página (js/transicion.js)
+   Tres franjas con los colores de los tres oficios.
+   ============================================================ */
+.cortina,
+.cortina-llega body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.cortina {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cortina span {
+  transform: translateY(100%);
+}
+
+.cortina span:nth-child(1) { background-color: #8F4A24; }
+.cortina span:nth-child(2) { background-color: #22477A; transition-delay: 0.07s; }
+.cortina span:nth-child(3) { background-color: #003E19; transition-delay: 0.14s; }
+
+.cortina span {
+  transition: transform 0.42s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.cortina--sube span {
+  transform: translateY(0);
+}
+
+/* Al llegar a la página nueva: las franjas siguen subiendo y la destapan */
+.cortina-llega body::before {
+  content: "";
+  background: linear-gradient(90deg, #8F4A24 0 33.34%, #22477A 33.34% 66.67%, #003E19 66.67% 100%);
+  animation: cortina-se-va 0.6s 0.05s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+@keyframes cortina-se-va {
+  to { transform: translateY(-100%); }
+}
+
+/* ============================================================
+   33. Menú tipo pastilla flotante y nombre más grande
+   ============================================================ */
+:root {
+  --alto-menu: 5.5rem;     /* js/menu.js pone el alto real */
+}
+
+.masthead {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  padding: 0.75rem var(--space-sm);
+  background: transparent;
+  border: 0;
+  pointer-events: none;     /* solo la pastilla recibe clics */
+}
+
+.masthead__nav {
+  pointer-events: auto;
+  max-width: var(--max-width-wide);
+  padding: 0.5rem 0.6rem 0.5rem 0.75rem;
+  border-radius: 999px;
+  background-color: rgba(22, 19, 15, 0.78);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.22);
+  transition: max-width 0.4s var(--curva, ease), padding 0.3s ease, background-color 0.3s ease;
+}
+
+:root[data-theme="dark"] .masthead__nav {
+  background-color: rgba(15, 17, 21, 0.78);
+}
+
+/* El contenido de arriba de cada página empieza debajo de la pastilla;
+   el borde transparente deja que su fondo siga por detrás del menú */
+main > :first-child {
+  border-top: var(--alto-menu) solid transparent;
+}
+
+/* Nombre más grande, con el cargo debajo */
+.masthead__brand {
+  gap: 0.7rem;
+}
+
+.masthead__mark {
+  width: 2.6rem;
+  height: 2.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-width: 2px;
+  transition: transform 0.4s var(--curva, ease);
+}
+
+.masthead__brand:hover .masthead__mark {
+  transform: rotate(-12deg) scale(1.08);
+}
+
+.masthead__nombre {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.masthead__cargo {
+  max-height: 1.2em;
+  overflow: hidden;
+  margin-top: 0.15rem;
+  font-family: var(--font);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #F0A27A;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+/* Enlaces del menú como pastillitas */
+.masthead__menu {
+  gap: 0.35rem;
+}
+
+.masthead__menu a {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.masthead__menu a:hover,
+.masthead__menu a[aria-current="page"],
+.masthead__menu a[aria-current="true"] {
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.masthead__menu .nav-cta,
+.masthead__menu .nav-cta:hover {
+  padding: 0.5rem 1.2rem;
+}
+
+/* Al bajar: pastilla más delgada y sin el cargo */
+.masthead--abajo .masthead__nav {
+  max-width: 54rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+.masthead--abajo .masthead__cargo {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+}
+
+.masthead--abajo .masthead__mark {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+@media (max-width: 48rem) {
+  .masthead {
+    padding: 0.5rem;
+  }
+
+  .masthead__nav {
+    border-radius: 1.4rem;
+    padding: 0.55rem 0.6rem;
+    row-gap: 0.4rem;
+  }
+
+  .masthead__menu {
+    gap: 0.15rem;
+  }
+
+  .masthead__menu a {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  .masthead--abajo .masthead__nav {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead__nav,
+  .masthead__cargo,
+  .masthead__mark {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   34. Inicio: trabajos en abanico
+   Cinco piezas abiertas como cartas en la mano. Al pasar el
+   mouse el abanico se abre más y la pieza apuntada sube.
+   ============================================================ */
+.hero__pila--abanico {
+  aspect-ratio: auto;
+  height: clamp(19rem, 34vw, 25rem);
+  max-width: 34rem;
+  justify-self: center;
+}
+
+.hero__pila--abanico .hero__pieza {
+  --abre: 1;                       /* cuánto se abre el abanico */
+  left: 50%;
+  bottom: 0;
+  top: auto;
+  right: auto;
+  width: 36%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  margin-left: -18%;
+  border-width: 0.4rem;
+  border-radius: 0.6rem;
+  transform-origin: 50% 115%;
+  transform: translate(var(--dx, 0), var(--dy, 0))
+             translateX(calc(var(--paso) * 2.6rem * var(--abre)))
+             rotate(calc(var(--paso) * 11deg * var(--abre) + var(--giro-extra, 0deg)))
+             translateY(var(--sube, 0))
+             scale(var(--escala, 1));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.25, 1.1),
+              box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.hero__pila--abanico .hero__pieza--uno   { --paso: -2; z-index: 1; animation-delay: 0.3s, 1.6s; }
+.hero__pila--abanico .hero__pieza--cuatro { --paso: -1; z-index: 2; animation-delay: 0.42s, 2.1s; }
+.hero__pila--abanico .hero__pieza--tres  { --paso: 0;  z-index: 3; animation-delay: 0.54s, 2.6s; }
+.hero__pila--abanico .hero__pieza--dos   { --paso: 1;  z-index: 2; animation-delay: 0.66s, 3.1s; }
+.hero__pila--abanico .hero__pieza--cinco { --paso: 2;  z-index: 1; animation-delay: 0.78s, 3.6s; }
+
+/* Al llegar, las cartas salen cerradas del centro y se abren */
+.hero__pila--abanico .hero__pieza {
+  animation-name: abanico-abre, pieza-flota;
+  animation-duration: 1s, 6s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.25, 1.1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: backwards, none;
+}
+
+@keyframes abanico-abre {
+  from {
+    opacity: 0;
+    transform: translateY(3rem) rotate(0deg) scale(0.85);
+  }
+}
+
+.hero__pila--abanico:hover .hero__pieza {
+  --abre: 1.35;
+}
+
+.hero__pila--abanico .hero__pieza:hover,
+.hero__pila--abanico .hero__pieza:focus-visible {
+  --sube: -1.6rem;
+  --escala: 1.12;
+  --giro-extra: 0deg;
+  z-index: 10 !important;
+}
+
+.hero__pila--abanico .hero__pista {
+  bottom: -2.6rem;
+}
+
+@media (max-width: 62rem) {
+  .hero__pila--abanico {
+    justify-self: center;
+    max-width: 30rem;
+    height: 19rem;
+    margin-top: var(--space-lg);
+  }
+}
+
+@media (max-width: 30rem) {
+  .hero__pila--abanico {
+    height: 15rem;
+  }
+
+  .hero__pila--abanico .hero__pieza {
+    transform: translate(var(--dx, 0), var(--dy, 0))
+               translateX(calc(var(--paso) * 1.7rem * var(--abre)))
+               rotate(calc(var(--paso) * 10deg * var(--abre) + var(--giro-extra, 0deg)))
+               translateY(var(--sube, 0))
+               scale(var(--escala, 1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__pila--abanico .hero__pieza {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   35. "Lo que hago": tarjetas y contadores con color y fondo
+   Mismos colores de siempre (terracota, azul, verde), pero las
+   tarjetas ya no son blancas y planas: llevan un degradado del
+   color de su área, el ícono en un círculo y algo de sombra.
+   ============================================================ */
+.oficio__contadores li {
+  --color-tile: var(--accent);
+  position: relative;
+  overflow: hidden;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--color-tile) 25%, transparent);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-tile) 22%, transparent) 0 35%, transparent 36%),
+    linear-gradient(150deg, color-mix(in srgb, var(--color-tile) 12%, var(--surface)), var(--surface));
+  box-shadow: 0 0.6rem 1.4rem color-mix(in srgb, var(--color-tile) 14%, transparent);
+}
+
+.oficio__contadores li:nth-child(2) { --color-tile: var(--post); }
+.oficio__contadores li:nth-child(3) { --color-tile: var(--juegos); }
+.oficio__contadores li:nth-child(4) { --color-tile: var(--diseno); }
+
+.oficio__contadores strong {
+  font-weight: 800;
+  color: var(--color-tile);
+  letter-spacing: -0.03em;
+}
+
+.oficio-card__cara--frente {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-oficio) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-oficio) 30%, transparent);
+  background:
+    radial-gradient(circle at 110% -10%, color-mix(in srgb, var(--color-oficio) 30%, transparent) 0 38%, transparent 39%),
+    radial-gradient(circle at -10% 115%, color-mix(in srgb, var(--color-oficio) 16%, transparent) 0 30%, transparent 31%),
+    linear-gradient(160deg, color-mix(in srgb, var(--color-oficio) 16%, var(--surface)) 0%, var(--surface) 70%);
+  box-shadow: 0 0.8rem 1.8rem color-mix(in srgb, var(--color-oficio) 18%, transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: transform 0.6s var(--curva, ease), box-shadow 0.3s ease, translate 0.3s ease;
+}
+
+.oficio-card:hover .oficio-card__cara--frente {
+  translate: 0 -4px;
+  box-shadow: 0 1.2rem 2.4rem color-mix(in srgb, var(--color-oficio) 28%, transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Ícono dentro de un círculo de color */
+.oficio-card__icono {
+  box-sizing: content-box;
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--color-oficio);
+  stroke: var(--sobre-acento, #fff);
+  stroke-width: 1.8;
+  box-shadow: 0 0.5rem 1rem color-mix(in srgb, var(--color-oficio) 35%, transparent);
+}
+
+/* Número grande, solo el contorno */
+.oficio-card__num {
+  top: 0.6rem;
+  right: 1rem;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-oficio);
+  opacity: 0.45;
+}
+
+.oficio-card__titulo {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.oficio-card__pista {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 0.6rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--color-oficio) 14%, transparent);
+  color: var(--color-oficio);
+  font-weight: 700;
+}
+
+/* La cara de atrás también con un poco de profundidad */
+.oficio-card__cara--atras {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.18) 0 30%, transparent 31%),
+    linear-gradient(155deg, var(--color-oficio), color-mix(in srgb, var(--color-oficio) 70%, #000));
+  box-shadow: 0 1rem 2rem color-mix(in srgb, var(--color-oficio) 30%, transparent);
+}
+
+:root[data-theme="dark"] .oficio-card__cara--atras {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.25) 0 30%, transparent 31%),
+    linear-gradient(155deg, var(--color-oficio), color-mix(in srgb, var(--color-oficio) 80%, #fff));
+}
+
+:root[data-theme="dark"] .oficio-card__cara--frente {
+  box-shadow: 0 0.8rem 1.8rem rgba(0, 0, 0, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 40rem) {
+  .oficio__contadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ============================================================
+   36. Trabajos: tarjetas ordenadas
+   - Rejilla de dos columnas con tarjetas de igual alto.
+   - Todas las imágenes en un marco del mismo tamaño (4:3).
+   - Si la pieza no llena el marco, detrás se ve ella misma
+     difuminada (js/fondos.js), así no quedan franjas blancas.
+   - El pie (año y etiquetas) siempre queda abajo.
+   ============================================================ */
+.obra .blog__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--space-md);
+}
+
+.obra .blog__item {
+  max-width: none;
+}
+
+.obra .post-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.6rem 1.6rem rgba(40, 30, 20, 0.07);
+}
+
+.obra .post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 1.2rem 2.6rem color-mix(in srgb, var(--categoria, var(--accent)) 22%, transparent);
+}
+
+/* Marco de imagen: siempre del mismo tamaño */
+.obra .post-card__gallery,
+.obra .post-card__gallery--single,
+.obra .post-card__gallery--ancha,
+.obra .post-card__gallery--vertical {
+  position: relative;
+  flex-direction: row;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  gap: 3px;
+  border-bottom: 0;
+  background-color: var(--dark, #16130f);
+}
+
+/* Línea de color de la categoría, justo debajo de la imagen */
+.obra .post-card__gallery::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background-color: var(--categoria, var(--accent));
+  z-index: 3;
+}
+
+/* Las dos piezas del troquel van una encima de la otra */
+.obra .post-card__gallery--ancha {
+  flex-direction: column;
+}
+
+.obra .post-card__zoom,
+.obra .post-card__gallery--ancha .post-card__zoom {
+  flex: 1 1 0;
+  width: auto;
+  min-height: 0;
+  isolation: isolate;
+}
+
+.obra .post-card__zoom .post-card__cover,
+.obra .post-card__gallery--ancha .post-card__cover,
+.obra .post-card__gallery--single .post-card__cover {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+/* La misma imagen, grande y borrosa, de fondo */
+.post-card__zoom--fondo::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: -1;
+  background-image: var(--fondo);
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) saturate(1.2) brightness(0.85);
+}
+
+/* Videos: llenan el marco */
+.obra .post-card__video {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+.obra .post-card__video--vertical {
+  width: auto;
+  height: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.obra .post-card__lupa {
+  z-index: 2;
+}
+
+/* Cuerpo de la tarjeta */
+.obra .post-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.obra .post-card__meta {
+  margin-top: auto;
+}
+
+@media (max-width: 30rem) {
+  .obra .post-card__gallery--vertical {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* ============================================================
+   37. Huellitas de perro detrás del cursor
+   ============================================================ */
+.huellita {
+  position: fixed;
+  z-index: 9998;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: -0.55rem 0 0 -0.55rem;
+  pointer-events: none;
+  color: var(--accent);
+  rotate: var(--giro, 0deg);
+  animation: huellita-se-borra 1.1s ease-out forwards;
+}
+
+.huellita svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+@keyframes huellita-se-borra {
+  0% { opacity: 0; scale: 0.4; }
+  15% { opacity: 0.55; scale: 1; }
+  100% { opacity: 0; scale: 0.9; }
+}
+
+/* ============================================================
+   38. Nucita, la mascota (esquina de abajo a la derecha)
+   ============================================================ */
+.mascota {
+  position: fixed;
+  right: 1rem;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  translate: 0 110%;
+  transition: translate 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.25);
+}
+
+.mascota--lista {
+  translate: 0 0;
+}
+
+.mascota__boton {
+  pointer-events: auto;
+  display: block;
+  width: 5.6rem;
+  height: 4.7rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 0.4rem 0.6rem rgba(0, 0, 0, 0.18));
+  transform-origin: 50% 100%;
+}
+
+.mascota__boton:hover .mascota__cabeza {
+  rotate: -8deg;
+}
+
+.mascota__boton:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1rem;
+}
+
+.mascota__dibujo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.mascota__cabeza {
+  transform-box: fill-box;
+  transform-origin: 50% 90%;
+  transition: rotate 0.3s ease;
+  animation: mascota-mira 5s ease-in-out infinite;
+}
+
+@keyframes mascota-mira {
+  0%, 70%, 100% { rotate: 0deg; }
+  78% { rotate: 10deg; }
+  88% { rotate: -6deg; }
+}
+
+.mascota__pelo { fill: #fff; stroke: #D8CDBF; stroke-width: 3; }
+.mascota__blanco { fill: #fff; }
+.mascota__crema { fill: #F6EAD6; }
+.mascota__mono path, .mascota__mono circle { fill: #FF6FA8; }
+.mascota__rubor { fill: #FFB3D0; opacity: 0.8; }
+.mascota__negro { fill: #161214; }
+.mascota__brillo { fill: #fff; }
+.mascota__boca { fill: none; stroke: #4A1622; stroke-width: 2.5; stroke-linecap: round; }
+.mascota__lengua { fill: #FF7FA0; }
+.mascota__panoleta { fill: #FF6FA8; }
+.mascota__pata { fill: #fff; stroke: #D8CDBF; stroke-width: 3; }
+
+.mascota__ojos {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mascota-parpadea 4.5s infinite;
+}
+
+@keyframes mascota-parpadea {
+  0%, 94%, 100% { scale: 1 1; }
+  97% { scale: 1 0.1; }
+}
+
+.mascota__boton--salta {
+  animation: mascota-salta 0.6s cubic-bezier(0.3, 0.7, 0.4, 1.4);
+}
+
+@keyframes mascota-salta {
+  0% { translate: 0 0; scale: 1; }
+  30% { translate: 0 -1.4rem; scale: 0.95 1.08; }
+  60% { translate: 0 0; scale: 1.08 0.92; }
+  100% { translate: 0 0; scale: 1; }
+}
+
+/* Globito de lo que dice */
+.mascota__burbuja {
+  position: relative;
+  max-width: 13rem;
+  margin: 0 0.4rem 0.4rem 0;
+  padding: 0.45rem 0.9rem;
+  border-radius: 1rem 1rem 0.25rem 1rem;
+  background-color: var(--ink);
+  color: var(--surface);
+  font-family: "Caveat", var(--font);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  opacity: 0;
+  scale: 0.6;
+  transform-origin: 100% 100%;
+  transition: opacity 0.25s ease, scale 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+
+.mascota--habla .mascota__burbuja {
+  opacity: 1;
+  scale: 1;
+}
+
+.mascota__burbuja:empty {
+  visibility: hidden;
+}
+
+@media (max-width: 48rem) {
+  .mascota {
+    right: 0.4rem;
+  }
+
+  .mascota__boton {
+    width: 4.2rem;
+    height: 3.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascota,
+  .mascota__cabeza,
+  .mascota__ojos,
+  .mascota__boton--salta,
+  .mascota__burbuja {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media print {
+  .mascota,
+  .huellita,
+  .cortina {
+    display: none;
+  }
+}
+
+/* ---- Ajustes de la propuesta tras probar en celular y en el hero oscuro ---- */
+@media (max-width: 48rem) {
+  .masthead__nav {
+    position: relative;
+  }
+
+  /* El sol/luna va arriba a la derecha, al lado del nombre */
+  .masthead__menu li:last-child {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+
+  .masthead__menu {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.huellita {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin: -0.68rem 0 0 -0.68rem;
+  color: #E2895A;
+}
+
+@keyframes huellita-se-borra {
+  0% { opacity: 0; scale: 0.4; }
+  15% { opacity: 0.85; scale: 1; }
+  100% { opacity: 0; scale: 0.9; }
+}
+
+.mascota__burbuja {
+  background-color: #fff;
+  color: #1d1a17;
+  box-shadow: 0 0.5rem 1.4rem rgba(0, 0, 0, 0.22);
+}
+
+.hero__pila--abanico:hover .hero__pieza {
+  --abre: 1.2;
+}
+
+.post-card__gallery--fondo {
+  isolation: isolate;
+}
+
+.post-card__gallery--fondo::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: -1;
+  background-image: var(--fondo);
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) saturate(1.2) brightness(0.8);
+}
+
+.obra .post-card__gallery--fondo .post-card__video {
+  background-color: transparent;
+  object-fit: contain;
 }

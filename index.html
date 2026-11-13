@@ -8,9 +8,10 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Outfit:wght@500..800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/tema.js"></script>
+  <script src="js/transicion.js"></script>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
 
   <header class="masthead">
     <nav class="masthead__nav" aria-label="Navegación principal">
-      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span>Cielo Yenied Caicedo</a>
+      <a href="index.html" class="masthead__brand"><span class="masthead__mark" aria-hidden="true">CC</span><span class="masthead__nombre">Cielo Yenied Caicedo <small class="masthead__cargo">Ingeniera Multimedia</small></span></a>
       <ul class="masthead__menu">
         <li><a href="index.html" aria-current="page">Inicio</a></li>
         <li><a href="blog.html">Trabajos</a></li>
@@ -44,7 +45,7 @@
         </a>
       </p>
 
-      <figure class="hero__pila" data-galeria>
+      <figure class="hero__pila hero__pila--abanico" data-galeria>
         <img data-zoom class="hero__pieza hero__pieza--uno"
              src="img/hero-1.webp" data-profundidad="0.6"
              alt="Página de revista sobre branding, con unas gafas de pasta ilustradas."
@@ -57,6 +58,14 @@
              src="img/hero-3.webp" data-profundidad="1.5"
              alt="Afiche de la Cajita Feliz de Drácula para una campaña de Halloween."
              width="320" height="320" loading="eager" decoding="async">
+        <img data-zoom="img/blog-poster-ferrari.webp" class="hero__pieza hero__pieza--cuatro"
+             src="img/hero-4.webp" data-profundidad="1.2"
+             alt="Póster informativo de la Scuderia Ferrari con el monoplaza dibujado en línea."
+             width="450" height="731" loading="eager" decoding="async">
+        <img data-zoom="img/blog-pixel-arana.webp" class="hero__pieza hero__pieza--cinco"
+             src="img/hero-5.webp" data-profundidad="0.8"
+             alt="Pixel art de dos personajes de cómic cara a cara sobre un fondo negro con telarañas."
+             width="450" height="547" loading="eager" decoding="async">
         <figcaption class="hero__pista" aria-hidden="true">Toca una pieza para ampliarla</figcaption>
       </figure>
     </section>
@@ -316,5 +325,8 @@
   <script src="js/oficio.js" defer></script>
   <script src="js/visor.js" defer></script>
 
+  <script src="js/menu.js" defer></script>
+  <script src="js/huellitas.js" defer></script>
+  <script src="js/mascota.js" defer></script>
 </body>
 </html>

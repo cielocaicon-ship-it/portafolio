@@ -69,7 +69,10 @@
         if (!destino) return;
         e.preventDefault();
         tarjeta.classList.add("oficio-card--sale");
-        setTimeout(function () { window.location.href = destino; }, menosMovimiento ? 0 : 280);
+        setTimeout(function () {
+          if (window.cortinaA) window.cortinaA(destino);    // con la cortina de color
+          else window.location.href = destino;
+        }, menosMovimiento ? 0 : 280);
       });
     }
   });

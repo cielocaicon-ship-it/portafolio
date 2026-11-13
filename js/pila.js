@@ -67,6 +67,8 @@
   "use strict";
 
   var pila = document.querySelector(".hero__pila");
+  // En abanico las piezas ya se ven todas: no se barajan
+  if (pila && pila.classList.contains("hero__pila--abanico")) return;
   if (!pila || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   var piezas = Array.prototype.slice.call(pila.querySelectorAll(".hero__pieza"));

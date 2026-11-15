@@ -7272,3 +7272,70 @@ main > :first-child {
     font-size: 0.82rem;
   }
 }
+
+/* ============================================================
+   42. Videojuegos en Trabajos: el jardín en pequeño
+   Es el mismo dibujo del jardín de juegos.html. Cada petunia es
+   un enlace que abre ese juego en el jardín completo.
+   ============================================================ */
+.jardin--vitrina {
+  position: relative;
+  margin: var(--space-md) 0;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 1rem 2.4rem rgba(20, 40, 30, 0.15);
+}
+
+.jardin--vitrina .jardin__escena {
+  height: clamp(16rem, 34vw, 26rem);
+  border: 0;
+  border-radius: 0;
+  cursor: default;
+}
+
+.jardin--vitrina .flor a {
+  cursor: pointer;
+}
+
+.jardin__pista-vitrina {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  padding: 0.45rem 1.1rem;
+  translate: -50% 0;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #1d1a17;
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+/* ============================================================
+   43. "Lo que hago": número de cada tarjeta relleno (se lee mejor)
+   ============================================================ */
+.oficio-card__num {
+  color: var(--color-oficio);
+  -webkit-text-stroke: 0;
+  opacity: 0.22;
+  font-size: 3.4rem;
+}
+
+:root[data-theme="dark"] .oficio-card__num {
+  color: #fff;
+  opacity: 0.16;
+}
+
+/* Si el navegador guardó una versión vieja de la página, las huellitas
+   de antes no se muestran (eran la huella negra gigante) */
+.huellita {
+  display: none !important;
+}
+
+.jardin--vitrina .burbuja {
+  display: none;
+}

@@ -7591,3 +7591,27 @@ main > :first-child {
     animation: none;
   }
 }
+
+/* Enlaces entre trabajos relacionados (GALA, sesión y su video) */
+.post-card__enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 var(--space-sm);
+}
+
+.post-card__enlaces a {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.post-card__enlaces a:hover {
+  background-color: var(--accent);
+  color: var(--sobre-acento, #fff);
+}

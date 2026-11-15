@@ -31,12 +31,12 @@
   var TRABAJOS = {
     diseno: ["blog.html#trabajo-cajita", "blog.html#trabajo-perfumeria", "blog.html#trabajo-revista",
              "blog.html#trabajo-granorte", "blog.html#trabajo-pixel-art", "blog.html#trabajo-ferrari"],
-    audiovisual: ["blog.html#trabajo-colegio", "blog.html#trabajo-perfumeria-video"],
+    audiovisual: ["blog.html#trabajo-colegio", "blog.html#trabajo-perfumeria-video", "blog.html#trabajo-vlog-gala"],
     animacion: ["blog.html#trabajo-empaque-animado"],
     juegos: ["juegos.html#juego-petugol", "juegos.html#juego-petupong", "juegos.html#juego-noche-de-espantos",
              "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp"],
     web: ["blog.html#trabajo-slotnova"],
-    marketing: ["blog.html#trabajo-bodegon", "blog.html#trabajo-colonia", "blog.html#trabajo-gala",
+    marketing: ["blog.html#trabajo-bodegon", "blog.html#trabajo-colonia", "blog.html#trabajo-gala", "blog.html#trabajo-sesion",
                 "blog.html#trabajo-emociones", "blog.html#trabajo-postre"]
   };
 

@@ -7339,3 +7339,55 @@ main > :first-child {
 .jardin--vitrina .burbuja {
   display: none;
 }
+
+/* ============================================================
+   44. Jardín de juegos completo en una sola pantalla (computador)
+   Título más compacto y el dibujo se ajusta al alto de la
+   ventana, para ver todo sin tener que bajar y subir.
+   ============================================================ */
+@media (min-width: 62rem) {
+  .jardin__encabezado {
+    position: relative;
+    padding-top: 0.4rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .migas--jardin {
+    position: absolute;
+    top: 0.6rem;
+    left: var(--space-sm);
+    margin: 0;
+  }
+
+  .jardin__kicker {
+    margin-bottom: 0.1rem;
+  }
+
+  .jardin__h1 {
+    font-size: clamp(2.6rem, 4.6vw, 4.2rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .jardin--portada .jardin__intro {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    font-size: 1rem;
+  }
+
+  /* El dibujo completo (sin recortar las flores) en un marco
+     redondeado, centrado y del alto que quepa en la ventana */
+  .jardin--portada .jardin__escena {
+    width: auto;
+    max-width: calc(100% - 2 * var(--space-sm));
+    height: clamp(15rem, calc(100vh - var(--alto-menu) - 16.5rem), 34rem);
+    aspect-ratio: 1200 / 520;
+    margin: 0 auto;
+    border-radius: 1.6rem;
+    box-shadow: 0 1.2rem 2.6rem rgba(20, 50, 40, 0.18);
+  }
+
+  .jardin--portada .jardin__lista {
+    margin-top: 0;
+    padding: 0.7rem var(--space-sm) 0.9rem;
+  }
+}

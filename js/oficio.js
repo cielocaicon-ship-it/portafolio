@@ -26,7 +26,7 @@
   //   animacion   → la animación del empaque (por ahora es la única)
   //   juegos      → uno de los juegos del jardín (al azar)
   //   web         → SlotNova
-  //   marketing   → todavía no hay fotos subidas: la tarjeta dice "muy pronto"
+  //   marketing   → una de las fotos (bodegón, producto, editorial, retrato)
   // Cuando subas un trabajo nuevo, agrega aquí su dirección (#trabajo-…).
   var TRABAJOS = {
     diseno: ["blog.html#trabajo-cajita", "blog.html#trabajo-perfumeria", "blog.html#trabajo-revista",
@@ -36,7 +36,8 @@
     juegos: ["juegos.html#juego-petugol", "juegos.html#juego-petupong", "juegos.html#juego-noche-de-espantos",
              "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp"],
     web: ["blog.html#trabajo-slotnova"],
-    marketing: []
+    marketing: ["blog.html#trabajo-bodegon", "blog.html#trabajo-colonia", "blog.html#trabajo-gala",
+                "blog.html#trabajo-emociones", "blog.html#trabajo-postre"]
   };
 
   // Elige uno al azar, sin repetir el último que se vio de esa área

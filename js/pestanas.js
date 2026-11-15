@@ -71,7 +71,7 @@
      se abre directo esa pestaña. Y si el enlace es a un trabajo
      (blog.html#trabajo-granorte), se abre su pestaña, se baja hasta él
      y se resalta un momento. */
-  var porEnlace = { "#diseno": "tab-diseno", "#posproduccion": "tab-post", "#videojuegos": "tab-juegos", "#web": "tab-web" };
+  var porEnlace = { "#diseno": "tab-diseno", "#fotografia": "tab-foto", "#posproduccion": "tab-post", "#videojuegos": "tab-juegos", "#web": "tab-web" };
   var hash = window.location.hash;
   var elegida = document.getElementById(porEnlace[hash] || "");
   var trabajo = null;

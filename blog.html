@@ -34,11 +34,13 @@
 
     <section class="obra section--wide" id="trabajos" aria-labelledby="obra-title">
       <h1 id="obra-title" class="section-title">Trabajos</h1>
-      <p class="obra__intro">Todo lo que he hecho, repartido en cuatro oficios. Elige uno para verlo.</p>
+      <p class="obra__intro">Todo lo que he hecho, repartido en cinco oficios. Elige uno para verlo.</p>
 
       <div class="obra__rail" role="tablist" aria-label="Tipos de trabajo">
         <button class="obra__tab" type="button" role="tab"
                 id="tab-diseno" aria-controls="panel-diseno" aria-selected="true">Diseño</button>
+        <button class="obra__tab" type="button" role="tab"
+                id="tab-foto" aria-controls="panel-foto" aria-selected="false" tabindex="-1">Fotografía</button>
         <button class="obra__tab" type="button" role="tab"
                 id="tab-post" aria-controls="panel-post" aria-selected="false" tabindex="-1">Posproducción</button>
         <button class="obra__tab" type="button" role="tab"
@@ -215,6 +217,168 @@
           </article>
             </li>
 
+          </ul>
+        </div>
+
+        <div class="obra__panel" id="panel-foto" role="tabpanel"
+             aria-labelledby="tab-foto" tabindex="0" hidden>
+          <h2 class="obra__grupo">Fotografía</h2>
+          <p class="obra__descripcion">Bodegón, producto, editorial y retrato. Cada foto con su intención: la luz, los objetos y la edición cuentan la historia.</p>
+          <ul class="blog__list">
+
+            <li class="blog__item" id="trabajo-bodegon">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--single">
+              <a class="post-card__zoom" href="img/foto-bodegon.webp">
+                <img class="post-card__cover"
+                     src="img/foto-bodegon.webp"
+                     alt="Bodegón con luz cálida y baja: botella de vino, dos velas gastadas, una copa caída y otra con vino y marca de labial, pétalos de rosa y un anillo sobre un mantel blanco."
+                     width="1577" height="997" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Bodegón</p>
+            <h3 class="post-card__title">Bodegón: después de la cena</h3>
+            <p class="post-card__excerpt">Naturaleza muerta con luz baja y cálida. La copa caída, las velas gastadas, los pétalos y el anillo sobre el mantel cuentan lo que pasó sin mostrar a nadie.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026">2026</time>
+              <ul class="post-card__tags">
+                <li>Bodegón</li>
+                <li>Iluminación</li>
+                <li>Composición</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item" id="trabajo-colonia">
+          <article class="post-card">
+            <div class="post-card__gallery">
+              <a class="post-card__zoom" href="img/foto-colonia-1.webp">
+                <img class="post-card__cover"
+                     src="img/foto-colonia-1.webp"
+                     alt="Frasco verde de Zakat Parfum con etiqueta de mosaico geométrico verde, morado y dorado, con la tapa dorada y morada en primer plano."
+                     width="898" height="1600" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+              <a class="post-card__zoom" href="img/foto-colonia-2.webp">
+                <img class="post-card__cover"
+                     src="img/foto-colonia-2.webp"
+                     alt="El mismo frasco en ángulo, con la tapa recostada a un lado sobre fondo gris claro."
+                     width="898" height="1600" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+              <a class="post-card__zoom" href="img/foto-colonia-3.webp">
+                <img class="post-card__cover"
+                     src="img/foto-colonia-3.webp"
+                     alt="Frasco de Zakat Parfum completo, de frente y con la tapa puesta, centrado sobre fondo gris."
+                     width="898" height="1600" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Fotografía de producto</p>
+            <h3 class="post-card__title">Zakat Parfum: el frasco como protagonista</h3>
+            <p class="post-card__excerpt">Tres tomas en estudio sobre fondo neutro para mostrar la forma del frasco, los reflejos dorados y el detalle del mosaico de la etiqueta.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026">2026</time>
+              <ul class="post-card__tags">
+                <li>Producto</li>
+                <li>Estudio</li>
+                <li>Retoque</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item" id="trabajo-gala">
+          <article class="post-card">
+            <div class="post-card__gallery">
+              <figure class="antes-despues">
+                <img class="antes-despues__img"
+                     src="img/foto-gala-original.webp"
+                     alt="Foto original de la sesión GALA, sin editar: modelo con vestido negro, estola blanca y tocado dorado, agachada sobre una tela blanca arrugada."
+                     width="1066" height="1600" loading="lazy" decoding="async">
+                <img class="antes-despues__img antes-despues__img--despues"
+                     src="img/foto-gala-editada.webp"
+                     alt="La misma foto ya editada: fondo limpio y parejo, piel y colores retocados."
+                     width="1066" height="1600" loading="lazy" decoding="async">
+                <span class="antes-despues__linea" aria-hidden="true"></span>
+                <span class="antes-despues__etq antes-despues__etq--antes" aria-hidden="true">Antes</span>
+                <span class="antes-despues__etq antes-despues__etq--despues" aria-hidden="true">Después</span>
+                <input class="antes-despues__control" type="range" min="0" max="100" value="50"
+                       aria-label="Desliza para comparar la foto original con la editada">
+              </figure>
+              <a class="post-card__zoom" href="img/foto-gala-portada.webp">
+                <img class="post-card__cover"
+                     src="img/foto-gala-portada.webp"
+                     alt="Portada final de la revista GALA, número 142, «El arte de la nostalgia», con la foto editada y titulares en vino tinto y dorado."
+                     width="1120" height="1600" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Fotografía editorial</p>
+            <h3 class="post-card__title">GALA: de la foto a la portada</h3>
+            <p class="post-card__excerpt">Sesión con estilo de los años 20 convertida en portada de revista. Desliza sobre la primera imagen para comparar la toma original con la editada, y toca la portada para verla completa.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026">2026</time>
+              <ul class="post-card__tags">
+                <li>Editorial</li>
+                <li>Retoque</li>
+                <li>Portada</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item" id="trabajo-emociones">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--single">
+              <a class="post-card__zoom" href="img/foto-emociones.webp">
+                <img class="post-card__cover"
+                     src="img/foto-emociones.webp"
+                     alt="Retrato en blanco y negro de una mujer de perfil, con los ojos cerrados, la cabeza hacia atrás y la mano en el cuello, iluminada de lado."
+                     width="1068" height="1600" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Fotografía de emociones</p>
+            <h3 class="post-card__title">Calma, en blanco y negro</h3>
+            <p class="post-card__excerpt">Retrato de perfil con luz lateral. Los ojos cerrados y la mano en el cuello transmiten tranquilidad; quitar el color deja todo el peso en la luz y la piel.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026">2026</time>
+              <ul class="post-card__tags">
+                <li>Retrato</li>
+                <li>Blanco y negro</li>
+                <li>Luz</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
+
+            <li class="blog__item" id="trabajo-postre">
+          <article class="post-card">
+            <div class="post-card__gallery post-card__gallery--single">
+              <a class="post-card__zoom" href="img/foto-postre.webp">
+                <img class="post-card__cover"
+                     src="img/foto-postre.webp"
+                     alt="Postre rosado sobre galleta de flor y plato blanco, rodeado de pétalos rojos, con rosas que flotan en el aire sobre fondo blanco."
+                     width="1067" height="1600" loading="lazy" decoding="async">
+                <span class="post-card__lupa" aria-hidden="true">Ampliar</span>
+              </a>
+            </div>
+            <p class="post-card__tag">Fotografía de producto</p>
+            <h3 class="post-card__title">Postre entre rosas que flotan</h3>
+            <p class="post-card__excerpt">Producto sorpresa con elemento flotante: un postre rosado rodeado de pétalos y rosas suspendidas en el aire, resuelto entre la toma y la edición.</p>
+            <footer class="post-card__meta">
+              <time datetime="2026">2026</time>
+              <ul class="post-card__tags">
+                <li>Producto</li>
+                <li>Composición</li>
+                <li>Edición</li>
+              </ul>
+            </footer>
+          </article>
+            </li>
           </ul>
         </div>
 
@@ -817,5 +981,6 @@
   <script src="js/fondos.js" defer></script>
   <script src="js/estrellas.js" defer></script>
   <script src="js/mascota.js" defer></script>
+  <script src="js/antes-despues.js" defer></script>
 </body>
 </html>

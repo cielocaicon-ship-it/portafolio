@@ -6,6 +6,9 @@
    brillan, giran un poco y se apagan solas. Solo con mouse: en
    celular no aparecen, y tampoco si se pidió menos movimiento.
 
+   Solo salen en los espacios vacíos: encima de textos, imágenes,
+   botones o tarjetas no aparecen, para no tapar nada.
+
    Para que salgan MÁS o MENOS estrellas, cambia PASO:
    número más grande = menos estrellas.
    ============================================================ */
@@ -17,13 +20,17 @@
   var menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!conMouse || menosMovimiento) return;
 
-  var PASO = 90;                        // distancia (px) entre estrella y estrella
+  var PASO = 150;                       // distancia (px) entre estrella y estrella
   var COLORES = ["#F2C14E", "#E2895A", "#FFE8A3", "#8FB4E8"];
 
   var ESTRELLA =
     '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
       '<path d="M12 0 C13 7 17 11 24 12 C17 13 13 17 12 24 C11 17 7 13 0 12 C7 11 11 7 12 0 Z"/>' +
     '</svg>';
+
+  // Encima de estas cosas no salen estrellas
+  var CONTENIDO = "a, button, img, video, iframe, svg, input, textarea, select, label, " +
+    "p, h1, h2, h3, h4, li, figure, dialog, .post-card, .oficio-card, .masthead__nav, .mascota";
 
   var ultimaX = null;
   var ultimaY = null;
@@ -37,6 +44,7 @@
     var dx = e.clientX - ultimaX;
     var dy = e.clientY - ultimaY;
     if (Math.sqrt(dx * dx + dy * dy) < PASO) return;
+    if (e.target.closest && e.target.closest(CONTENIDO)) return;
 
     var estrella = document.createElement("span");
     estrella.className = "estrellita";

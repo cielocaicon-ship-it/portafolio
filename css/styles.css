@@ -65,7 +65,7 @@ body {
   background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-wrap: break-word;
@@ -211,7 +211,7 @@ main:focus-visible {
   color: #fff;
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.175rem;
 }
 
 .masthead__mark {
@@ -224,7 +224,7 @@ main:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
 }
 
 .masthead__menu {
@@ -238,7 +238,7 @@ main:focus-visible {
   color: rgba(255, 255, 255, 0.88);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   letter-spacing: 0.02em;
 }
 
@@ -385,7 +385,7 @@ main > section + section {
 }
 
 .hero__kicker {
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -406,7 +406,7 @@ main > section + section {
 }
 
 .hero__lead {
-  font-size: 1.15rem;
+  font-size: 1.275rem;
   color: rgba(255, 255, 255, 0.82);
   max-width: 55ch;
   margin-bottom: 0;
@@ -426,7 +426,7 @@ main > section + section {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.9rem 1.8rem;
@@ -444,7 +444,7 @@ main > section + section {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
 }
 
 .btn-circle-link:hover {
@@ -461,7 +461,7 @@ main > section + section {
   border-radius: 50%;
   background-color: #fff;
   color: var(--dark);
-  font-size: 1.1rem;
+  font-size: 1.225rem;
 }
 
 .btn-circle-link:hover .btn-circle {
@@ -494,7 +494,7 @@ main > section + section {
 }
 
 .about__subtitle {
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -509,7 +509,7 @@ main > section + section {
 }
 
 .tool-list li {
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 500;
   color: var(--ink);
   background-color: var(--chip-bg);
@@ -584,7 +584,7 @@ main > section + section {
 
 .skills__aside-title {
   font-family: var(--font);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -594,7 +594,7 @@ main > section + section {
 
 .skills__aside-text {
   margin-bottom: 0;
-  font-size: 1.1rem;
+  font-size: 1.225rem;
   font-weight: 500;
 }
 
@@ -632,7 +632,7 @@ main > section + section {
 
 .project__tag {
   align-self: flex-start;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--accent);
@@ -643,13 +643,13 @@ main > section + section {
 }
 
 .project__title {
-  font-size: 1.02rem;
+  font-size: 1.145rem;
   margin-bottom: var(--space-xs);
 }
 
 .project__desc {
   flex-grow: 1;
-  font-size: 0.88rem;
+  font-size: 1.005rem;
   color: var(--gray);
   margin-bottom: 0;
 }
@@ -737,7 +737,7 @@ main > section + section {
   border-radius: 999px;
   background-color: var(--ink);
   color: var(--surface);
-  font-size: 0.7rem;
+  font-size: 0.825rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   opacity: 0;
@@ -785,7 +785,7 @@ main > section + section {
   padding: var(--space-sm) var(--space-sm) 0;
   max-width: none;
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   line-height: 1.5;
   text-align: center;
 }
@@ -852,7 +852,7 @@ main > section + section {
   background: none;
   color: var(--gray);
   font-family: var(--font);
-  font-size: 1.05rem;
+  font-size: 1.175rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   cursor: pointer;
@@ -998,7 +998,7 @@ main > section + section {
   display: inline-block;
   padding: 0.55rem 1.3rem;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -1075,7 +1075,7 @@ main > section + section {
 
 .post-card__tag {
   align-self: flex-start;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--categoria, var(--accent));
   background-color: var(--chip-bg);
@@ -1085,7 +1085,7 @@ main > section + section {
 }
 
 .post-card__title {
-  font-size: 1.15rem;
+  font-size: 1.275rem;
   margin-bottom: var(--space-sm);
 }
 
@@ -1103,7 +1103,7 @@ main > section + section {
   gap: var(--space-xs);
   border-top: 1px solid var(--line);
   padding-top: var(--space-xs);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   color: var(--ink);
 }
 
@@ -1176,7 +1176,7 @@ main > section + section {
 }
 
 .contact__required-note {
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   color: var(--gray);
   margin-bottom: var(--space-md);
 }
@@ -1204,7 +1204,7 @@ main > section + section {
 .contact .form-label {
   font-family: var(--font);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   color: var(--ink);
   margin-bottom: 0.35rem;
 }
@@ -1216,7 +1216,7 @@ main > section + section {
   background-color: var(--field);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding: 0.65rem 0.75rem;
 }
 
@@ -1255,7 +1255,7 @@ main > section + section {
 .form-contador {
   display: block;
   margin-top: 0.25rem;
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 600;
   color: var(--gray);
   min-height: 1.2em;
@@ -1268,7 +1268,7 @@ main > section + section {
 .form-hint {
   display: block;
   margin-top: 0.35rem;
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   color: var(--gray);
 }
 
@@ -1281,7 +1281,7 @@ main > section + section {
   padding: 0.9rem 2.2rem;
   font-family: var(--font);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1.075rem;
   cursor: pointer;
   margin-top: var(--space-sm);
 }
@@ -1335,7 +1335,7 @@ main > section + section {
 }
 
 .contact__data dt {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1349,7 +1349,7 @@ main > section + section {
   margin: 0 0 var(--space-sm);
   padding-bottom: var(--space-sm);
   border-bottom: 1px solid var(--line);
-  font-size: 1.02rem;
+  font-size: 1.145rem;
   font-weight: 500;
 }
 
@@ -1380,7 +1380,7 @@ main > section + section {
 }
 
 .contact__aside-note {
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   color: var(--gray);
   margin-bottom: 0;
 }
@@ -1415,7 +1415,7 @@ main > section + section {
 .site-footer a {
   color: var(--ink);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
 }
 
 .site-footer a:hover {
@@ -1424,7 +1424,7 @@ main > section + section {
 
 .site-footer__contact {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
 }
 
 .site-footer__contact a {
@@ -1939,7 +1939,7 @@ main > section + section {
   background-color: transparent;
   color: #fff;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 600;
   cursor: pointer;
 }
@@ -1955,7 +1955,7 @@ main > section + section {
 }
 
 .tema-btn__icono {
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1;
 }
 
@@ -2001,13 +2001,13 @@ main > section + section {
 
 .arcade__mas strong {
   display: block;
-  font-size: 1.05rem;
+  font-size: 1.175rem;
 }
 
 .arcade__mas span {
   display: block;
   color: var(--gray);
-  font-size: 0.9rem;
+  font-size: 1.025rem;
 }
 
 /* ---------- Récords y tablas ---------- */
@@ -2018,7 +2018,7 @@ main > section + section {
 }
 
 .records__titulo {
-  font-size: 1.15rem;
+  font-size: 1.275rem;
   margin-bottom: var(--space-sm);
 }
 
@@ -2033,7 +2033,7 @@ main > section + section {
   background-color: var(--chip-bg);
   border-radius: 999px;
   padding: 0.3rem 0.85rem;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
 }
 
 .stats strong {
@@ -2052,7 +2052,7 @@ main > section + section {
 .tabla {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2060,7 +2060,7 @@ main > section + section {
   text-align: left;
   padding: 0.7rem 0.9rem 0;
   color: var(--gray);
-  font-size: 0.85rem;
+  font-size: 0.975rem;
 }
 
 .tabla th,
@@ -2072,7 +2072,7 @@ main > section + section {
 }
 
 .tabla thead th {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--gray);
@@ -2113,7 +2113,7 @@ main > section + section {
   background-color: transparent;
   color: var(--error);
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -2126,7 +2126,7 @@ main > section + section {
 
 .records__aviso {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   color: var(--gray);
 }
 
@@ -2212,7 +2212,7 @@ main > section + section {
   justify-content: space-between;
   gap: var(--space-xs);
   margin-top: var(--space-xs);
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   color: var(--gray);
 }
 
@@ -2230,7 +2230,7 @@ main > section + section {
   background-color: var(--ink);
   color: var(--surface);
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -2294,7 +2294,7 @@ main > section + section {
 .juego__opciones legend {
   width: 100%;
   margin-bottom: 0.3rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.7);
@@ -2317,7 +2317,7 @@ main > section + section {
   padding: 0.45rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 999px;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   cursor: pointer;
 }
 
@@ -2361,16 +2361,16 @@ main > section + section {
   border: 1px solid var(--line);
   border-radius: 0.8rem;
   padding: var(--space-sm);
-  font-size: 0.9rem;
+  font-size: 1.025rem;
 }
 
 .instrucciones h2 {
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin-bottom: var(--space-xs);
 }
 
 .instrucciones h3 {
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   margin: var(--space-sm) 0 0.3rem;
 }
 
@@ -2392,7 +2392,7 @@ kbd {
   background-color: var(--band);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 700;
   text-align: center;
 }
@@ -2448,7 +2448,7 @@ kbd {
   }
 
   .juego__marcador {
-    font-size: 0.85rem;
+    font-size: 0.975rem;
   }
 }
 
@@ -2498,7 +2498,7 @@ kbd {
 /* Enlace para volver a Trabajos (arriba de la página de juegos) */
 .migas {
   margin: 0 0 var(--space-sm);
-  font-size: 0.9rem;
+  font-size: 1.025rem;
 }
 
 .migas a {
@@ -2541,7 +2541,7 @@ kbd {
   background-color: #fff;
   border-color: #fff;
   color: #08140D;
-  font-size: 0.95rem;
+  font-size: 1.075rem;
   padding: 0.7rem 1.5rem;
 }
 
@@ -2584,7 +2584,7 @@ kbd {
   border-radius: 999px;
   background-color: #fff;
   color: #08090B;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -2597,7 +2597,7 @@ kbd {
 .jugador__titulo {
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 1rem;
+  font-size: 1.125rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2610,7 +2610,7 @@ kbd {
 
 .jugador__ayuda {
   position: relative;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
 }
 
 .jugador__ayuda summary {
@@ -2678,7 +2678,7 @@ kbd {
 
 @media (max-width: 30rem) {
   .jugador__titulo {
-    font-size: 0.9rem;
+    font-size: 1.025rem;
   }
 
   .jugador__inicio {
@@ -2756,7 +2756,7 @@ main > .arcade-hero {
 
 .arcade-hero__kicker {
   margin-bottom: var(--space-xs);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2792,7 +2792,7 @@ main > .arcade-hero {
 }
 
 .arcade-hero__lead {
-  font-size: 1.1rem;
+  font-size: 1.225rem;
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--space-md);
 }
@@ -2818,7 +2818,7 @@ main > .arcade-hero {
   background-color: #2BD47D;
   color: #05140B;
   font-weight: 800;
-  font-size: 1.05rem;
+  font-size: 1.175rem;
   text-decoration: none;
   box-shadow: 0 0 0 0 rgba(43, 212, 125, 0.6);
   animation: latido 2s ease-out infinite;
@@ -2839,7 +2839,7 @@ main > .arcade-hero {
 }
 
 .arcade-hero__moneda {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -3018,7 +3018,7 @@ main > .cinta--juegos + section {
   border-radius: 999px;
   border: 1px solid var(--neon);
   color: var(--neon);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
@@ -3030,7 +3030,7 @@ main > .cinta--juegos + section {
 .juego-card__texto {
   flex: 1 1 auto;
   color: #A9B0BA;
-  font-size: 0.92rem;
+  font-size: 1.045rem;
 }
 
 .juego-card__acciones {
@@ -3134,7 +3134,7 @@ main > .cinta--juegos + section {
 .oficio__kicker,
 .cv-cabeza__kicker {
   margin-bottom: var(--space-xs);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -3178,7 +3178,7 @@ main > .cinta--juegos + section {
 .oficio__contadores span {
   display: block;
   margin-top: 0.35rem;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   color: var(--gray);
 }
 
@@ -3285,17 +3285,17 @@ main > .cinta--juegos + section {
 
 .oficio-card__pista {
   margin-top: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   color: var(--gray);
 }
 
 .oficio-card__texto {
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5;
 }
 
 .oficio-card__herramientas {
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -3397,7 +3397,7 @@ main > .cv-cabeza {
   align-items: center;
   padding: 0.7rem 1.4rem;
   border-radius: 999px;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -3448,7 +3448,7 @@ main > .cv-cabeza {
   border-radius: 999px;
   background-color: var(--chip-bg);
   color: var(--ink);
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 600;
   text-decoration: none;
 }
@@ -3566,7 +3566,7 @@ main > .cv-cabeza {
 
 .linea__fecha {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3575,14 +3575,14 @@ main > .cv-cabeza {
 
 .linea__titulo {
   display: block;
-  font-size: 1.15rem;
+  font-size: 1.275rem;
   font-weight: 700;
 }
 
 .linea__lugar {
   display: block;
   color: var(--gray);
-  font-size: 0.92rem;
+  font-size: 1.045rem;
 }
 
 .linea__detalle {
@@ -3604,7 +3604,7 @@ main > .cv-cabeza {
   padding: 0.2rem 0.7rem;
   border-radius: 999px;
   background-color: var(--chip-bg);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
 }
 
 /* Lo que falta completar con la hoja de vida */
@@ -3638,7 +3638,7 @@ main > .cv-cabeza {
 .cv-grupo--juegos { --color-grupo: var(--juegos); }
 
 .cv-grupo h3 {
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin-bottom: 0.7rem;
 }
 
@@ -3652,7 +3652,7 @@ main > .cv-cabeza {
   padding: 0.3rem 0.8rem;
   border: 1px solid var(--line-ui);
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
@@ -3679,7 +3679,7 @@ main > .cv-cabeza {
 
 .cv-contacto span {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3836,7 +3836,7 @@ main > .cv-cabeza {
   border-radius: 999px;
   background-color: #fff;
   color: #5B5A73;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3908,7 +3908,7 @@ main > .cv-cabeza {
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #F3C28B, #CD7F32 55%, #8C4F1C);
   color: #2B1405;
-  font-size: 0.7rem;
+  font-size: 0.825rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -3935,7 +3935,7 @@ main > .cv-cabeza {
 
 .vitrina__kicker {
   margin-bottom: 0.4rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -3994,7 +3994,7 @@ main > .cv-cabeza {
 }
 
 .vitrina__cifras span {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -4010,11 +4010,11 @@ main > .cv-cabeza {
   border-radius: 999px;
   border: 1px solid rgba(169, 199, 255, 0.5);
   color: #DCE6FF;
-  font-size: 0.8rem;
+  font-size: 0.925rem;
 }
 
 .vitrina__equipo {
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -4483,7 +4483,7 @@ main > .jardin {
   background-color: var(--surface);
   color: var(--ink);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1.025rem;
   text-decoration: none;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
@@ -4675,7 +4675,7 @@ main > .jardin {
   border-radius: 999px;
   border: 1px solid var(--neon);
   color: var(--neon);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 700;
 }
 
@@ -4688,7 +4688,7 @@ main > .jardin {
 
 .carta__texto {
   color: #C2C8D1;
-  font-size: 0.95rem;
+  font-size: 1.075rem;
 }
 
 .carta__acciones {
@@ -4708,7 +4708,7 @@ main > .jardin {
   background-color: var(--neon);
   color: #08090B;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.225rem;
   text-decoration: none;
   box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon) 60%, transparent);
   animation: latido-carta 1.6s ease-out infinite;
@@ -4733,7 +4733,7 @@ main > .jardin {
   border-radius: 999px;
   border: 1px solid #6B7480;
   color: #EEF0F3;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -4887,7 +4887,7 @@ main > .jardin--portada {
 
 .jardin__kicker {
   margin: 0 auto 0.3rem;
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -5074,7 +5074,7 @@ main > .jardin--portada {
   border-radius: 999px;
   background-color: #1E242D;
   color: #DDE3EA;
-  font-size: 0.78rem;
+  font-size: 0.905rem;
 }
 
 .carta__record {
@@ -5083,7 +5083,7 @@ main > .jardin--portada {
   border-radius: 0.6rem;
   background-color: color-mix(in srgb, var(--neon) 18%, #11151B);
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 600;
 }
 
@@ -5183,7 +5183,7 @@ main > .jardin--portada {
   border-radius: 999px;
   background-color: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.85);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   white-space: nowrap;
   animation: pista-aparece 0.6s 1.6s both;
 }
@@ -5247,7 +5247,7 @@ main > .jardin--portada {
   margin: 0.4rem 0 0;
   max-width: none;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   text-align: center;
 }
 
@@ -5329,7 +5329,7 @@ main > .jardin--portada {
   border-radius: 999px;
   background-color: var(--sobre-acento);
   color: var(--color-oficio);
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 800;
   text-decoration: none;
   transition: scale 0.2s ease;
@@ -5346,7 +5346,7 @@ main > .jardin--portada {
   border-radius: 50%;
   background: transparent;
   color: var(--sobre-acento);
-  font-size: 1.1rem;
+  font-size: 1.225rem;
   line-height: 1;
   cursor: pointer;
 }
@@ -5672,7 +5672,7 @@ main > .jardin--portada {
   animation: texto-sube 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
 
-.cartas--pantalla .carta__tag { animation-delay: 0.25s; background-color: rgba(8, 9, 11, 0.5); font-size: 0.85rem; }
+.cartas--pantalla .carta__tag { animation-delay: 0.25s; background-color: rgba(8, 9, 11, 0.5); font-size: 0.975rem; }
 .cartas--pantalla .carta__texto { animation-delay: 0.55s; }
 .cartas--pantalla .carta__info { animation-delay: 0.65s; }
 .cartas--pantalla .carta__acciones { animation-delay: 0.75s; }
@@ -5703,14 +5703,14 @@ main > .jardin--portada {
 
 .cartas--pantalla .carta__texto {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 1.05rem;
+  font-size: 1.175rem;
 }
 
 .cartas--pantalla .carta__info li {
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid color-mix(in srgb, var(--neon) 55%, transparent);
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   padding: 0.3rem 0.85rem;
 }
 
@@ -5916,7 +5916,7 @@ main > .jardin--portada {
   border: 1px solid rgba(11, 61, 42, 0.15);
   box-shadow: 0 0.4rem 1.2rem rgba(11, 61, 42, 0.12);
   color: #16302A;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.4;
   animation: texto-sube 0.6s 0.4s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
@@ -6004,7 +6004,7 @@ main > .jardin--portada {
 @media (max-width: 40rem) {
   .jardin--portada .jardin__intro {
     border-radius: 1rem;
-    font-size: 0.92rem;
+    font-size: 1.045rem;
   }
 }
 
@@ -6208,7 +6208,7 @@ main > :first-child {
 .masthead__mark {
   width: 2.6rem;
   height: 2.6rem;
-  font-size: 0.95rem;
+  font-size: 1.075rem;
   font-weight: 700;
   border-width: 2px;
   transition: transform 0.4s var(--curva, ease);
@@ -6233,7 +6233,7 @@ main > :first-child {
   overflow: hidden;
   margin-top: 0.15rem;
   font-family: var(--font);
-  font-size: 0.68rem;
+  font-size: 0.805rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -6301,7 +6301,7 @@ main > :first-child {
 
   .masthead__menu a {
     padding: 0.4rem 0.65rem;
-    font-size: 0.85rem;
+    font-size: 0.975rem;
   }
 
   .masthead--abajo .masthead__nav {
@@ -6907,7 +6907,7 @@ main > :first-child {
   border: 2px dashed var(--sobre-acento);
   border-radius: 999px;
   color: var(--sobre-acento);
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 800;
 }
 
@@ -7018,7 +7018,7 @@ main > :first-child {
 /* ---------- Texto ---------- */
 .about__kicker {
   margin: 0 0 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -7060,7 +7060,7 @@ main > :first-child {
   border: 1px solid var(--line);
   border-radius: 1rem;
   background-color: var(--surface);
-  font-size: 0.92rem;
+  font-size: 1.045rem;
   line-height: 1.45;
 }
 
@@ -7078,7 +7078,7 @@ main > :first-child {
 .about__pasos strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.175rem;
 }
 
 .about__datos {
@@ -7095,7 +7095,7 @@ main > :first-child {
   border-radius: 999px;
   background-color: color-mix(in srgb, var(--post) 12%, transparent);
   color: var(--post);
-  font-size: 0.85rem;
+  font-size: 0.975rem;
   font-weight: 700;
 }
 
@@ -7184,14 +7184,14 @@ main > :first-child {
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.225rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
 .whatsapp__texto small {
   font-family: var(--font);
-  font-size: 0.8rem;
+  font-size: 0.925rem;
   font-weight: 500;
   opacity: 0.9;
 }
@@ -7208,9 +7208,19 @@ main > :first-child {
   --max-width-wide: 80rem;
 }
 
+/* Letra base un poco más grande en todas las pantallas (pedido de
+   Cielo: "unos 2 puntos más"). En celular se queda en 16 px para que
+   el menú quepa; en computador 18 px y en pantallas anchas hasta 22 px. */
+
+@media (min-width: 48rem) {
+  html {
+    font-size: 18px;
+  }
+}
+
 @media (min-width: 75rem) {
   html {
-    font-size: clamp(16px, 0.55vw + 9px, 20px);
+    font-size: clamp(18px, 0.55vw + 11px, 22px);
   }
 }
 
@@ -7228,5 +7238,37 @@ main > :first-child {
 
   .hero__lead {
     max-width: 34rem;
+  }
+}
+
+/* En celular el menú vuelve a su tamaño para que quepa en una fila */
+@media (max-width: 48rem) {
+  .masthead__menu a,
+  .masthead__menu .nav-cta,
+  .masthead__menu .nav-cta:hover {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .masthead__nombre {
+    font-size: 1.1rem;
+  }
+
+  .masthead__cargo {
+    font-size: 0.66rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .masthead__menu {
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .masthead__menu a,
+  .masthead__menu .nav-cta,
+  .masthead__menu .nav-cta:hover {
+    padding: 0.35rem 0.45rem;
+    font-size: 0.82rem;
   }
 }

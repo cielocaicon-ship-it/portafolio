@@ -7484,3 +7484,110 @@ main > :first-child {
   outline: 3px solid var(--accent);
   outline-offset: -3px;
 }
+
+/* ============================================================
+   46. Videos en grande (js/video-grande.js)
+   ============================================================ */
+.video-ampliar {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background-color: rgba(20, 17, 14, 0.75);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, scale 0.2s ease;
+}
+
+.video-ampliar:hover {
+  background-color: var(--accent);
+  scale: 1.05;
+}
+
+.video-ampliar:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.video-grande {
+  width: 100vw;
+  max-width: none;
+  height: 100vh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.video-grande[open] {
+  display: grid;
+  place-items: center;
+}
+
+.video-grande::backdrop {
+  background-color: rgba(8, 6, 4, 0.92);
+}
+
+.video-grande__video {
+  display: block;
+  width: min(92vw, 1400px);
+  max-height: 88vh;
+  border-radius: 0.8rem;
+  background-color: #000;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.6);
+}
+
+/* Videos de celular: se ven altos, casi de toda la pantalla */
+.video-grande__video--vertical {
+  width: auto;
+  height: 88vh;
+  max-width: 92vw;
+}
+
+.video-grande__cerrar {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #1d1a17;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.video-grande__cerrar:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.video-grande[open] .video-grande__video {
+  animation: video-crece 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+}
+
+@keyframes video-crece {
+  from { opacity: 0; scale: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-grande[open] .video-grande__video {
+    animation: none;
+  }
+}

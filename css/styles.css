@@ -6666,31 +6666,31 @@ main > :first-child {
 }
 
 /* ============================================================
-   37. Huellitas de perro detrás del cursor
+   37. Estrellitas detrás del cursor (js/estrellas.js)
    ============================================================ */
-.huellita {
+.estrellita {
   position: fixed;
   z-index: 9998;
-  width: 1.1rem;
-  height: 1.1rem;
-  margin: -0.55rem 0 0 -0.55rem;
+  width: calc(1.1rem * var(--tam, 1));
+  height: calc(1.1rem * var(--tam, 1));
+  translate: -50% -50%;
   pointer-events: none;
-  color: var(--accent);
-  rotate: var(--giro, 0deg);
-  animation: huellita-se-borra 1.1s ease-out forwards;
+  filter: drop-shadow(0 0 6px currentColor);
+  animation: estrellita-brilla 1.3s ease-out forwards;
 }
 
-.huellita svg {
+.estrellita svg {
   display: block;
   width: 100%;
   height: 100%;
   fill: currentColor;
 }
 
-@keyframes huellita-se-borra {
-  0% { opacity: 0; scale: 0.4; }
-  15% { opacity: 0.55; scale: 1; }
-  100% { opacity: 0; scale: 0.9; }
+@keyframes estrellita-brilla {
+  0%   { opacity: 0; scale: 0.2; rotate: 0deg; }
+  20%  { opacity: 1; scale: 1.15; }
+  45%  { scale: 0.9; }
+  100% { opacity: 0; scale: 0.5; rotate: 90deg; translate: -50% 40%; }
 }
 
 /* ============================================================
@@ -6842,7 +6842,7 @@ main > :first-child {
 
 @media print {
   .mascota,
-  .huellita,
+  .estrellita,
   .cortina {
     display: none;
   }
@@ -6867,18 +6867,6 @@ main > :first-child {
   }
 }
 
-.huellita {
-  width: 1.35rem;
-  height: 1.35rem;
-  margin: -0.68rem 0 0 -0.68rem;
-  color: #E2895A;
-}
-
-@keyframes huellita-se-borra {
-  0% { opacity: 0; scale: 0.4; }
-  15% { opacity: 0.85; scale: 1; }
-  100% { opacity: 0; scale: 0.9; }
-}
 
 .mascota__burbuja {
   background-color: #fff;
@@ -7206,4 +7194,39 @@ main > :first-child {
   font-size: 0.8rem;
   font-weight: 500;
   opacity: 0.9;
+}
+
+/* ============================================================
+   41. Pantallas grandes: todo un poco más grande y más ancho
+   En computadores con pantalla ancha (más de 1200 px) la letra
+   crece poco a poco con el ancho de la pantalla (hasta 20 px) y
+   el contenido ocupa más espacio a los lados. Como casi todos los
+   tamaños de la página están en "rem", todo crece parejo.
+   ============================================================ */
+:root {
+  --max-width: 68rem;
+  --max-width-wide: 80rem;
+}
+
+@media (min-width: 75rem) {
+  html {
+    font-size: clamp(16px, 0.55vw + 9px, 20px);
+  }
+}
+
+@media (min-width: 90rem) {
+  /* El inicio usa también el ancho nuevo y le da más espacio al titular */
+  .hero {
+    padding-left: max(var(--space-sm), calc((100% - var(--max-width-wide)) / 2));
+    padding-right: max(var(--space-sm), calc((100% - var(--max-width-wide)) / 2));
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 3.6vw, 4rem);
+  }
+
+  .hero__lead {
+    max-width: 34rem;
+  }
 }

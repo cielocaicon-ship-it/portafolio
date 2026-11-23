@@ -7379,7 +7379,7 @@ main > :first-child {
   .jardin--portada .jardin__escena {
     width: auto;
     max-width: calc(100% - 2 * var(--space-sm));
-    height: clamp(14rem, calc(100vh - var(--alto-menu) - 23rem), 34rem);
+    height: clamp(18rem, calc(100vh - var(--alto-menu) - 15rem), 36rem);
     aspect-ratio: 1200 / 520;
     margin: 0 auto;
     border-radius: 1.6rem;
@@ -7652,53 +7652,6 @@ main > :first-child {
   scale: 0.82;
 }
 
-/* Filtro: Todos · 2D · 3D · Realidad aumentada */
-.jardin__filtro {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.45rem;
-  padding: 0.6rem var(--space-sm) 0;
-}
-
-.jardin__chip {
-  padding: 0.35rem 0.95rem;
-  border: 2px solid transparent;
-  border-radius: 999px;
-  background-color: rgba(22, 19, 15, 0.6);
-  color: #fff;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, scale 0.2s ease;
-}
-
-.jardin__chip:hover {
-  scale: 1.05;
-}
-
-.jardin__chip[aria-pressed="true"] {
-  background-color: #fff;
-  border-color: #16130F;
-  color: #16130F;
-}
-
-.jardin__chip:focus-visible {
-  outline: 3px solid #FFC93C;
-  outline-offset: 2px;
-}
-
-.juego--apagado {
-  opacity: 0.25;
-  filter: grayscale(0.8);
-  transition: opacity 0.3s ease, filter 0.3s ease;
-}
-
-.jardin [data-tipo] {
-  transition: opacity 0.3s ease, filter 0.3s ease;
-}
-
 /* Botón para abrir el juego AR fuera del marco (mejor para la cámara) */
 .jugador__solo {
   display: inline-flex;
@@ -7731,5 +7684,122 @@ main > :first-child {
 
   .jugador__solo {
     padding: 0.4rem 0.75rem;
+  }
+}
+
+/* ============================================================
+   48. Trabajos → Videojuegos: banner grande hacia los juegos
+   ============================================================ */
+.banner-juegos--grande {
+  align-items: center;
+  gap: var(--space-md);
+  padding: clamp(1.5rem, 4vw, 2.6rem);
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(192, 132, 252, 0.35), transparent 45%),
+    radial-gradient(circle at 10% 100%, rgba(52, 211, 153, 0.3), transparent 45%),
+    linear-gradient(135deg, #0B2A17, #08140D);
+}
+
+.banner-juegos__texto {
+  flex: 1 1 32rem;
+}
+
+.banner-juegos--grande h3 {
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 800;
+}
+
+.banner-juegos__grupos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.banner-juegos__grupo {
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.banner-juegos__grupo--ar {
+  border-color: rgba(192, 132, 252, 0.55);
+  background-color: rgba(192, 132, 252, 0.12);
+}
+
+.banner-juegos--grande .banner-juegos__numero {
+  margin: 0 0 0.35rem;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.banner-juegos__numero strong {
+  font-size: 1.8rem;
+  color: #6FCF8F;
+}
+
+.banner-juegos__grupo--ar .banner-juegos__numero strong {
+  color: #D8B4FE;
+}
+
+.banner-juegos__ar {
+  margin-left: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background-color: #C084FC;
+  color: #16130F;
+  font-size: 0.8rem;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+.banner-juegos--grande .banner-juegos__nombres {
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.banner-juegos--grande .banner-juegos__nota {
+  margin-top: 0.35rem;
+  color: #D8B4FE;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.banner-juegos--grande .banner-juegos__boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.05rem 2.1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+  font-weight: 800;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12), 0 1rem 2rem rgba(0, 0, 0, 0.35);
+  transition: scale 0.2s ease, background-color 0.2s ease;
+}
+
+.banner-juegos--grande .banner-juegos__boton:hover {
+  scale: 1.05;
+  color: #08140D;
+}
+
+.banner-juegos__icono {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background-color: #08140D;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 40rem) {
+  .banner-juegos--grande .banner-juegos__boton {
+    width: 100%;
+    justify-content: center;
   }
 }

@@ -547,14 +547,14 @@
   }
 
   escena.addEventListener("click", function (e) {
-    if (e.target.closest(".flor, .perrita, .maria")) return;
+    if (e.target.closest(".flor, .perrita, .maria, .jardin__sol, .nube")) return;
     var p = puntoDelDibujo(e);
     lanzar(Math.max(MIN_X + 40, Math.min(MAX_X - 20, p.x)));
   });
 
   /* ---------- En el celular, el jardín se acomoda más compacto ---------- */
   var COMPACTO = { viewBox: "0 110 790 420", maria: 60, flores: [170, 250, 330, 410, 490, 570, 650, 730], sol: [740, 160], min: 140, max: 760, borde: 785 };
-  var NORMAL = { viewBox: "0 0 1200 520", maria: 140, flores: [350, 460, 570, 680, 790, 900, 1010, 1120], sol: [1150, 80], min: 230, max: 1160, borde: 1190 };
+  var NORMAL = { viewBox: "0 0 1200 520", maria: 140, flores: [350, 460, 570, 680, 790, 900, 1010, 1120], sol: [1105, 175], min: 230, max: 1160, borde: 1190 };
   var mariaGrupo = escena.querySelector(".maria") && escena.querySelector(".maria").parentNode;
   var sol = escena.querySelector(".jardin__sol");
   var disposicion = null;
@@ -564,6 +564,9 @@
     if (d === disposicion) return;
     disposicion = d;
     escena.setAttribute("viewBox", d.viewBox);
+    // En pantalla ancha se recorta un poco de cielo y un poco de pasto
+    // por igual, para que el sol y las nubes no queden cortados
+    escena.setAttribute("preserveAspectRatio", d === COMPACTO ? "xMidYMax slice" : "xMidYMid slice");
     escena.classList.toggle("jardin__escena--compacta", d === COMPACTO);
     mariaX = d.maria;
     if (mariaGrupo) mariaGrupo.setAttribute("transform", "translate(" + d.maria + " 420)");

@@ -7379,7 +7379,7 @@ main > :first-child {
   .jardin--portada .jardin__escena {
     width: auto;
     max-width: calc(100% - 2 * var(--space-sm));
-    height: clamp(15rem, calc(100vh - var(--alto-menu) - 16.5rem), 34rem);
+    height: clamp(14rem, calc(100vh - var(--alto-menu) - 23rem), 34rem);
     aspect-ratio: 1200 / 520;
     margin: 0 auto;
     border-radius: 1.6rem;
@@ -7614,4 +7614,122 @@ main > :first-child {
 .post-card__enlaces a:hover {
   background-color: var(--accent);
   color: var(--sobre-acento, #fff);
+}
+
+/* ============================================================
+   47. Juegos en realidad aumentada y filtro por tipo
+   ============================================================ */
+.juego-card--ar-pool-8 { --neon: #34D399; }
+.juego-card--cofre-portales { --neon: #C084FC; }
+
+/* Insignia "AR" en la petunia */
+.flor__ar circle {
+  fill: #16130F;
+  stroke: var(--neon);
+  stroke-width: 2.5;
+}
+
+.flor__ar text {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  fill: #fff;
+}
+
+.jardin__ar {
+  margin-left: 0.2rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background-color: #16130F;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+/* En el celular las petunias son un poco más chicas para que quepan las 8 */
+.jardin__escena--compacta .flor__cabeza {
+  scale: 0.82;
+}
+
+/* Filtro: Todos · 2D · 3D · Realidad aumentada */
+.jardin__filtro {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.6rem var(--space-sm) 0;
+}
+
+.jardin__chip {
+  padding: 0.35rem 0.95rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-color: rgba(22, 19, 15, 0.6);
+  color: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, scale 0.2s ease;
+}
+
+.jardin__chip:hover {
+  scale: 1.05;
+}
+
+.jardin__chip[aria-pressed="true"] {
+  background-color: #fff;
+  border-color: #16130F;
+  color: #16130F;
+}
+
+.jardin__chip:focus-visible {
+  outline: 3px solid #FFC93C;
+  outline-offset: 2px;
+}
+
+.juego--apagado {
+  opacity: 0.25;
+  filter: grayscale(0.8);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.jardin [data-tipo] {
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Botón para abrir el juego AR fuera del marco (mejor para la cámara) */
+.jugador__solo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.975rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.jugador__solo:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 30rem) {
+  .jugador__solo-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .jugador__solo {
+    padding: 0.4rem 0.75rem;
+  }
 }

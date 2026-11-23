@@ -553,8 +553,8 @@
   });
 
   /* ---------- En el celular, el jardín se acomoda más compacto ---------- */
-  var COMPACTO = { viewBox: "0 110 790 420", maria: 60, flores: [190, 290, 390, 490, 590, 690], sol: [730, 175], min: 150, max: 760, borde: 785 };
-  var NORMAL = { viewBox: "0 0 1200 520", maria: 140, flores: [370, 515, 660, 805, 950, 1095], sol: [1110, 150], min: 230, max: 1160, borde: 1190 };
+  var COMPACTO = { viewBox: "0 110 790 420", maria: 60, flores: [170, 250, 330, 410, 490, 570, 650, 730], sol: [740, 160], min: 140, max: 760, borde: 785 };
+  var NORMAL = { viewBox: "0 0 1200 520", maria: 140, flores: [350, 460, 570, 680, 790, 900, 1010, 1120], sol: [1150, 80], min: 230, max: 1160, borde: 1190 };
   var mariaGrupo = escena.querySelector(".maria") && escena.querySelector(".maria").parentNode;
   var sol = escena.querySelector(".jardin__sol");
   var disposicion = null;

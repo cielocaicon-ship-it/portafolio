@@ -34,7 +34,8 @@
     audiovisual: ["blog.html#trabajo-colegio", "blog.html#trabajo-perfumeria-video", "blog.html#trabajo-vlog-gala"],
     animacion: ["blog.html#trabajo-empaque-animado"],
     juegos: ["juegos.html#juego-petugol", "juegos.html#juego-petupong", "juegos.html#juego-noche-de-espantos",
-             "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp"],
+             "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp",
+             "juegos.html#juego-ar-pool-8", "juegos.html#juego-cofre-portales"],
     web: ["blog.html#trabajo-slotnova"],
     marketing: ["blog.html#trabajo-bodegon", "blog.html#trabajo-colonia", "blog.html#trabajo-gala", "blog.html#trabajo-sesion",
                 "blog.html#trabajo-emociones", "blog.html#trabajo-postre"]

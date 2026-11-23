@@ -36,7 +36,7 @@
     <section class="jardin jardin--portada" id="jardin" aria-labelledby="arcade-title">
       <div class="jardin__encabezado">
         <p class="migas migas--jardin"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
-        <p class="jardin__kicker">Saga Petunia · 6 juegos</p>
+        <p class="jardin__kicker">8 juegos · 2 en realidad aumentada</p>
         <h1 id="arcade-title" class="jardin__h1">Video<span>juegos</span></h1>
         <p class="jardin__intro"><span>Bienvenido al <strong>jardín de Nucita</strong>: cada petunia es un juego. Tócala para conocerlo.</span></p>
       </div>
@@ -54,7 +54,7 @@
         </defs>
         <rect width="1200" height="520" fill="url(#cielo)"/>
         <g class="paralaje" data-prof="6">
-          <circle class="jardin__sol" cx="1080" cy="90" r="46"/>
+          <circle class="jardin__sol" cx="1150" cy="80" r="46"/>
           <g class="jardin__estrellas">
             <circle cx="120" cy="60" r="2"/><circle cx="300" cy="110" r="1.6"/><circle cx="520" cy="50" r="2.2"/>
             <circle cx="700" cy="120" r="1.5"/><circle cx="860" cy="70" r="2"/><circle cx="980" cy="160" r="1.6"/>
@@ -132,7 +132,7 @@
         </g>
       </g>
       </g>
-      <g class="flor juego-card--petugol" data-indice="0" data-x="380" data-nombre="PetuGol" transform="translate(380 420)">
+      <g class="flor juego-card--petugol" data-tipo="2d" data-indice="0" data-x="350" data-nombre="PetuGol" transform="translate(350 420)">
         <a href="futbol.html" tabindex="-1">
           <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
@@ -172,7 +172,7 @@
           </g>
         </a>
       </g>
-      <g class="flor juego-card--petupong" data-indice="1" data-x="545" data-nombre="PetuPong" transform="translate(545 420)">
+      <g class="flor juego-card--petupong" data-tipo="2d" data-indice="1" data-x="460" data-nombre="PetuPong" transform="translate(460 420)">
         <a href="pingpong.html" tabindex="-1">
           <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
@@ -212,7 +212,7 @@
           </g>
         </a>
       </g>
-      <g class="flor juego-card--noche-de-espantos" data-indice="2" data-x="710" data-nombre="Noche de Espantos" transform="translate(710 420)">
+      <g class="flor juego-card--noche-de-espantos" data-tipo="3d" data-indice="2" data-x="570" data-nombre="Noche de Espantos" transform="translate(570 420)">
         <a href="noche-de-espantos.html" tabindex="-1">
           <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
@@ -252,7 +252,7 @@
           </g>
         </a>
       </g>
-      <g class="flor juego-card--condor-de-los-andes" data-indice="3" data-x="875" data-nombre="Cóndor de los Andes" transform="translate(875 420)">
+      <g class="flor juego-card--condor-de-los-andes" data-tipo="3d" data-indice="3" data-x="680" data-nombre="Cóndor de los Andes" transform="translate(680 420)">
         <a href="condor-de-los-andes.html" tabindex="-1">
           <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
@@ -292,7 +292,7 @@
           </g>
         </a>
       </g>
-      <g class="flor juego-card--estanco-nucita" data-indice="4" data-x="1040" data-nombre="Estanco Nucita" transform="translate(1040 420)">
+      <g class="flor juego-card--estanco-nucita" data-tipo="2d" data-indice="4" data-x="790" data-nombre="Estanco Nucita" transform="translate(790 420)">
         <a href="estanco-nucita.html" tabindex="-1">
           <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
@@ -332,7 +332,7 @@
           </g>
         </a>
       </g>
-      <g class="flor juego-card--turbopix-gp" data-indice="5" data-x="1100" data-nombre="TurboPix GP" transform="translate(1100 420)">
+      <g class="flor juego-card--turbopix-gp" data-tipo="3d" data-indice="5" data-x="900" data-nombre="TurboPix GP" transform="translate(900 420)">
         <a href="turbopix-gp.html" tabindex="-1">
           <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
           <g class="flor__planta">
@@ -366,6 +366,88 @@
                 <g class="flor__cartel">
                   <rect x="-86" y="-20" width="172" height="34" rx="17"/>
                   <text y="4" text-anchor="middle">TurboPix GP</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <g class="flor juego-card--ar-pool-8" data-tipo="ar" data-indice="6" data-x="1010" data-nombre="AR Pool 8" transform="translate(1010 420)">
+        <a href="ar-pool-8.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -56 12 -112 0 -160"/>
+            <ellipse class="flor__hoja" cx="-17" cy="-67" rx="20" ry="9" transform="rotate(-30 -17 -67)"/>
+            <ellipse class="flor__hoja" cx="16" cy="-107" rx="19" ry="8" transform="rotate(28 16 -107)"/>
+            <g transform="translate(22 -92) rotate(35)">
+              <path class="petunia__boton" d="M0 0 C -8 -10 -6 -26 0 -32 C 6 -26 8 -10 0 0 Z"/>
+            </g>
+            <g transform="translate(0 -160)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(0)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(72)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(144)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(216)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(288)"/>
+                  <circle class="petunia__union" r="24"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="0.0" y2="-34.0"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="32.3" y2="-10.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
+                  <circle class="petunia__garganta" r="13"/>
+                </g>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-ar-pool-8.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
+              </g>
+              <g class="flor__ar" transform="translate(26 -26)"><circle r="13"/><text y="4.5" text-anchor="middle">AR</text></g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(0 -74)">
+                <g class="flor__cartel">
+                  <rect x="-73" y="-20" width="146" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">AR Pool 8</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
+      <g class="flor juego-card--cofre-portales" data-tipo="ar" data-indice="7" data-x="1120" data-nombre="Cofre de los Portales" transform="translate(1120 420)">
+        <a href="cofre-portales.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -70 12 -140 0 -200"/>
+            <ellipse class="flor__hoja" cx="-17" cy="-67" rx="20" ry="9" transform="rotate(-30 -17 -67)"/>
+            <ellipse class="flor__hoja" cx="16" cy="-107" rx="19" ry="8" transform="rotate(28 16 -107)"/>
+            <g transform="translate(22 -92) rotate(35)">
+              <path class="petunia__boton" d="M0 0 C -8 -10 -6 -26 0 -32 C 6 -26 8 -10 0 0 Z"/>
+            </g>
+            <g transform="translate(0 -200)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(0)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(72)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(144)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(216)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(288)"/>
+                  <circle class="petunia__union" r="24"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="0.0" y2="-34.0"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="32.3" y2="-10.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
+                  <circle class="petunia__garganta" r="13"/>
+                </g>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-cofre-portales.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
+              </g>
+              <g class="flor__ar" transform="translate(26 -26)"><circle r="13"/><text y="4.5" text-anchor="middle">AR</text></g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(-70 -74)">
+                <g class="flor__cartel">
+                  <rect x="-148" y="-20" width="296" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">Cofre de los Portales</text>
                 </g>
               </g>
             </g>
@@ -440,13 +522,21 @@
         </g>
       </g>
       </svg>
+      <div class="jardin__filtro" role="group" aria-label="Ver juegos por tipo">
+        <button class="jardin__chip" type="button" data-filtro="todos" aria-pressed="true">Todos</button>
+        <button class="jardin__chip" type="button" data-filtro="2d" aria-pressed="false">2D</button>
+        <button class="jardin__chip" type="button" data-filtro="3d" aria-pressed="false">3D</button>
+        <button class="jardin__chip" type="button" data-filtro="ar" aria-pressed="false">Realidad aumentada</button>
+      </div>
       <ul class="jardin__lista">
-        <li class="juego-card--petugol"><a href="futbol.html" data-indice="0"><img class="jardin__mini" src="img/petunia-petugol.webp" alt="" width="40" height="40"> PetuGol</a></li>
-        <li class="juego-card--petupong"><a href="pingpong.html" data-indice="1"><img class="jardin__mini" src="img/petunia-petupong.webp" alt="" width="40" height="40"> PetuPong</a></li>
-        <li class="juego-card--noche-de-espantos"><a href="noche-de-espantos.html" data-indice="2"><img class="jardin__mini" src="img/petunia-noche-de-espantos.webp" alt="" width="40" height="40"> Noche de Espantos</a></li>
-        <li class="juego-card--condor-de-los-andes"><a href="condor-de-los-andes.html" data-indice="3"><img class="jardin__mini" src="img/petunia-condor-de-los-andes.webp" alt="" width="40" height="40"> Cóndor de los Andes</a></li>
-        <li class="juego-card--estanco-nucita"><a href="estanco-nucita.html" data-indice="4"><img class="jardin__mini" src="img/petunia-estanco-nucita.webp" alt="" width="40" height="40"> Estanco Nucita</a></li>
-        <li class="juego-card--turbopix-gp"><a href="turbopix-gp.html" data-indice="5"><img class="jardin__mini" src="img/petunia-turbopix-gp.webp" alt="" width="40" height="40"> TurboPix GP</a></li>
+        <li class="juego-card--petugol" data-tipo="2d"><a href="futbol.html" data-indice="0"><img class="jardin__mini" src="img/petunia-petugol.webp" alt="" width="40" height="40"> PetuGol</a></li>
+        <li class="juego-card--petupong" data-tipo="2d"><a href="pingpong.html" data-indice="1"><img class="jardin__mini" src="img/petunia-petupong.webp" alt="" width="40" height="40"> PetuPong</a></li>
+        <li class="juego-card--noche-de-espantos" data-tipo="3d"><a href="noche-de-espantos.html" data-indice="2"><img class="jardin__mini" src="img/petunia-noche-de-espantos.webp" alt="" width="40" height="40"> Noche de Espantos</a></li>
+        <li class="juego-card--condor-de-los-andes" data-tipo="3d"><a href="condor-de-los-andes.html" data-indice="3"><img class="jardin__mini" src="img/petunia-condor-de-los-andes.webp" alt="" width="40" height="40"> Cóndor de los Andes</a></li>
+        <li class="juego-card--estanco-nucita" data-tipo="2d"><a href="estanco-nucita.html" data-indice="4"><img class="jardin__mini" src="img/petunia-estanco-nucita.webp" alt="" width="40" height="40"> Estanco Nucita</a></li>
+        <li class="juego-card--turbopix-gp" data-tipo="3d"><a href="turbopix-gp.html" data-indice="5"><img class="jardin__mini" src="img/petunia-turbopix-gp.webp" alt="" width="40" height="40"> TurboPix GP</a></li>
+        <li class="juego-card--ar-pool-8" data-tipo="ar"><a href="ar-pool-8.html" data-indice="6"><img class="jardin__mini" src="img/petunia-ar-pool-8.webp" alt="" width="40" height="40"> AR Pool 8 <span class="jardin__ar">AR</span></a></li>
+        <li class="juego-card--cofre-portales" data-tipo="ar"><a href="cofre-portales.html" data-indice="7"><img class="jardin__mini" src="img/petunia-cofre-portales.webp" alt="" width="40" height="40"> Cofre de los Portales <span class="jardin__ar">AR</span></a></li>
       </ul>
     </section>
 
@@ -563,6 +653,42 @@
           </div>
         </div>
       </article>
+      <article class="carta carta--ar-pool-8 juego-card--ar-pool-8" data-indice="6" hidden aria-labelledby="carta-titulo-6">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-ar-pool-8.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="carta__portada">
+          <img src="img/arcade-ar-pool-8.webp" alt="AR Pool 8 en modo 3D: mesa de billar de madera con paño verde, el taco junto a la bola blanca y las bolas en triángulo, bajo lámparas colgantes." width="800" height="500" decoding="async">
+          <span class="carta__numero" aria-hidden="true">07</span>
+        </div>
+        <div class="carta__cuerpo">
+          <p class="carta__tag">Realidad aumentada · billar</p>
+          <h3 class="carta__titulo" id="carta-titulo-6">AR Pool 8</h3>
+          <p class="carta__texto">Pool de 8 bolas contra un bot que calcula sus tiros. Escanea el marcador con el celular y la mesa aparece encima, como si fuera real: caminas a su alrededor para apuntar.</p>
+          <ul class="carta__info"><li>Contra el bot</li><li>Marcador o cámara libre</li><li>Realidad aumentada</li></ul>
+          <div class="carta__acciones">
+            <a class="carta__jugar" href="ar-pool-8.html"><span aria-hidden="true">▶</span> Jugar</a>
+            <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/ar-pool-8">Ver el código<span class="solo-lector"> de AR Pool 8</span></a>
+          </div>
+        </div>
+      </article>
+      <article class="carta carta--cofre-portales juego-card--cofre-portales" data-indice="7" hidden aria-labelledby="carta-titulo-7">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-cofre-portales.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="carta__portada">
+          <img src="img/arcade-cofre-portales.webp" alt="El Cofre de los Portales en realidad aumentada: un cofre dorado con gemas flotando sobre una mesa real, con el letrero «¡Toca el cofre!»." width="800" height="500" decoding="async">
+          <span class="carta__numero" aria-hidden="true">08</span>
+        </div>
+        <div class="carta__cuerpo">
+          <p class="carta__tag">Realidad aumentada · 9 deportes</p>
+          <h3 class="carta__titulo" id="carta-titulo-7">El Cofre de los Portales</h3>
+          <p class="carta__texto">Un cofre aparece sobre lo que ve tu cámara. Al abrirlo salen 9 portales a minijuegos: baloncesto, ping-pong, fútbol, bolos, minigolf, dardos, voleibol, air hockey y aros. Juega con el dedo o con tu mano frente a la cámara.</p>
+          <ul class="carta__info"><li>Solo u online</li><li>Con el dedo o la mano</li><li>Realidad aumentada</li></ul>
+          <div class="carta__acciones">
+            <a class="carta__jugar" href="cofre-portales.html"><span aria-hidden="true">▶</span> Jugar</a>
+            <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/cofre-portales">Ver el código<span class="solo-lector"> de El Cofre de los Portales</span></a>
+          </div>
+        </div>
+      </article>
       <div class="cartas__puntos" role="group" aria-label="Elegir juego">
         <button class="cartas__punto" type="button" data-indice="0" aria-label="PetuGol"></button>
         <button class="cartas__punto" type="button" data-indice="1" aria-label="PetuPong"></button>
@@ -570,6 +696,8 @@
         <button class="cartas__punto" type="button" data-indice="3" aria-label="Cóndor de los Andes"></button>
         <button class="cartas__punto" type="button" data-indice="4" aria-label="Estanco Nucita"></button>
         <button class="cartas__punto" type="button" data-indice="5" aria-label="TurboPix GP"></button>
+        <button class="cartas__punto" type="button" data-indice="6" aria-label="AR Pool 8"></button>
+        <button class="cartas__punto" type="button" data-indice="7" aria-label="El Cofre de los Portales"></button>
       </div>
       <!-- Animación al darle Jugar (se pinta encima de todo) -->
       <div class="arranque" id="arranque" aria-hidden="true" hidden>
@@ -618,5 +746,6 @@
 
   <script src="js/menu.js" defer></script>
   <script src="js/estrellas.js" defer></script>
+  <script src="js/filtro-juegos.js" defer></script>
 </body>
 </html>

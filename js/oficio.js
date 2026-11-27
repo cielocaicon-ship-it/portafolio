@@ -35,7 +35,7 @@
     animacion: ["blog.html#trabajo-empaque-animado"],
     juegos: ["juegos.html#juego-petugol", "juegos.html#juego-petupong", "juegos.html#juego-noche-de-espantos",
              "juegos.html#juego-condor-de-los-andes", "juegos.html#juego-estanco-nucita", "juegos.html#juego-turbopix-gp",
-             "juegos.html#juego-ar-pool-8", "juegos.html#juego-cofre-portales"],
+             "juegos.html#juego-ar-pool-8", "juegos.html#juego-cofre-portales", "juegos.html#juego-carolina-ar"],
     web: ["blog.html#trabajo-slotnova"],
     marketing: ["blog.html#trabajo-bodegon", "blog.html#trabajo-colonia", "blog.html#trabajo-gala", "blog.html#trabajo-sesion",
                 "blog.html#trabajo-emociones", "blog.html#trabajo-postre"]

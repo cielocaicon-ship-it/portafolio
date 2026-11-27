@@ -36,7 +36,7 @@
     <section class="jardin jardin--portada" id="jardin" aria-labelledby="arcade-title">
       <div class="jardin__encabezado">
         <p class="migas migas--jardin"><a href="blog.html#videojuegos">← Volver a Trabajos</a></p>
-        <p class="jardin__kicker">8 juegos · 2 en realidad aumentada</p>
+        <p class="jardin__kicker">9 juegos · 3 en realidad aumentada</p>
         <h1 id="arcade-title" class="jardin__h1">Video<span>juegos</span></h1>
         <p class="jardin__intro"><span>Bienvenido al <strong>jardín de Nucita</strong>: cada petunia es un juego. Tócala para conocerlo, o juega con el sol, las nubes y el pasto.</span></p>
       </div>
@@ -454,6 +454,47 @@
           </g>
         </a>
       </g>
+      <g class="flor juego-card--carolina-ar" data-tipo="ar" data-indice="8" data-x="1130" data-nombre="Carolina AR Adventure" transform="translate(1130 420)">
+        <a href="carolina-ar.html" tabindex="-1">
+          <ellipse class="flor__sombra" cx="0" cy="3" rx="28" ry="6"/>
+          <g class="flor__planta">
+            <path class="flor__tallo" d="M0 0 C -14 -70 12 -140 0 -200"/>
+            <ellipse class="flor__hoja" cx="-17" cy="-67" rx="20" ry="9" transform="rotate(-30 -17 -67)"/>
+            <ellipse class="flor__hoja" cx="16" cy="-107" rx="19" ry="8" transform="rotate(28 16 -107)"/>
+            <g transform="translate(22 -92) rotate(35)">
+              <path class="petunia__boton" d="M0 0 C -8 -10 -6 -26 0 -32 C 6 -26 8 -10 0 0 Z"/>
+            </g>
+            <g transform="translate(0 -200)">
+              <g class="flor__cabeza">
+                <g class="flor__petalos">
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(0)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(72)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(144)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(216)"/>
+                  <ellipse class="petunia__lobulo" cx="0" cy="-22" rx="22" ry="25" transform="rotate(288)"/>
+                  <circle class="petunia__union" r="24"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="0.0" y2="-34.0"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="32.3" y2="-10.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-20.0" y2="27.5"/>
+                  <line class="petunia__vena" x1="0" y1="0" x2="-32.3" y2="-10.5"/>
+                  <circle class="petunia__garganta" r="13"/>
+                </g>
+                <circle class="petunia__marco" r="25"/>
+                <image class="petunia__foto" href="img/petunia-carolina-ar.webp" x="-22" y="-22" width="44" height="44" clip-path="url(#centro-petunia)" preserveAspectRatio="xMidYMid slice"/>
+              </g>
+              <g class="flor__ar" transform="translate(26 -26)"><circle r="13"/><text y="4.5" text-anchor="middle">AR</text></g>
+              <!-- Cartelito con el nombre: aparece al pasar el mouse -->
+              <g transform="translate(-70 -74)">
+                <g class="flor__cartel">
+                  <rect x="-148" y="-20" width="296" height="34" rx="17"/>
+                  <text y="4" text-anchor="middle">Carolina AR Adventure</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </a>
+      </g>
       <!-- La pelota que lanza María -->
       <g class="pelota" hidden transform="translate(170 290)">
         <circle r="11"/>
@@ -531,6 +572,7 @@
         <li class="juego-card--turbopix-gp" data-tipo="3d"><a href="turbopix-gp.html" data-indice="5"><img class="jardin__mini" src="img/petunia-turbopix-gp.webp" alt="" width="40" height="40"> TurboPix GP</a></li>
         <li class="juego-card--ar-pool-8" data-tipo="ar"><a href="ar-pool-8.html" data-indice="6"><img class="jardin__mini" src="img/petunia-ar-pool-8.webp" alt="" width="40" height="40"> AR Pool 8 <span class="jardin__ar">AR</span></a></li>
         <li class="juego-card--cofre-portales" data-tipo="ar"><a href="cofre-portales.html" data-indice="7"><img class="jardin__mini" src="img/petunia-cofre-portales.webp" alt="" width="40" height="40"> Cofre de los Portales <span class="jardin__ar">AR</span></a></li>
+        <li class="juego-card--carolina-ar" data-tipo="ar"><a href="carolina-ar.html" data-indice="8"><img class="jardin__mini" src="img/petunia-carolina-ar.webp" alt="" width="40" height="40"> Carolina AR Adventure <span class="jardin__ar">AR</span></a></li>
       </ul>
     </section>
 
@@ -683,6 +725,24 @@
           </div>
         </div>
       </article>
+      <article class="carta carta--carolina-ar juego-card--carolina-ar" data-indice="8" hidden aria-labelledby="carta-titulo-8">
+        <div class="carta__fondo" aria-hidden="true"><img src="img/arcade-carolina-ar.webp" alt="" width="800" height="500" decoding="async"></div>
+        <div class="carta__chispas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="carta__portada">
+          <img src="img/arcade-carolina-ar.webp" alt="Pantalla de inicio de Carolina AR Adventure: el título «Carolina!» sobre un atardecer retro con sol, pinos y mar." width="800" height="500" decoding="async">
+          <span class="carta__numero" aria-hidden="true">09</span>
+        </div>
+        <div class="carta__cuerpo">
+          <p class="carta__tag">Realidad aumentada · Carolina del Norte</p>
+          <h3 class="carta__titulo" id="carta-titulo-8">Carolina AR Adventure</h3>
+          <p class="carta__texto">Hecho para el stand de Carolina del Norte en la feria de inglés. Un cofre aparece sobre lo que ve tu cámara y abre 7 minijuegos del estado: el avión de los hermanos Wright en Kitty Hawk, golf en Pinehurst, Charlotte, un tour en lancha por los Outer Banks y los Hornets, Panthers y Charlotte FC.</p>
+          <ul class="carta__info"><li>7 minijuegos</li><li>Inglés y español</li><li>Realidad aumentada</li></ul>
+          <div class="carta__acciones">
+            <a class="carta__jugar" href="carolina-ar.html"><span aria-hidden="true">▶</span> Jugar</a>
+            <a class="carta__codigo" href="https://github.com/cielocaicon-ship-it/florida-ar">Ver el código<span class="solo-lector"> de Carolina AR Adventure</span></a>
+          </div>
+        </div>
+      </article>
       <div class="cartas__puntos" role="group" aria-label="Elegir juego">
         <button class="cartas__punto" type="button" data-indice="0" aria-label="PetuGol"></button>
         <button class="cartas__punto" type="button" data-indice="1" aria-label="PetuPong"></button>
@@ -692,6 +752,7 @@
         <button class="cartas__punto" type="button" data-indice="5" aria-label="TurboPix GP"></button>
         <button class="cartas__punto" type="button" data-indice="6" aria-label="AR Pool 8"></button>
         <button class="cartas__punto" type="button" data-indice="7" aria-label="El Cofre de los Portales"></button>
+        <button class="cartas__punto" type="button" data-indice="8" aria-label="Carolina AR Adventure"></button>
       </div>
       <!-- Animación al darle Jugar (se pinta encima de todo) -->
       <div class="arranque" id="arranque" aria-hidden="true" hidden>

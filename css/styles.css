@@ -7621,6 +7621,7 @@ main > :first-child {
    ============================================================ */
 .juego-card--ar-pool-8 { --neon: #34D399; }
 .juego-card--cofre-portales { --neon: #C084FC; }
+.juego-card--carolina-ar { --neon: #38BDF8; }
 
 /* Insignia "AR" en la petunia */
 .flor__ar circle {

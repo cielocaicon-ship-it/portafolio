@@ -1,5 +1,5 @@
 /* ============================================================
-   Cosas para jugar en el jardín (juegos.html)
+   Cosas para jugar en el jardín (arcade.html)
    Cielo Yenied Caicedo — Portafolio
 
    1. Tocar el sol: se hace de noche (o de día). Usa el mismo

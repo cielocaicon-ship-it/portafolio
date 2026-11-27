@@ -1,5 +1,5 @@
 /* ============================================================
-   El jardín de Nucita (juegos.html)
+   El jardín de Nucita (arcade.html)
    Cielo Yenied Caicedo — Portafolio
 
    Nucita, la perrita del Cóndor de los Andes, quiere jugar.
@@ -510,7 +510,7 @@
     var x0 = mariaX + 30, y0 = 290, y1 = SUELO - 10;
     var dur = menosMovimiento ? 0 : 900;
     var t0 = performance.now();
-    pelota.removeAttribute("hidden");
+    pelota.removeAttribute("display");
     decir("¡La pelota! ¡Voy!");
 
     function vuelo(ahora) {
@@ -525,12 +525,12 @@
     // Nucita sale corriendo apenas María lanza
     correrA(xFin - 45, function () {
       setTimeout(function () {
-        pelota.setAttribute("hidden", "");
-        if (pelotaBoca) pelotaBoca.removeAttribute("hidden");
+        pelota.setAttribute("display", "none");
+        if (pelotaBoca) pelotaBoca.removeAttribute("display");
         decir("¡La tengo! 🐾");
         setTimeout(function () {
           correrA(mariaX + 90, function () {
-            if (pelotaBoca) pelotaBoca.setAttribute("hidden", "");
+            if (pelotaBoca) pelotaBoca.setAttribute("display", "none");
             mira = -1;
             ponerPosicion();
             decir("¡Otra vez, otra vez!");
@@ -593,7 +593,7 @@
   ponerPosicion();
   decir("¡Guau! ¿Jugamos?");
 
-  /* Si se llega con juegos.html#juego-petugol (por ejemplo, desde
+  /* Si se llega con arcade.html#juego-petugol (por ejemplo, desde
      "Ver un trabajo" en el Inicio), Nucita corre a esa petunia y se
      abre su carta. */
   var pedido = /^#juego-(.+)$/.exec(window.location.hash);

@@ -10,8 +10,11 @@ Portafolio web de Ingeniería Multimedia (Universidad Simón Bolívar, sede Cúc
 |---|---|
 | `index.html` | Inicio: presentación, sobre mí, habilidades y proyectos |
 | `blog.html` | Trabajos: diseño, posproducción y videojuegos |
-| `juegos.html` | Videojuegos de la saga Petunia, récords e historial de partidos |
+| `arcade.html` | Arcade: los 9 videojuegos en el jardín de Nucita, récords e historial de partidos |
 | `contacto.html` | Formulario de contacto |
+| `ar-experience.html` | Módulo WebAR: El Cofre de los Portales (A-Frame, cursor con Raycaster) |
+| `carolina-ar.html`, `ar-pool-8.html`, `turbopix-gp.html` | Otros juegos en pantalla completa |
+| `juegos.html`, `cofre-portales.html` | Redirecciones de las direcciones viejas |
 | `futbol.html`, `pingpong.html`, `noche-de-espantos.html`, `condor-de-los-andes.html`, `estanco-nucita.html` | Cada juego a pantalla completa con botón para volver |
 
 ## Videojuegos (carpeta `juegos/`)

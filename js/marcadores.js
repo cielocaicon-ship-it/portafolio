@@ -7,7 +7,7 @@
    - records:   estadísticas y los 5 mejores puntajes (High Scores)
 
    Todo queda en UNA sola clave: "arcade-cielo".
-   La usan juegos.html, futbol.html, pingpong.html y PetuPong
+   La usan arcade.html, futbol.html, pingpong.html y PetuPong
    (que está dentro de un iframe pero es el mismo sitio, así que
    comparte el mismo localStorage).
 

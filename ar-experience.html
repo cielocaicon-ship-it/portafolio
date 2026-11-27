@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiencia WebAR: El Cofre de los Portales — Cielo Caicedo</title>
+  <meta name="description" content="El Cofre de los Portales, juego de Cielo Caicedo: un cofre en realidad aumentada que abre 9 minijuegos deportivos, solo u online.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Outfit:wght@500..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/tema.js"></script>
+  <script src="js/transicion.js"></script>
+</head>
+<body class="jugador">
+
+  <!-- Barra para salir del juego y volver al portafolio -->
+  <header class="jugador__barra">
+    <nav class="jugador__nav" aria-label="Salir del juego">
+      <a class="jugador__volver" href="arcade.html"><span aria-hidden="true">←</span> Volver</a>
+      <h1 class="jugador__titulo">El Cofre de los Portales</h1>
+      <details class="jugador__ayuda">
+        <summary>Cómo se juega</summary>
+        <div class="jugador__ayuda-panel">
+          <p>Un cofre aparece sobre lo que ve tu cámara. Ábrelo y elige uno de los 9 portales: baloncesto, ping-pong, fútbol, bolos, minigolf, dardos, voleibol, air hockey y aros.</p>
+          <ul>
+            <li>Juega <strong>con el dedo</strong> en la pantalla o <strong>con tu mano</strong> frente a la cámara</li>
+            <li><strong>Jugar solo</strong> o <strong>multijugador online</strong>; con un amigo usen el mismo código de sala</li>
+            <li>Funciona en vertical u horizontal</li>
+            <li>Si la cámara no abre aquí, toca <strong>Abrir solo ↗</strong></li>
+          </ul>
+        </div>
+      </details>
+      <a class="jugador__solo" href="https://cielocaicon-ship-it.github.io/cofre-portales/" aria-label="Abrir El Cofre de los Portales solo, en toda la pantalla"><span class="jugador__solo-texto">Abrir solo</span> <span aria-hidden="true">↗</span></a>
+      <a class="jugador__inicio" href="index.html" aria-label="Ir al inicio del portafolio"><span class="masthead__mark" aria-hidden="true">CC</span></a>
+    </nav>
+  </header>
+
+  <main class="jugador__pantalla">
+    <iframe class="jugador__juego" id="juego" src="https://cielocaicon-ship-it.github.io/cofre-portales/"
+            title="El Cofre de los Portales" allow="camera; microphone; xr-spatial-tracking; fullscreen; autoplay; gamepad; accelerometer; gyroscope; magnetometer" allowfullscreen></iframe>
+  </main>
+
+  <script src="js/marcadores.js" defer></script>
+  <script src="js/jugador.js" defer></script>
+
+</body>
+</html>
